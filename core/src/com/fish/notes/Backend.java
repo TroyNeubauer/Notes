@@ -2,10 +2,10 @@ package com.fish.notes;
 
 import com.fish.core.game.Account;
 import com.fish.core.game.Course;
+import com.fish.core.game.Post;
 import com.fish.core.game.LoginResult;
+import com.fish.core.game.PostData;
 import com.fish.core.game.School;
-
-import java.util.List;
 
 public class Backend {
     public static School getSchool(long id) {
@@ -27,6 +27,10 @@ public class Backend {
     }
 
     public static LoginResult register(String username, String password, String email) {
+        return null;
+    }
+
+    public static Post post(String title, Course course, PostData data) {
         return null;
     }
 }
