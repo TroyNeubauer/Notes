@@ -37,7 +37,6 @@ public class Notes extends Game {
         dialogs = GDXDialogsSystem.install();
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
-        font = skin.get(TextButton.TextButtonStyle.class).font;
         setScreen(new LoginScreen(this));
     }
 
