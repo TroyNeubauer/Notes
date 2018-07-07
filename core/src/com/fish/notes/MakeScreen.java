@@ -63,7 +63,20 @@ public class MakeScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    @Override
+    public void resize(int width, int height) {
 
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
 
     public void render(float delta) {
         stage.act(delta);

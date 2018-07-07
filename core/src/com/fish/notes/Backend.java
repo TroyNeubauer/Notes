@@ -24,13 +24,17 @@ public class Backend implements Runnable {
     public void run() {
         SocketHints hints = new SocketHints();
         hints.tcpNoDelay = false;
+        hints.trafficClass = 0x02 | 0x04;//Cheap and reliable
         while(socket == null) {
             try {
                 socket = Gdx.net.newClientSocket(Net.Protocol.TCP, NotesConstants.IP, NotesConstants.PORT, hints);
             } catch(Exception e) {
-
+                Notes.showDialog("Unable to connect to server!", "Check your connection");
+            } try {
+                Thread.sleep(5000);
+            }catch(InterruptedException e) {
+                break;
             }
-
         }
     }
 

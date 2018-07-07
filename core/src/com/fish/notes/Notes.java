@@ -6,7 +6,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.fish.core.game.Core;
+import com.fish.core.game.PostDataImage;
+import com.fish.core.game.PostDataText;
 
 import de.tomgrill.gdxdialogs.core.GDXDialogs;
 import de.tomgrill.gdxdialogs.core.GDXDialogsSystem;
@@ -26,8 +30,8 @@ public class Notes extends Game {
 		img = new Texture("Fishnotes.png");
 		skin = new Skin(Gdx.files.internal("default.json"));
 		warning = dialogs.newDialog(GDXButtonDialog.class);
-
-		}
+        addCreators();
+    }
 
 	@Override
 	public void render () {
@@ -56,6 +60,21 @@ public class Notes extends Game {
             }
         });
         warningDialog.build().show();
+    }
+
+    private void addCreators() {
+        Core.creatorMap.put(PostDataImage.class, new Core.Creator() {
+            @Override
+            public Object create() {
+                return new Actor();
+            }
+        });
+        Core.creatorMap.put(PostDataText.class, new Core.Creator() {
+            @Override
+            public Object create() {
+                return new Actor();
+            }
+        });
     }
 
 }
