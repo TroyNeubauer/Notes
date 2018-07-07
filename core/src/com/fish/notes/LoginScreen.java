@@ -79,16 +79,7 @@ public class LoginScreen implements Screen {
 
     protected boolean checkFields() {
         if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
-            final GDXButtonDialog warningDialog = Notes.warning;
-            warningDialog.setTitle("Cannot login!").setMessage("You must input a username and password!");
-            warningDialog.addButton("Ok");
-            warningDialog.setClickListener(new ButtonClickListener() {
-                @Override
-                public void click(int button) {
-                    warningDialog.dismiss();
-                }
-            });
-            warningDialog.build().show();
+            Notes.showDialog("Cannot login!","You must input a username and password!" );
             return true;
         }
         return false;
