@@ -33,6 +33,7 @@ public class ShopScreen extends MyScreen {
     public ShopScreen(Notes notes) {
         this.notes = notes;
         this.stage = new Stage();
+        //stage.setDebugAll(true);
 
         this.title = new Label("Shop", Notes.skin);
         title.setAlignment(Align.center);
@@ -46,7 +47,14 @@ public class ShopScreen extends MyScreen {
 
         this.smallpack = new Label("Purchase Small", Notes.skin);
         this.small = new Image(new Texture("small.png"));
-        smallpack.setColor(Color.TEAL);
+        smallpack.setColor(Color.WHITE);
+        smallpack.setDebug(true);
+        smallpack.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("click");
+            }
+        });
         this.buysmall = new TextButton("$0.99", Notes.skin);
         this.mediumpack = new Label("Purchase Medium", Notes.skin);
         this.med = new Image(new Texture("medium.png"));
@@ -69,13 +77,14 @@ public class ShopScreen extends MyScreen {
         table.add(buymed);
        // table.add(buylarge);
         table.row();
+        table.setColor(Color.WHITE);
         stage.addActor(table);
+        Gdx.input.setInputProcessor(stage);
     }
     @Override
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
-        stage.act();
     }
     @Override
     public void dispose() {
