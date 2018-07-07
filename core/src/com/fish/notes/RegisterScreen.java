@@ -18,7 +18,7 @@ public class RegisterScreen implements Screen
     private Stage stage;
     private TextField username, password, verify, email;
     private Notes notes;
-    private Label label;
+    private Label label, passwords;
 
     public RegisterScreen(Notes notes)
     {
@@ -44,6 +44,9 @@ public class RegisterScreen implements Screen
         this.label = new Label("Welcome to Notes", Notes.skin);
         label.setAlignment(Align.center);
 
+        this.passwords = new Label("", Notes.skin);
+        passwords.setAlignment(Align.center);
+
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         container.add(label).prefSize(label.getWidth(), label.getHeight()).row();
@@ -51,12 +54,52 @@ public class RegisterScreen implements Screen
         container.add(username).prefSize(username.getWidth(), username.getHeight()).row();
         container.add(password).prefSize(password.getWidth(), password.getHeight()).row();
         container.add(verify).prefSize(verify.getWidth(), verify.getHeight()).row();
+        container.add(passwords).prefSize(passwords.getWidth(), passwords.getHeight()).row();
         stage.addActor(container);
 
         Gdx.input.setInputProcessor(stage);
 
+        password.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+                //check if username is already taken
+                if(password.getText() != null)
+                {
+
+                }
+            }
+        });
+        verify.addListener(new TextFieldListener()
+        {
+            @Override
+            public void keyTyped(TextField textfield, char key){
+                //check if username is already taken
+                if(verify.getText() != null)
+                {
+
+                }
+            }
+        });
+        username.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y){
+            //check if username is already taken
+                if(username.getText() != null)
+                {
+
+                }
+            }
+        });
 
 
+    }
+
+    public void checkSamePasswords()
+    {
+        if(!password.getText().equals(verify.getText()));
+            passwords.setText("Passwords do not match");
     }
     @Override
     public void show() {
