@@ -56,7 +56,7 @@ public class LoginScreen implements Screen {
                 if (net.isConnected()) {
                     net.getContext().writeAndFlush(new LoginData(usernameField.getText().toCharArray(), passwordField.getText().toCharArray()));
                 } else {
-                    GDXButtonDialog warningDialog = game.getDialogs().newDialog(GDXButtonDialog.class);
+                    GDXButtonDialog warningDialog = Notes.warning;
                     warningDialog.setTitle("No connection!").setMessage("Check your internet connection or try again later!");
                     warningDialog.addButton("Ok");
                     warningDialog.setClickListener((button) -> warningDialog.dismiss());
@@ -81,7 +81,7 @@ public class LoginScreen implements Screen {
 
     protected boolean checkFields() {
         if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
-            GDXButtonDialog warningDialog = Notes.
+            GDXButtonDialog warningDialog = Notes.warning;
             warningDialog.setTitle("Cannot login!").setMessage("You must input a username and password!");
             warningDialog.addButton("Ok");
             warningDialog.setClickListener((button) -> warningDialog.dismiss());
