@@ -2,14 +2,30 @@ package com.fish.notes;
 
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+//<<<<<<< Updated upstream
 import com.fish.core.notes.LoginResult;
+import com.badlogic.gdx.utils.viewport.Viewport;
+import com.fish.core.notes.Account;
+import com.fish.core.notes.LoginResult;
+import com.fish.core.packet.LoginData;
+
+import java.awt.Color;
+
+import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
+import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
+//>>>>>>> Stashed changes
+
+import static java.awt.Color.RED;
 
 public class LoginScreen extends MyScreen {
+    private Viewport viewport;
+    private OrthographicCamera camera;
     private Stage stage;
     Image img;
     private TextField usernameField, passwordField;
@@ -86,6 +102,10 @@ public class LoginScreen extends MyScreen {
         return false;
     }
 
+    public void resize(int width, int height) {
+        viewport.update(width, height);
+        camera.update();
+    }
    @Override
     public void render(float delta) {
         stage.act(delta);

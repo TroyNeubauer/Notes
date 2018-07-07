@@ -64,7 +64,7 @@ public class ProfileScreen extends MyScreen {
 
         for(int i = 0; i < Notes.account.getClasses().size(); i++)
         {
-            container.add(new Label("" + Backend.getClass(Notes.account.getClasses().get(i)), Notes.skin);
+           // container.add(new Label("" + Backend.getClass(Notes.account.getClasses().get(i)), Notes.skin));
         }
 
 
