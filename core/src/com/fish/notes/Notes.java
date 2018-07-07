@@ -17,7 +17,6 @@ public class Notes extends ApplicationAdapter {
 		batch = new SpriteBatch();
 		img = new Texture("Fishnotes.png");
 		skin = new Skin(Gdx.files.internal("default.json"));
-		
 
 	}
 
