@@ -25,6 +25,8 @@ public class Backend implements Runnable {
     public static boolean showConnectionDialog = true;
     private static final Kryo kryo = new Kryo();
 
+    public static final Object DISCONNECTED_FROM_SERVER = new Object();
+
     private Backend() {
 
     }
@@ -68,6 +70,11 @@ public class Backend implements Runnable {
     private static Thread socketThread;
     private static AtomicBoolean running = new AtomicBoolean(false);
 
+    public static boolean isConnected() {
+        if(socket == null) return false;
+        return socket.isConnected();
+    }
+
     public static void stop() {
         socket.dispose();
         try {
@@ -89,6 +96,9 @@ public class Backend implements Runnable {
     private static Object getData(String methodName, Object... args) {
         if(!running.get()) {
             start();
+        }
+        if(!isConnected()) {
+            return DISCONNECTED_FROM_SERVER;
         }
         BackendRequest request = new BackendRequest(methodName, args);
         kryo.writeObject(out, request);

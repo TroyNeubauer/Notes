@@ -80,10 +80,12 @@ public class Notes extends Game {
     }
 
     public static boolean validateResult(LoginResult result, String title) {
-        if(result == null) {
+        if(result == Backend.DISCONNECTED_FROM_SERVER) {
             Notes.showDialog("No connection", "Check your internet connection or try again later!");
         } else {
-            if (result.isSuccess()) {
+            if(result == null) {
+                Notes.showDialog("Invalid server request!", "");
+            } else if (result.isSuccess()) {
                 return true;
             } else {
                 Notes.showDialog(title, result.getMessage());
