@@ -91,6 +91,7 @@ public class LoginScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //Show create account screen
+                game.
             }
         });
 
