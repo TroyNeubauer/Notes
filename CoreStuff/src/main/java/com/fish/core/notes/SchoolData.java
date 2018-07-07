@@ -1,4 +1,4 @@
-package com.fish.core.game;
+package com.fish.core.notes;
 
 
 import java.util.List;

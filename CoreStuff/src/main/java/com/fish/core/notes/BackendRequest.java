@@ -1,10 +1,9 @@
-package com.fish.core.game;
+package com.fish.core.notes;
 
 
 public final class BackendRequest {
     private String methodName;
     private Object[] args;
-
 
     public BackendRequest(String methodName, Object[] args) {
         this.methodName = methodName;

@@ -1,26 +1,18 @@
 package com.fish.notes;
 
-import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.fish.core.game.Account;
-import com.fish.core.game.Core;
-import com.fish.core.game.LoginResult;
-import com.fish.core.game.Post;
-import com.fish.core.game.PostDataImage;
-import com.fish.core.game.PostDataText;
+import com.fish.core.notes.Account;
+import com.fish.core.notes.Core;
+import com.fish.core.notes.LoginResult;
+import com.fish.core.notes.Post;
+import com.fish.core.notes.PostDataImage;
+import com.fish.core.notes.PostDataText;
 
 import de.tomgrill.gdxdialogs.core.GDXDialogs;
 import de.tomgrill.gdxdialogs.core.GDXDialogsSystem;
@@ -81,10 +73,12 @@ public class Notes extends Game {
     }
 
     public static boolean validateResult(LoginResult result, String title) {
-        if(result == null) {
+        if(result == Backend.DISCONNECTED_FROM_SERVER) {
             Notes.showDialog("No connection", "Check your internet connection or try again later!");
         } else {
-            if (result.isSuccess()) {
+            if(result == null) {
+                Notes.showDialog("Invalid server request!", "");
+            } else if (result.isSuccess()) {
                 return true;
             } else {
                 Notes.showDialog(title, result.getMessage());

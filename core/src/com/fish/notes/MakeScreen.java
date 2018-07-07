@@ -4,13 +4,6 @@ import com.badlogic.gdx.*;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
-import com.fish.core.game.Account;
-import com.fish.core.game.LoginResult;
-import com.fish.core.packet.LoginData;
-
-import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
-import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
 public class MakeScreen extends MyScreen {
     private Stage stage;

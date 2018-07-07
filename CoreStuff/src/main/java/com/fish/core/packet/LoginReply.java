@@ -1,6 +1,6 @@
 package com.fish.core.packet;
 
-import com.fish.core.game.Account;
+import com.fish.core.notes.Account;
 
 public class LoginReply {
 	private Account account;

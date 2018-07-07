@@ -1,12 +1,12 @@
-package com.fish.core.game;
+package com.fish.core.notes;
 
-import java.util.List;
+import java.util.Set;
 
 public class Account extends PublicAccount {
 
 	public String email;
 	private long schoolID;
-	private List<Long> classes;
+	private Set<Long> classes;
 	private int points, coins;
 
 	public Account(long id, String username, byte[] profilePic, String email) {
@@ -25,7 +25,7 @@ public class Account extends PublicAccount {
 		return email;
 	}
 
-    public List<Long> getClasses() {
+    public Set<Long> getClasses() {
         return classes;
     }
 

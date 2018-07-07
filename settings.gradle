@@ -1,2 +1,2 @@
-include ':CoreStuff'
+include ':CoreStuff', ':Server'
 include 'desktop', 'android', 'ios', 'core'

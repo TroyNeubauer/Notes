@@ -15,6 +15,7 @@ public class SettingsScreen extends MyScreen
         this.stage = new Stage();
     }
 
+
     @Override
     public void render(float delta) {
         stage.act(delta);
