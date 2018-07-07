@@ -2,6 +2,7 @@ package com.fish.notes;
 
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -15,6 +16,7 @@ import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
 public class LoginScreen implements Screen {
     private Stage stage;
+    Image img;
     private TextField usernameField, passwordField;
     private TextButton loginButton, registerBtn;
     private Label label;
@@ -39,8 +41,10 @@ public class LoginScreen implements Screen {
         this.label = new Label("Welcome to Notes", Notes.skin);
         label.setAlignment(Align.center);
 
+        img = new Image(new Texture("Fishnotes.png"));
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        container.add(img).row();
         container.add(label).prefSize(label.getWidth(), label.getHeight()).row();
         container.add(usernameField).prefSize(usernameField.getWidth(), usernameField.getHeight()).row();
         container.add(passwordField).prefSize(passwordField.getWidth(), passwordField.getHeight()).row();

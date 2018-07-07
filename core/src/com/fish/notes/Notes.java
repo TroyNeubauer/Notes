@@ -39,7 +39,7 @@ public class Notes extends Game {
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
         font = skin.get(TextButton.TextButtonStyle.class).font;
-        setScreen(new RegisterScreen());
+        setScreen(new LoginScreen(this));
     }
 
 	public static void showDialog(String title, String message) {
