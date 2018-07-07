@@ -1,6 +1,4 @@
-package com.fish.core.game;
-
-import java.util.List;
+package com.fish.core.notes;
 
 public class Course extends DefaultNotesObject {
     private String name;

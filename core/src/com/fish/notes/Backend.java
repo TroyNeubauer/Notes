@@ -9,16 +9,21 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.fish.core.NotesConstants;
-import com.fish.core.game.Account;
-import com.fish.core.game.BackendRequest;
-import com.fish.core.game.Course;
-import com.fish.core.game.Post;
-import com.fish.core.game.LoginResult;
-import com.fish.core.game.PostData;
-import com.fish.core.game.PublicAccount;
-import com.fish.core.game.School;
+import com.fish.core.notes.Account;
+import com.fish.core.notes.BackendRequest;
+import com.fish.core.notes.BackendResponse;
+import com.fish.core.notes.Course;
+import com.fish.core.notes.Post;
+import com.fish.core.notes.LoginResult;
+import com.fish.core.notes.PostData;
+import com.fish.core.notes.PublicAccount;
+import com.fish.core.notes.School;
+import com.fish.notes.backend.RequestInfo;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.atomic.AtomicLong;
 
 public class Backend implements Runnable {
 
@@ -26,6 +31,9 @@ public class Backend implements Runnable {
     private static final Kryo kryo = new Kryo();
 
     public static final Object DISCONNECTED_FROM_SERVER = new Object();
+
+    private static final AtomicLong IDs = new AtomicLong(0);
+    private static final List<RequestInfo> requests = new ArrayList<RequestInfo>();
 
     private Backend() {
 
@@ -61,6 +69,34 @@ public class Backend implements Runnable {
                 e.printStackTrace();
                 continue;
             }
+            while(running.get() && socket.isConnected()) {
+                try {
+                    BackendResponse response = kryo.readObject(in, BackendResponse.class);
+                    for(int i = 0; i < requests.size(); i++) {
+                        RequestInfo request = requests.get(i);
+                        if(request.id == response.id) {
+                            request.result = response.result;
+                            request.done = true;
+                            System.out.println("Recieved! Setting id \"" + request.id + "\" to " + request.result);
+                        }
+                    }
+
+                } catch(ClassCastException e) {
+                  System.err.print("Different class recieved from server!");
+                  e.printStackTrace();
+                  continue;
+                } catch(GdxRuntimeException e) {
+                    System.err.println("In 12345 catch in Backend!");
+                    e.printStackTrace();
+                    continue;
+                }
+
+                try {
+                    Thread.sleep(1);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            }
         }
     }
 
@@ -86,7 +122,7 @@ public class Backend implements Runnable {
 
     private static void start() {
         if(socketThread != null) {
-            throw new RuntimeException("thing already running!");
+            return;
         }
         socketThread = new Thread(new Backend());
         running.set(true);
@@ -102,8 +138,17 @@ public class Backend implements Runnable {
         }
         BackendRequest request = new BackendRequest(methodName, args);
         kryo.writeObject(out, request);
-
-        return null;
+        long id = IDs.incrementAndGet();
+        RequestInfo info = new RequestInfo(id);
+        requests.add(info);
+        while(!info.done) {
+            try {
+                Thread.sleep(1);
+            } catch(Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return info.result;
     }
 
     public static PublicAccount getAccount(long id) {
@@ -120,6 +165,7 @@ public class Backend implements Runnable {
 
     public static void joinClass(Account account, Course course) {
         getData("joinClass", account, course);
+        account.getClasses().add(course.getID());
     }
 
 

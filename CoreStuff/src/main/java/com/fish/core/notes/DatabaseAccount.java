@@ -1,6 +1,4 @@
-package com.fish.core.game;
-
-import com.fish.core.game.Account;
+package com.fish.core.notes;
 
 import java.util.Arrays;
 
@@ -12,7 +10,7 @@ import java.util.Arrays;
  */
 public class DatabaseAccount {
 
-	private Account account;
+	private com.fish.core.notes.Account account;
 
 	/** The number of iterations used to hash their password */
 	private int iterations;
@@ -21,14 +19,14 @@ public class DatabaseAccount {
 	/** The hash of the user's password */
 	private byte[] hash;
 
-	public DatabaseAccount(Account account, int iterations, byte[] salt, byte[] hash) {
+	public DatabaseAccount(com.fish.core.notes.Account account, int iterations, byte[] salt, byte[] hash) {
 		this.account = account;
 		this.iterations = iterations;
 		this.salt = salt;
 		this.hash = hash;
 	}
 
-	public Account getAccount() {
+	public com.fish.core.notes.Account getAccount() {
 		return account;
 	}
 
