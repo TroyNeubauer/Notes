@@ -40,6 +40,7 @@ public class ShopScreen extends MyScreen {
 
         this.name = new Label("User: " + Notes.account.getUsername(), Notes.skin);
         name.setAlignment(Align.left);
+        stage.addActor(name);
 
         //this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
         //name.setAlignment(Align.left);
