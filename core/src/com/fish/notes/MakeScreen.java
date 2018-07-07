@@ -12,7 +12,7 @@ import com.fish.core.packet.LoginData;
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
-public class MakeScreen implements Screen {
+public class MakeScreen extends MyScreen {
     private Stage stage;
     private TextButton sumbit, picchoice, textchoice;
     private Label label;
@@ -64,30 +64,13 @@ public class MakeScreen implements Screen {
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
     }
+    @Override
     public void dispose() {
         stage.dispose();
     }
 
-    @Override
-    public void show() {
-
-    }
 }

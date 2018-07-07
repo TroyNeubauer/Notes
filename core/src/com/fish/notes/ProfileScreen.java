@@ -8,7 +8,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.utils.Align;
 
-public class ProfileScreen implements Screen {
+public class ProfileScreen extends MyScreen {
     private Stage stage;
     private Texture pfp;
     private Label name, email, points, coins, label;
@@ -39,29 +39,9 @@ public class ProfileScreen implements Screen {
 
 
     @Override
-    public void show() {
-    }
-
-    @Override
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
     }
 
     @Override

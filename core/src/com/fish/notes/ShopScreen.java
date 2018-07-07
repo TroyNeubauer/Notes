@@ -20,7 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 
-public class ShopScreen implements Screen {
+public class ShopScreen extends MyScreen {
 
     private Stage stage;
     private TextField paymentinfo;
@@ -63,11 +63,6 @@ public class ShopScreen implements Screen {
 
     @Override
     public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
 
     }
 

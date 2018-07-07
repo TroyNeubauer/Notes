@@ -31,7 +31,7 @@ import de.tomgrill.gdxdialogs.core.GDXDialogsSystem;
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
-public class RegisterScreen implements Screen
+public class RegisterScreen extends MyScreen
 {
     private Stage stage;
     private Image img;
@@ -155,9 +155,6 @@ public class RegisterScreen implements Screen
     public void resume() {
     }
 
-    @Override
-    public void hide() {
-    }
 
     @Override
     public void dispose() {

@@ -14,7 +14,7 @@ import com.fish.core.packet.LoginData;
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
-public class LoginScreen implements Screen {
+public class LoginScreen extends MyScreen {
     private Stage stage;
     Image img;
     private TextField usernameField, passwordField;
@@ -89,30 +89,10 @@ public class LoginScreen implements Screen {
         return false;
     }
 
-    @Override
-    public void show() {
-    }
-
-    @Override
+   @Override
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-    }
-
-    @Override
-    public void pause() {
-    }
-
-    @Override
-    public void resume() {
-    }
-
-    @Override
-    public void hide() {
     }
 
     @Override

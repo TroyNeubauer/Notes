@@ -1,40 +1,23 @@
 package com.fish.notes;
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
-public class PostScreen implements Screen {
-    @Override
-    public void show() {
-
+public class PostScreen extends MyScreen {
+    private Stage stage;
+    public PostScreen()
+    {
+        this.stage = new Stage();
     }
 
     @Override
     public void render(float delta) {
-
-    }
-
-    @Override
-    public void resize(int width, int height) {
-
-    }
-
-    @Override
-    public void pause() {
-
-    }
-
-    @Override
-    public void resume() {
-
-    }
-
-    @Override
-    public void hide() {
-
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
 }

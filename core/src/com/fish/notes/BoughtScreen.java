@@ -2,7 +2,7 @@ package com.fish.notes;
 
 import com.badlogic.gdx.Screen;
 
-public class BoughtScreen implements Screen {
+public class BoughtScreen extends MyScreen {
     @Override
     public void show() {
 
@@ -28,10 +28,6 @@ public class BoughtScreen implements Screen {
 
     }
 
-    @Override
-    public void hide() {
-
-    }
 
     @Override
     public void dispose() {
