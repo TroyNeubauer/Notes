@@ -1,4 +1,4 @@
-/*package com.fish.notes;
+package com.fish.notes;
 
 
 import com.badlogic.gdx.*;
@@ -73,12 +73,12 @@ public class LoginScreen implements Screen {
         });
 
     }
-*/
+
     /*
      * Returns true if any of the fields are invalid.
      * @return {@code true} if any of the fields are invalid
      */
-/*
+
     protected boolean checkFields() {
         if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
             GDXButtonDialog warningDialog = game.getDialogs().newDialog(GDXButtonDialog.class);
@@ -136,4 +136,3 @@ public class LoginScreen implements Screen {
     }
 
 }
-*/
