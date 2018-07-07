@@ -51,7 +51,7 @@ public class MakeScreen implements Screen {
             }
         });
 
-        
+
 
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Table container = new Table();
