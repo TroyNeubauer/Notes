@@ -35,7 +35,7 @@ public class LoginScreen implements Screen {
         this.label = new Label("Welcome to Notes", Notes.skin);
         label.setAlignment(Align.center);
 
-        setSizes(Notes);
+        setSizes(game);
 
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -52,7 +52,7 @@ public class LoginScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(checkFields()) return;
-                DiploClientNet net = game.getNet();
+                DiploClientNet net = game.getNext();
                 if (net.isConnected()) {
                     net.getContext().writeAndFlush(new LoginData(usernameField.getText().toCharArray(), passwordField.getText().toCharArray()));
                 } else {
