@@ -1,25 +1,17 @@
 package com.fish.core.game;
 
-public class Account {
+import java.util.List;
 
-	public int id;
+public class Account extends DefaultNotesObject {
+
 	public String username, email;
+	private long schoolID;
+	private List<Long> classes;
 
-	public Account() {
-	}
-
-	public Account(int id, String username, String email) {
-		this.id = id;
+	public Account(long id, String username, String email) {
+	    super(id);
 		this.username = username;
 		this.email = email;
-	}
-
-	public int getID() {
-		return id;
-	}
-	
-	public void setID(int id) {
-		this.id = id;
 	}
 
 	public String getUsername() {
@@ -30,19 +22,21 @@ public class Account {
 		return email;
 	}
 
-	@Override
+    public List<Long> getClasses() {
+        return classes;
+    }
+
+    @Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + id;
 		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Account [id=" + id + ", username=" + username + ", email=" + email + "]";
+		return "Account [id=" + getID() + ", username=" + username + ", email=" + email + "]";
 	}
 }
