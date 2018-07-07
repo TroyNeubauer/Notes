@@ -1,6 +1,7 @@
 package com.fish.notes;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +13,7 @@ import de.tomgrill.gdxdialogs.core.GDXDialogsSystem;
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
-public class Notes extends ApplicationAdapter {
+public class Notes extends Game {
 	SpriteBatch batch;
 	Texture img;
 	public static Skin skin;
@@ -42,5 +43,19 @@ public class Notes extends ApplicationAdapter {
 		batch.dispose();
 		img.dispose();
 	}
+
+	public static void showDialog(String title, String message) {
+        final GDXButtonDialog warningDialog = Notes.warning;
+        warningDialog.setTitle(title).setMessage(message);
+        warningDialog.addButton("Ok");
+
+        warningDialog.setClickListener(new ButtonClickListener() {
+            @Override
+            public void click(int button) {
+                warningDialog.dismiss();
+            }
+        });
+        warningDialog.build().show();
+    }
 
 }

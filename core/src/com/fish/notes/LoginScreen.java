@@ -55,35 +55,20 @@ public class LoginScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(checkFields()) return;
-
-
                 LoginResult result = Backend.login(usernameField.getText(), passwordField.getText());
-                String title, message;
                 if(result != null) {
                     if (result.isSuccess()) {
                         result.getAccount();
                         //Set account
                         return;
                     } else {
-                        title = "Error logging in!";
-                        message = result.getMessage();
+                        Notes.showDialog("Error logging in!", result.getMessage());
                     }
                 } else {
-                    title = "No connection";
-                    message = "Check your internet connection or try again later!";
-
+                    Notes.showDialog("No connection", "Check your internet connection or try again later!");
                 }
-                final GDXButtonDialog warningDialog = Notes.warning;
-                warningDialog.setTitle(title).setMessage(message);
-                warningDialog.addButton("Ok");
 
-                warningDialog.setClickListener(new ButtonClickListener() {
-                    @Override
-                    public void click(int button) {
-                        warningDialog.dismiss();
-                    }
-                });
-                warningDialog.build().show();
+
             }
         });
 
