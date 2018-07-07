@@ -6,8 +6,12 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.fish.core.game.Account;
+import com.fish.core.game.LoginResult;
+import com.fish.core.packet.LoginData;
 
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
+import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
 public class LoginScreen implements Screen {
     private Stage stage;
@@ -35,7 +39,6 @@ public class LoginScreen implements Screen {
         this.label = new Label("Welcome to Notes", Notes.skin);
         label.setAlignment(Align.center);
 
-        setSizes(Notes);
 
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -52,23 +55,42 @@ public class LoginScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if(checkFields()) return;
-                DiploClientNet net = game.getNet();
-                if (net.isConnected()) {
-                    net.getContext().writeAndFlush(new LoginData(usernameField.getText().toCharArray(), passwordField.getText().toCharArray()));
+
+
+                LoginResult result = Backend.login(usernameField.getText(), passwordField.getText());
+                String title, message;
+                if(result != null) {
+                    if (result.isSuccess()) {
+                        result.getAccount();
+                        //Set account
+                        return;
+                    } else {
+                        title = "Error logging in!";
+                        message = result.getMessage();
+                    }
                 } else {
-                    GDXButtonDialog warningDialog = Notes.warning;
-                    warningDialog.setTitle("No connection!").setMessage("Check your internet connection or try again later!");
-                    warningDialog.addButton("Ok");
-                    warningDialog.setClickListener((button) -> warningDialog.dismiss());
-                    warningDialog.build().show();
+                    title = "No connection";
+                    message = "Check your internet connection or try again later!";
+
                 }
+                final GDXButtonDialog warningDialog = Notes.warning;
+                warningDialog.setTitle(title).setMessage(message);
+                warningDialog.addButton("Ok");
+
+                warningDialog.setClickListener(new ButtonClickListener() {
+                    @Override
+                    public void click(int button) {
+                        warningDialog.dismiss();
+                    }
+                });
+                warningDialog.build().show();
             }
         });
 
         registerBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new RegisterScreen(game, usernameField.getText(), Notes));
+                //Show create account screen
             }
         });
 
@@ -81,26 +103,19 @@ public class LoginScreen implements Screen {
 
     protected boolean checkFields() {
         if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
-            GDXButtonDialog warningDialog = Notes.warning;
+            final GDXButtonDialog warningDialog = Notes.warning;
             warningDialog.setTitle("Cannot login!").setMessage("You must input a username and password!");
             warningDialog.addButton("Ok");
-            warningDialog.setClickListener((button) -> warningDialog.dismiss());
+            warningDialog.setClickListener(new ButtonClickListener() {
+                @Override
+                public void click(int button) {
+                    warningDialog.dismiss();
+                }
+            });
             warningDialog.build().show();
             return true;
         }
         return false;
-    }
-
-    public void setNotes(Notes game) {
-        setSizes(game);
-    }
-
-    private void setSizes(Notes game) {
-        loginButton.setSize(getWidth(0.22 * Notes.guiScale), getHeightAbsloute(0.1 * Notes.guiScale));
-        label.setSize(getWidth(0.4 * Notes.guiScale), getHeightAbsloute(0.08 * Notes.guiScale));
-        passwordField.setSize(getWidth(0.4 * Notes.guiScale), getHeightAbsloute(0.08 * Notes.guiScale));
-        usernameField.setSize(getWidth(0.4 * Notes.guiScale), getHeightAbsloute(0.08 * Notes.guiScale));
-        registerBtn.setSize(getWidth(0.2 * Notes.guiScale), getHeightAbsloute(0.07 * Notes.guiScale));
     }
 
     @Override
@@ -115,7 +130,6 @@ public class LoginScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        setSizes(game.getNotes());
     }
 
     @Override
