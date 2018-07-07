@@ -3,14 +3,14 @@ package com.fish.notes;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class MyScreen implements Screen
 {
-    private Stage stage;
     public MyScreen()
     {
-        this.stage = new S
     }
+
     /** Called when this screen becomes the current screen for a {@link Game}. */
     public void show ()
     {
