@@ -32,7 +32,7 @@ public class LoginScreen implements Screen {
 
         this.registerBtn = new TextButton("Create Account", Notes.skin);
 
-        this.label = new Label("The Game of Diplomacy!", Notes.skin);
+        this.label = new Label("Welcome to Notes", Notes.skin);
         label.setAlignment(Align.center);
 
         setSizes(Notes);
@@ -81,7 +81,7 @@ public class LoginScreen implements Screen {
 
     protected boolean checkFields() {
         if(usernameField.getText().isEmpty() || passwordField.getText().isEmpty()) {
-            GDXButtonDialog warningDialog = game.getDialogs().newDialog(GDXButtonDialog.class);
+            GDXButtonDialog warningDialog = Notes.
             warningDialog.setTitle("Cannot login!").setMessage("You must input a username and password!");
             warningDialog.addButton("Ok");
             warningDialog.setClickListener((button) -> warningDialog.dismiss());
@@ -91,11 +91,11 @@ public class LoginScreen implements Screen {
         return false;
     }
 
-    public void setNotes(Notes notes) {
-        setSizes(Notes);
+    public void setNotes(Notes game) {
+        setSizes(game);
     }
 
-    private void setSizes(Notes Notes) {
+    private void setSizes(Notes game) {
         loginButton.setSize(getWidth(0.22 * Notes.guiScale), getHeightAbsloute(0.1 * Notes.guiScale));
         label.setSize(getWidth(0.4 * Notes.guiScale), getHeightAbsloute(0.08 * Notes.guiScale));
         passwordField.setSize(getWidth(0.4 * Notes.guiScale), getHeightAbsloute(0.08 * Notes.guiScale));
