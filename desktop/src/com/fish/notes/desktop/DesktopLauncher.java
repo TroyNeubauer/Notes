@@ -11,11 +11,9 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
 public class DesktopLauncher {
-<<<<<<< Updated upstream
+
 	public static void main (String[] arg)  {
-=======
-	public static void main (String[] arg) {
->>>>>>> Stashed changes
+
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.addIcon("mac.png", Files.FileType.Internal);
         config.addIcon("windows.png", Files.FileType.Internal);
