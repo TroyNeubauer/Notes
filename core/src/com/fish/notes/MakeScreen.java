@@ -5,13 +5,18 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.fish.core.game.Account;
+import com.fish.core.game.LoginResult;
+import com.fish.core.packet.LoginData;
+
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
+import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
 public class MakeScreen implements Screen {
     private Stage stage;
     private TextButton sumbit, picchoice, textchoice;
     private Label label;
-    private TextField title;
+    private TextField title, postdata;
     private Notes game;
 
 
@@ -19,9 +24,24 @@ public class MakeScreen implements Screen {
         this.game = game;
         this.stage = stage;
 
-    
+        this.picchoice = new TextButton("");
+
         this.title = new TextField("", Notes.skin);
         title.setMessageText("Title");
+
+        this.postdata = new TextField("", Notes.skin);
+        postdata.setMessageText("Enter Text");
+
+        this.title = new TextField("", Notes.skin);
+
+        title.
+        title.addListener(new ClickListener()) {
+            public void clicked(InputEvent event, float x, float y){
+                if(title.getText().length() > 0) {
+                    Backend.post(title.getText, new Course (0, "Math"), postdata.getText());
+                }
+            }
+        }
 
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Table container = new Table();
@@ -30,13 +50,7 @@ public class MakeScreen implements Screen {
         this.sumbit = new TextButton("Post", Notes.skin);
         sumbit.addListener(finalize);
 
-        EventListener finalize = new EventListener() {
-            @Override
-            public boolean handle(Event event) {
-                //Post temp = new Post(new PostData post, title.getText());
-                return false;
-            }
-        }
+        Gdx.input.setInputProcessor(stage);
     }
 
 
