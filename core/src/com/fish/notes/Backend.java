@@ -11,6 +11,7 @@ import com.fish.core.game.Course;
 import com.fish.core.game.Post;
 import com.fish.core.game.LoginResult;
 import com.fish.core.game.PostData;
+import com.fish.core.game.PublicAccount;
 import com.fish.core.game.School;
 
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -36,7 +37,7 @@ public class Backend implements Runnable {
                 showConnectionDialog = false;
             } try {
                 Thread.sleep(5000);
-            }catch(InterruptedException e) {
+            } catch(InterruptedException e) {
                 break;
             }
         }
@@ -64,6 +65,10 @@ public class Backend implements Runnable {
         }
 
         return null;
+    }
+
+    public static PublicAccount getAccount(long id) {
+        return (PublicAccount) getData("getAccount", id);
     }
 
     public static School getSchool(long id) {

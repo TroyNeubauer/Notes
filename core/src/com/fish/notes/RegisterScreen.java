@@ -36,13 +36,11 @@ public class RegisterScreen implements Screen
     private Stage stage;
     private Image img;
     private TextField username, password, verify, email;
-    private Notes notes;
     private TextButton register;
     private Label label, passwords;
 
-    public RegisterScreen(Notes notes)
+    public RegisterScreen()
     {
-        this.notes = notes;
         this.stage = new Stage();
 
         this.username = new TextField("", Notes.skin);
@@ -95,20 +93,14 @@ public class RegisterScreen implements Screen
             @Override
             public void keyTyped(TextField textfield, char key){
                 //check if password is same both times
-                if(password.getText() != null)
-                {
                     checkSamePasswords();
-                }
             }
         });
         verify.setTextFieldListener(new TextField.TextFieldListener(){
             @Override
             public void keyTyped(TextField textfield, char key){
                 //check if password is same both times
-                if(verify.getText() != null)
-                {
                     checkSamePasswords();
-                }
             }
         });
         username.setTextFieldListener(new TextField.TextFieldListener(){
@@ -123,6 +115,11 @@ public class RegisterScreen implements Screen
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //create new account
+                if(checkFields()) return;
+                LoginResult result = Backend.register(username.getText(), password.getText(), email.getText());
+                if(Notes.validateResult(result, "Unable to create account")){
+                    Notes.account = result.getAccount();
+                }
 
             }
         });
@@ -136,7 +133,13 @@ public class RegisterScreen implements Screen
         }
         return true;
     }
-
+    protected boolean checkFields() {
+    if(username.getText().isEmpty() || password.getText().isEmpty() || verify.getText().isEmpty()) {
+        Notes.showDialog("Cannot create account!","You must complete all fields" );
+        return true;
+    }
+    return false;
+}
     @Override
     public void show() {
     }
@@ -145,6 +148,7 @@ public class RegisterScreen implements Screen
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
+        System.out.println("drawing...");
     }
 
     @Override

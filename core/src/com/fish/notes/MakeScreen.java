@@ -53,12 +53,12 @@ public class MakeScreen implements Screen {
 
 
 
-        container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        //container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Table container = new Table();
         container.add(title);
 
         this.sumbit = new TextButton("Post", Notes.skin);
-        sumbit.addListener(finalize);
+        //sumbit.addListener(finalize);
 
         Gdx.input.setInputProcessor(stage);
     }
