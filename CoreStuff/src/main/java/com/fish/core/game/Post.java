@@ -19,5 +19,7 @@ public class Post {
         return name;
     }
 
-
+    public long getPosterID() {
+        return posterID;
+    }
 }

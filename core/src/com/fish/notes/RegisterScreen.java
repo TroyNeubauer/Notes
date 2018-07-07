@@ -36,13 +36,11 @@ public class RegisterScreen implements Screen
     private Stage stage;
     private Image img;
     private TextField username, password, verify, email;
-    private Notes notes;
     private TextButton register;
     private Label label, passwords;
 
-    public RegisterScreen(Notes notes)
+    public RegisterScreen()
     {
-        this.notes = notes;
         this.stage = new Stage();
 
         this.username = new TextField("", Notes.skin);
@@ -150,6 +148,7 @@ public class RegisterScreen implements Screen
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
+        System.out.println("drawing...");
     }
 
     @Override
