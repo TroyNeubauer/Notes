@@ -16,15 +16,23 @@ public class MakeScreen implements Screen {
     private Stage stage;
     private TextButton sumbit, picchoice, textchoice;
     private Label label;
-    private TextField title, postdata;
+    private TextField title, postdata, classbox;
     private Notes game;
 
+    @Override
+    public void hide() {
+    }
 
     public MakeScreen(final Notes game) {
         this.game = game;
         this.stage = stage;
 
-        this.picchoice = new TextButton("");
+        /*
+        this.picchoice = new TextButton("Picture Post");
+        picchoice
+        */
+
+        this.label = new Label("Create a post", Notes.skin);
 
         this.title = new TextField("", Notes.skin);
         title.setMessageText("Title");
@@ -32,16 +40,18 @@ public class MakeScreen implements Screen {
         this.postdata = new TextField("", Notes.skin);
         postdata.setMessageText("Enter Text");
 
-        this.title = new TextField("", Notes.skin);
+        this.classbox = new TextField("", Notes.skin);
+        classbox.setMessageText("Class");
 
-        title.
-        title.addListener(new ClickListener()) {
+        title.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y){
                 if(title.getText().length() > 0) {
-                    Backend.post(title.getText, new Course (0, "Math"), postdata.getText());
+                    //Backend.post(title.getText, new Course (0, "Math"), postdata.getText());
                 }
             }
-        }
+        });
+
+        
 
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         Table container = new Table();
