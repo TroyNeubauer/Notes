@@ -8,6 +8,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.fish.notes.Notes;
 
 import javax.swing.ImageIcon;
+import javax.swing.UIManager;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) throws Throwable {
