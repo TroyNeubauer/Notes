@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Net;
 import com.badlogic.gdx.net.Socket;
 import com.badlogic.gdx.net.SocketHints;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.fish.core.NotesConstants;
 import com.fish.core.game.Account;
 import com.fish.core.game.Course;
@@ -15,6 +16,8 @@ import com.fish.core.game.School;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Backend implements Runnable {
+
+    public static boolean showConnectionDialog = true;
 
     private Backend() {
 
@@ -28,13 +31,17 @@ public class Backend implements Runnable {
         while(socket == null) {
             try {
                 socket = Gdx.net.newClientSocket(Net.Protocol.TCP, NotesConstants.IP, NotesConstants.PORT, hints);
-            } catch(Exception e) {
-                Notes.showDialog("Unable to connect to server!", "Check your connection");
+            } catch(GdxRuntimeException e) {
+                if(showConnectionDialog) Notes.showDialog("Unable to connect to server!", "Check your connection");
+                showConnectionDialog = false;
             } try {
                 Thread.sleep(5000);
             }catch(InterruptedException e) {
                 break;
             }
+        }
+        if(!showConnectionDialog) {//if we connected after a while...
+            Notes.showDialog("Connected to server!", "");
         }
     }
 

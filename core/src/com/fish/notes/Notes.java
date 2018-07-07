@@ -6,11 +6,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
+import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.fish.core.game.Account;
 import com.fish.core.game.Core;
+import com.fish.core.game.LoginResult;
+import com.fish.core.game.Post;
 import com.fish.core.game.PostDataImage;
 import com.fish.core.game.PostDataText;
 
@@ -25,6 +33,7 @@ public class Notes extends Game {
 	public static Skin skin;
 	public static GDXButtonDialog warning;
 	public static Account account;
+    private static BitmapFont font;
 	
 	@Override
 	public void create () {
@@ -34,6 +43,7 @@ public class Notes extends Game {
 		skin = new Skin(Gdx.files.internal("default.json"));
 		warning = dialogs.newDialog(GDXButtonDialog.class);
         addCreators();
+        font = skin.get(TextButton.TextButtonStyle.class).font;
     }
 
 	@Override
@@ -68,23 +78,60 @@ public class Notes extends Game {
     private void addCreators() {
         Core.creatorMap.put(PostDataImage.class, new Core.Creator() {
             @Override
-            public Object create() {
-                return new Actor();
+            public Object create(Post post) {
+                return new BaseActor(post){
+                    @Override
+                    public void addImpl(Table table) {
+
+                    }
+                };
             }
         });
         Core.creatorMap.put(PostDataText.class, new Core.Creator() {
             @Override
-            public Object create() {
-                return new Actor();
+            public Object create(Post post) {
+                return new BaseActor(post){
+                    @Override
+                    public void addImpl(Table table) {
+
+                    }
+                };
             }
         });
     }
 
-    static class BaseActor extends Actor {
-        @Override
-        public void draw(Batch batch, float parentAlpha) {
-            super.draw(batch, parentAlpha);
+    public static boolean validateResult(LoginResult result, String title) {
+        if(result == null) {
+            Notes.showDialog("No connection", "Check your internet connection or try again later!");
+        } else {
+            if (result.isSuccess()) {
+                return true;
+            } else {
+                Notes.showDialog(title, result.getMessage());
+            }
         }
+        return false;
+    }
+
+    static abstract class BaseActor extends HorizontalGroup {
+
+	    private Post post;
+
+        public BaseActor(Post post) {
+            this.post = post;
+            Table left = new Table();
+
+            left.add(new Label("", skin));
+
+
+            Table right = new Table();
+            addImpl(right);
+
+            this.addActor(left);
+            this.addActor(right);
+        }
+
+        public abstract void addImpl(Table table);
     }
 
 }

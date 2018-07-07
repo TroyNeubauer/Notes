@@ -56,19 +56,10 @@ public class LoginScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 if(checkFields()) return;
                 LoginResult result = Backend.login(usernameField.getText(), passwordField.getText());
-                if(result != null) {
-                    if (result.isSuccess()) {
-                        Notes.account = result.getAccount();
-                        //Set account
-                        return;
-                    } else {
-                        Notes.showDialog("Error logging in!", result.getMessage());
-                    }
-                } else {
-                    Notes.showDialog("No connection", "Check your internet connection or try again later!");
+                if(Notes.validateResult(result, "Unable to log in!")) {
+                    Notes.account = result.getAccount();
+                    //Set account
                 }
-
-
             }
         });
 

@@ -7,6 +7,6 @@ public class Core {
     public static Map<Class<?>, Creator> creatorMap = new HashMap<Class<?>, Creator>();
 
     public interface Creator {
-        public Object create();
+        public Object create(Post post);
     }
 }
