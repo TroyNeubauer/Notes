@@ -35,7 +35,6 @@ public class ProfileScreen implements Screen {
         email.setAlignment(Align.left);
         points.setAlignment(Align.left);
         coins.setAlignment(Align.left);
-
     }
 
 
