@@ -29,23 +29,21 @@ import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
 public class Notes extends Game {
 	public static Skin skin;
-	public static GDXButtonDialog warning;
+	public static GDXDialogs dialogs;
 	public static Account account;
     private static BitmapFont font;
 	
 	@Override
 	public void create () {
-        GDXDialogs dialogs = GDXDialogsSystem.install();
+        dialogs = GDXDialogsSystem.install();
 		skin = new Skin(Gdx.files.internal("default.json"));
-		warning = dialogs.newDialog(GDXButtonDialog.class);
         addCreators();
         font = skin.get(TextButton.TextButtonStyle.class).font;
         setScreen(new RegisterScreen());
     }
 
-
 	public static void showDialog(String title, String message) {
-        final GDXButtonDialog warningDialog = Notes.warning;
+        final GDXButtonDialog warningDialog = dialogs.newDialog(GDXButtonDialog.class);
         warningDialog.setTitle(title).setMessage(message);
         warningDialog.addButton("Ok");
 
