@@ -6,8 +6,10 @@ import com.badlogic.gdx.Screen;
 
 public abstract class MyScreen implements Screen
 {
+    private Stage stage;
     public MyScreen()
     {
+        this.stage = new S
     }
     /** Called when this screen becomes the current screen for a {@link Game}. */
     public void show ()

@@ -11,8 +11,7 @@ import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
 public class DesktopLauncher {
-	public static void main (String[] arg) throws Throwable {
-		UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+	public static void main (String[] arg)  {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.addIcon("mac.png", Files.FileType.Internal);
         config.addIcon("windows.png", Files.FileType.Internal);

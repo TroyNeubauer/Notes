@@ -61,12 +61,11 @@ public class ProfileScreen extends MyScreen {
         container.add(pfp).left().row();
         container.add(courses).prefSize(courses.getWidth(), courses.getHeight()).left().row();
 
-
-        for(int i = 0; i < Notes.account.getClasses().size(); i++)
+        for(long ID : Notes.account.getClasses())
         {
-           // container.add(new Label("" + Backend.getClass(Notes.account.getClasses().get(i)), Notes.skin));
+            Label temp = new Label("" + Backend.getClass(ID), Notes.skin);
+            container.add(temp).prefSize(temp.getWidth(), temp.getHeight()).left().row();
         }
-
 
         container.add(name).prefSize(name.getWidth(), name.getHeight()).row();
         container.add(email).prefSize(email.getWidth(), email.getHeight()).row();
