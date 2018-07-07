@@ -1,6 +1,7 @@
 package com.fish.notes;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -12,7 +13,7 @@ import de.tomgrill.gdxdialogs.core.GDXDialogsSystem;
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 
-public class Notes extends ApplicationAdapter {
+public class Notes extends Game {
 	SpriteBatch batch;
 	Texture img;
 	public static Skin skin;

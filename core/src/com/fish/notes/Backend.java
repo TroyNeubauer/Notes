@@ -23,6 +23,7 @@ public class Backend implements Runnable {
     @Override
     public void run() {
         SocketHints hints = new SocketHints();
+        hints.tcpNoDelay = false;
         while(socket == null) {
             try {
                 socket = Gdx.net.newClientSocket(Net.Protocol.TCP, NotesConstants.IP, NotesConstants.PORT, hints);
