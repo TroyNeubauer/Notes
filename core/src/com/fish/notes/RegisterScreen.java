@@ -105,13 +105,6 @@ public class RegisterScreen implements Screen
                     checkSamePasswords();
             }
         });
-        username.setTextFieldListener(new TextField.TextFieldListener(){
-            @Override
-            public void keyTyped(TextField textfield, char key){
-                //check if username is already taken
-
-            }
-        });
 
         register.addListener(new ClickListener() {
             @Override
