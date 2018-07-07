@@ -141,7 +141,6 @@ public class RegisterScreen implements Screen
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
-        System.out.println("drawing...");
     }
 
     @Override

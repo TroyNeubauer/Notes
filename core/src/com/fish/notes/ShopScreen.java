@@ -9,11 +9,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.pay.Offer;
-import com.badlogic.gdx.pay.OfferType;
-import com.badlogic.gdx.pay.PurchaseManagerConfig;
-import com.badlogic.gdx.pay.PurchaseObserver;
-import com.badlogic.gdx.pay.Transaction;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -44,15 +39,6 @@ public class ShopScreen implements Screen {
 
         this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
         name.setAlignment(Align.left);
-
-
-
-
-
-        this.password = new TextField("", Notes.skin);
-        password.setMessageText("Create a password");
-        password.setPasswordMode(true);
-        password.setPasswordCharacter('*');
     }
 
     @Override

@@ -24,7 +24,7 @@ public class ProfileScreen implements Screen {
         label.setAlignment(Align.center);
 
         this.pfp = new Texture("Fishnotes_udp.png");
-        pfp.setAlignment(Align.left);
+        //pfp.setAlignment(Align.left);
 
         this.name = new Label("User: " + Notes.account.getUsername(), Notes.skin);
         this.email = new Label("Email: " + Notes.account.getEmail(), Notes.skin);
