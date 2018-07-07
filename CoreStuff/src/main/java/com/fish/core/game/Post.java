@@ -3,10 +3,12 @@ package com.fish.core.game;
 public class Post {
     private PostData data;
     private String name;
+    private long posterID;
 
-    public Post(PostData data, String name) {
+    public Post(PostData data, String name, long posterID) {
         this.data = data;
         this.name = name;
+        this.posterID = posterID;
     }
 
     public PostData getData() {
