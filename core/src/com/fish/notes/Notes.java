@@ -43,4 +43,18 @@ public class Notes extends ApplicationAdapter {
 		img.dispose();
 	}
 
+	public static void showDialog(String title, String message) {
+        final GDXButtonDialog warningDialog = Notes.warning;
+        warningDialog.setTitle(title).setMessage(message);
+        warningDialog.addButton("Ok");
+
+        warningDialog.setClickListener(new ButtonClickListener() {
+            @Override
+            public void click(int button) {
+                warningDialog.dismiss();
+            }
+        });
+        warningDialog.build().show();
+    }
+
 }
