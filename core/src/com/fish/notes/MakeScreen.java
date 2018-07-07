@@ -44,7 +44,7 @@ public class MakeScreen implements Screen {
         classbox.setMessageText("Class");
 
         title.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y){
+            public void clicked(InputEvent event, float x, float y) {
                 if(title.getText().length() > 0) {
                     //Backend.post(title.getText, new Course (0, "Math"), postdata.getText());
                 }
