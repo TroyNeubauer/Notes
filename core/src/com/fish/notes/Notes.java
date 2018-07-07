@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.fish.core.game.Account;
 import com.fish.core.game.Core;
 import com.fish.core.game.PostDataImage;
 import com.fish.core.game.PostDataText;
@@ -22,6 +23,7 @@ public class Notes extends Game {
 	Texture img;
 	public static Skin skin;
 	public static GDXButtonDialog warning;
+	public static Account account;
 	
 	@Override
 	public void create () {

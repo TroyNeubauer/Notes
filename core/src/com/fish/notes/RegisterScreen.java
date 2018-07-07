@@ -55,6 +55,8 @@ public class RegisterScreen implements Screen
 
         Gdx.input.setInputProcessor(stage);
 
+
+
     }
     @Override
     public void show() {

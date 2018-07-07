@@ -58,7 +58,7 @@ public class LoginScreen implements Screen {
                 LoginResult result = Backend.login(usernameField.getText(), passwordField.getText());
                 if(result != null) {
                     if (result.isSuccess()) {
-                        result.getAccount();
+                        Notes.account = result.getAccount();
                         //Set account
                         return;
                     } else {
