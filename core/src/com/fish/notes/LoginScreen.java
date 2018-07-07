@@ -39,7 +39,6 @@ public class LoginScreen implements Screen {
         this.label = new Label("Welcome to Notes", Notes.skin);
         label.setAlignment(Align.center);
 
-
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         container.add(label).prefSize(label.getWidth(), label.getHeight()).row();
