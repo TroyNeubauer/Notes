@@ -19,8 +19,13 @@ public class Server {
         while(running) {
             while (socket == null || socket.isClosed())
                 setupNet();
+            try {
+                if (System.in.available() > 0) {
 
-            InputStreamReader reader = new InputStreamReader(System.in);
+                }
+            } catch (IOException e) {
+                
+            }
 
 
 
@@ -40,19 +45,7 @@ public class Server {
 
 
     public static void main(String[] args) {
-        while(true) {
-            try {
-                System.out.println(System.in.available());
-                while(System.in.available() > 0) {
-                    System.out.print((char) System.in.read());
-                }
-                System.out.println();
-                Thread.sleep(100);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        //new Server();
+        new Server();
     }
 
 
