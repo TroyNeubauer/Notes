@@ -18,10 +18,10 @@ public class LoginScreen implements Screen {
     private TextField usernameField, passwordField;
     private TextButton loginButton, registerBtn;
     private Label label;
-    private Notes game;
+    private Notes notes;
 
-    public LoginScreen(final Notes game) {
-        this.game = game;
+    public LoginScreen(final Notes notes) {
+        this.notes = notes;
         this.stage = new Stage();
 
         this.usernameField = new TextField("", Notes.skin);
@@ -76,7 +76,7 @@ public class LoginScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //Show create account screen
-                game.
+                notes.setScreen(new RegisterScreen(notes));
             }
         });
 
