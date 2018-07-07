@@ -26,6 +26,8 @@ public class LoginScreen extends MyScreen {
         this.notes = notes;
         this.stage = new Stage();
 
+
+
         this.usernameField = new TextField("", Notes.skin);
         usernameField.setMessageText("Username");
 

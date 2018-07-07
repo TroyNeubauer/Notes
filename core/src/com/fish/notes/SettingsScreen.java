@@ -7,14 +7,18 @@ public class SettingsScreen extends MyScreen
 {
     private Stage stage;
 
+
+
     public SettingsScreen()
     {
+
         this.stage = new Stage();
     }
 
     @Override
     public void render(float delta) {
-
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
