@@ -31,7 +31,6 @@ public class Notes extends Game {
 	public static Skin skin;
 	public static GDXDialogs dialogs;
 	public static Account account;
-    private static BitmapFont font;
 	
 	@Override
 	public void create () {
