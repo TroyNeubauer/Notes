@@ -37,7 +37,7 @@ public class Notes extends Game {
         dialogs = GDXDialogsSystem.install();
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
-        setScreen(new LoginScreen(this));
+        setScreen(new ShopScreen(this));
     }
 
 	public static void showDialog(String title, String message) {
