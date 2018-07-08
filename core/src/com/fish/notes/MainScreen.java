@@ -1,21 +1,9 @@
 package com.fish.notes;
 
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.input.GestureDetector;
-import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 import com.fish.core.notes.Post;
-
-import java.awt.Color;
-import java.util.*;
-
-import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
-
-import static com.badlogic.gdx.scenes.scene2d.InputEvent.Type.scrolled;
 
 public class MainScreen extends MyScreen {
     private Label username, coins, totalvotes;
