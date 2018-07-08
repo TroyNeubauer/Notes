@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.fish.core.notes.LoginResult;
 
 public class MakeScreen extends MyScreen {
     private Stage stage;
@@ -35,31 +36,24 @@ public class MakeScreen extends MyScreen {
 
         this.classbox = new TextField("", Notes.skin);
         classbox.setMessageText("Class");
-        postdata.setColor(Color.BLUE);
-        /*
-        title.addListener(new ClickListener() {
-            public void clicked(InputEvent event, float x, float y) {
-                if(title.getText().length() > 0) {
-                    //Backend.post(title.getText, new Course (0, "Math"), postdata.getText());
-                }
-            }
-        });
-    */
+        classbox.setColor(Color.BLUE);
 
+        this.picchoice = new TextButton("Picture Post", Notes.skin);
 
-        this.sumbit = new TextButton("Post", Notes.skin);
-        //sumbit.addListener(finalize);
-
-        Gdx.input.setInputProcessor(stage);
-
+        this.textchoice = new TextButton("Text Post", Notes.skin);
 
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        table.add(title).width(50).height(50).expand().bottom().left();
+        table.add(picchoice).width(Gdx.graphics.getWidth()/2).height(30).left();
+        table.add(textchoice).width(Gdx.graphics.getWidth()/2).height(30).right();
         table.row();
-        table.add(postdata).width(50).height(50).expand().bottom().left();
+        table.add(title).width(40).height(40).expand().top().center();
         table.row();
-        table.add(classbox).width(50).height(50).expand().bottom().left();
+        table.add(postdata).width(40).height(40).expand().top().center();
+        table.row();
+        table.add(classbox).width(40).height(40).expand().top().center();
+        table.row();
+        table.add(title).width(40).height(40).expand().top().center();
         table.row();
     }
 
