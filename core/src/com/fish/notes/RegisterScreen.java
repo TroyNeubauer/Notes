@@ -1,6 +1,7 @@
 package com.fish.notes;
 
 
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -67,12 +68,32 @@ public class RegisterScreen extends MyScreen
         stage.addActor(container);
 
         Gdx.input.setInputProcessor(stage);
-
+        email.setTextFieldListener(new TextField.TextFieldListener(){
+            @Override
+            public void keyTyped(TextField textfield, char key){
+                //check if password is same both times
+                if ((key == '\r' || key == '\n')){
+                    textfield.next( Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT));
+                }
+            }
+        });
+        username.setTextFieldListener(new TextField.TextFieldListener(){
+            @Override
+            public void keyTyped(TextField textfield, char key){
+                //check if password is same both times
+                if ((key == '\r' || key == '\n')){
+                    textfield.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT));
+                }
+            }
+        });
         password.setTextFieldListener(new TextField.TextFieldListener(){
             @Override
             public void keyTyped(TextField textfield, char key){
                 //check if password is same both times
-                    checkSamePasswords();
+                checkSamePasswords();
+                if ((key == '\r' || key == '\n')){
+                    textfield.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT));
+                }
             }
         });
         verify.setTextFieldListener(new TextField.TextFieldListener(){
@@ -80,6 +101,9 @@ public class RegisterScreen extends MyScreen
             public void keyTyped(TextField textfield, char key){
                 //check if password is same both times
                     checkSamePasswords();
+                if ((key == '\r' || key == '\n')){
+                    textfield.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT));
+                }
             }
         });
 

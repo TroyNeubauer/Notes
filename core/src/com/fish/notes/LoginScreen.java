@@ -22,8 +22,6 @@ import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 import static java.awt.Color.RED;
 
 public class LoginScreen extends MyScreen {
-    private Viewport viewport;
-    private OrthographicCamera camera;
     private Stage stage;
     Image img;
     private TextField usernameField, passwordField;
@@ -86,11 +84,20 @@ public class LoginScreen extends MyScreen {
         usernameField.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
             public void keyTyped(TextField textField, char c) {
-                if (c == '\n'){
-
+                if ((c == '\r' || c == '\n')){
+                    textField.next( Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT));
                 }
             }
         });
+        passwordField.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textField, char c) {
+                if ((c == '\r' || c == '\n')){
+                    textField.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) );
+                }
+            }
+        });
+
 
     }
 
