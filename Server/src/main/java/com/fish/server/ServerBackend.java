@@ -196,4 +196,12 @@ public class ServerBackend {
         return server.database.getAllClasses(school);
     }
 
+    public static Post getPost(long id) {
+        return server.database.posts.get(id).getPost();
+    }
+
+    public static List<Long> getBoughtPosts() {
+        return (List<Post>) getData("getBoughtPosts");
+    }
+
 }

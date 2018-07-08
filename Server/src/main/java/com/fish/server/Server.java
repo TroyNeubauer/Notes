@@ -42,20 +42,14 @@ public class Server {
         } else {
             database = new Database(64, 1000, 32, 128);
         }
-        while(running) {
-            while (socket == null || socket.isClosed())
-                setupNet();
-            try {
-                if (System.in.available() > 0) {
-                    String line = scanner.next();
-                    System.out.println("line: " + line);
-                }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        setupNet();
+        try {
+            if (System.in.available() > 0) {
+                String line = scanner.next();
+                System.out.println("line: " + line);
             }
-
-
-
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
     }
