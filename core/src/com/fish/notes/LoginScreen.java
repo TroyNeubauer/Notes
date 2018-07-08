@@ -9,17 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.fish.core.notes.LoginResult;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import com.fish.core.notes.Account;
-import com.fish.core.notes.LoginResult;
-import com.fish.core.packet.LoginData;
 
-import java.awt.Color;
-
-import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
-import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
-
-import static java.awt.Color.RED;
 
 public class LoginScreen extends MyScreen {
     Image img;
@@ -40,8 +30,10 @@ public class LoginScreen extends MyScreen {
         passwordField.setPasswordCharacter('*');
 
         this.loginButton = new TextButton("Login", Notes.skin);
+        loginButton.setColor(com.badlogic.gdx.graphics.Color.GRAY);
 
         this.registerBtn = new TextButton("Create Account", Notes.skin);
+        registerBtn.setColor(com.badlogic.gdx.graphics.Color.GRAY);
 
         this.label = new Label("Welcome to Notes", Notes.skin);
         label.setAlignment(Align.center);
@@ -56,6 +48,7 @@ public class LoginScreen extends MyScreen {
         container.add(loginButton).prefSize(loginButton.getWidth(), loginButton.getHeight()).row();
         container.add(registerBtn).prefSize(registerBtn.getWidth(), registerBtn.getHeight()).row();
         container.row();
+        container.setColor(com.badlogic.gdx.graphics.Color.TEAL);
         stage.addActor(container);
 
 

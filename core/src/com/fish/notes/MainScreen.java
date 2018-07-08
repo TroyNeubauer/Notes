@@ -37,7 +37,7 @@ public class MainScreen extends MyScreen {
         java.util.List<Post> relevantPosts = Backend.getRelevantPosts();
         System.out.println("relevant posts: " + relevantPosts);
         for(int i = 0; i < relevantPosts.size(); i++) {
-            PostScreen item = new PostScreen(notes);
+            PostScreen item = new PostScreen(notes, relevantPosts.get(i));
             stage.addActor(item);
         }
     }

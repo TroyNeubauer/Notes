@@ -2,6 +2,7 @@ package com.fish.notes;
 
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -52,6 +53,7 @@ public class RegisterScreen extends MyScreen
 
         this.register = new TextButton("Create Account", Notes.skin);
         register.setDisabled(true);
+        register.setColor(com.badlogic.gdx.graphics.Color.GRAY);
 
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -63,6 +65,7 @@ public class RegisterScreen extends MyScreen
         container.add(verify).prefSize(verify.getWidth(), verify.getHeight()).row();
         container.add(passwords).prefSize(passwords.getWidth(), passwords.getHeight()).row();
         container.add(register).prefSize(register.getWidth(), register.getHeight()).row();
+        container.setColor(Color.TEAL);
         stage.addActor(container);
 
         Gdx.input.setInputProcessor(stage);
