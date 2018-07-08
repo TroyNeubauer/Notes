@@ -58,16 +58,15 @@ public class PostScreen extends Table {
                     Backend.addUpvote(p, -1);
                 }
             });
-            Table table = new Table();
-            table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-            table.add(back).prefSize(100, 50).right().top().row();
-            table.add(title).prefSize(300, 85).expand().left();
-            table.add(votes).prefSize(60, 60).right();
-            table.row();
-            table.add(username).width(40).height(40).expand().bottom().left();
-            table.add(up).right().width(40).height(40);
-            table.add(down).left().width(40).height(40);
-            table.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgPost.png"))));
+            setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+            add(back).prefSize(100, 50).right().top().row();
+            add(title).prefSize(300, 85).left();
+            add(votes).prefSize(60, 60).right();
+            row();
+            add(username).width(40).height(40).bottom().left();
+            add(up).right().width(40).height(40);
+            add(down).left().width(40).height(40);
+            setBackground(new TextureRegionDrawable(new TextureRegion(new Texture("bgPost.png"))));
 
 
         }
