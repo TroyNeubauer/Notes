@@ -2,6 +2,7 @@ package com.fish.server;
 
 import com.fish.core.notes.Account;
 import com.fish.core.notes.BackendRequest;
+import com.fish.core.notes.BackendResponse;
 import com.fish.core.notes.Course;
 import com.fish.core.notes.DatabaseAccount;
 import com.fish.core.notes.LoginResult;
@@ -17,6 +18,8 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
+
+import static com.fish.server.Server.kryo;
 
 public class ServerBackend {
     private static Server server;
@@ -50,7 +53,10 @@ public class ServerBackend {
             Socket socket = client.socket;
             while(socket.isConnected()) {
                 try {
-                    BackendRequest request = Server.kryo.readObject(client.in, BackendRequest.class);
+                    BackendRequest request = kryo.readObject(client.in, BackendRequest.class);
+                    Object result = invoke(request.getMethodName(), client, request.getArgs());
+                    BackendResponse response = new BackendResponse(result, request.getId());
+                    kryo.writeObject(client.out, response);
                 } catch(ClassCastException e) {
                     System.err.println("Invalid class! Expected " + BackendRequest.class);
                     e.printStackTrace();
@@ -158,6 +164,7 @@ public class ServerBackend {
     public static Object getRelevantPosts(Client sender) {
         if(sender.getAccount() == null) return new ErrorString("Please login before requesting data");
         return server.database.getRelevantPosts(sender.getAccount());
+
     }
 
 

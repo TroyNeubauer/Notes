@@ -137,9 +137,9 @@ public class Backend implements Runnable {
         if(!isConnected()) {
             return DISCONNECTED_FROM_SERVER;
         }
-        BackendRequest request = new BackendRequest(methodName, args);
-        kryo.writeObject(out, request);
         long id = IDs.incrementAndGet();
+        BackendRequest request = new BackendRequest(methodName, args, id);
+        kryo.writeObject(out, request);
         RequestInfo info = new RequestInfo(id);
         requests.add(info);
         while(!info.done) {
