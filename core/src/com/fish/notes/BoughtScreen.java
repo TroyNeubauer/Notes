@@ -45,7 +45,7 @@ public class BoughtScreen extends MyScreen {
         table.add(totalvotes).height(30).width(30).left();
         table.row();
 
-        for(int i = 0; i < Backend.; i++) {
+        for(int i = 0; i < Backend.getBoughtPosts().size(); i++) {
             PostScreen item = new PostScreen();
         }
     }
