@@ -36,7 +36,7 @@ import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 public class Notes extends Game {
 	public static Skin skin;
 	public static GDXDialogs dialogs;
-	public static DatabaseAccount account = Backend.getMyAccount();
+	public static DatabaseAccount account;
     public static PurchaseManagerConfig purchaseManagerConfig;
     public static PurchaseObserver purchaseObserver;
     public static PlatformResolver m_platformResolver;
@@ -50,6 +50,7 @@ public class Notes extends Game {
     }
 	@Override
 	public void create () {
+        account = new DatabaseAccount(new Account(0, "TroyNeubauer", Gdx.files.internal("Fishnotes_udp.png").readBytes(), "troyneubauer@gmail.com"), 100, new byte[32], new byte[32]);
         Backend.start();
         dialogs = GDXDialogsSystem.install();
 		skin = new Skin(Gdx.files.internal("default.json"));
