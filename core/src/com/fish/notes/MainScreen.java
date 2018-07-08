@@ -3,6 +3,7 @@ package com.fish.notes;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -12,6 +13,8 @@ import com.fish.core.notes.Post;
 import java.awt.Color;
 
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
+
+import static com.badlogic.gdx.scenes.scene2d.InputEvent.Type.scrolled;
 
 public class MainScreen extends MyScreen {
     private Stage stage;
@@ -47,8 +50,10 @@ public class MainScreen extends MyScreen {
         table.row();
 
         for(int i = 0; i < Backend.getRelevantPosts().size(); i++) {
-            PostScreen item = new PostScreen();
+            PostScreen item = new PostScreen(notes);
         }
+        //Gdx.input.setInputProcessor(new GestureDetector(new MyGestureListener()));
+        //stage.scrolled(notes.setScreen();)
     }
 
     @Override
