@@ -23,11 +23,11 @@ import com.fish.core.notes.LoginResult;
 import com.fish.core.notes.Post;
 import com.fish.core.notes.PostDataImage;
 import com.fish.core.notes.PostDataText;
-
 import de.tomgrill.gdxdialogs.core.GDXDialogs;
 import de.tomgrill.gdxdialogs.core.GDXDialogsSystem;
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
+
 
 public class Notes extends Game {
 	public static Skin skin;

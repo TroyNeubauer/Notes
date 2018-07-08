@@ -83,6 +83,14 @@ public class LoginScreen extends MyScreen {
                 notes.setScreen(new RegisterScreen());
             }
         });
+        usernameField.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textField, char c) {
+                if (c == '\n'){
+
+                }
+            }
+        });
 
     }
 
