@@ -50,7 +50,6 @@ public class Notes extends Game {
         dialogs = GDXDialogsSystem.install();
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
-        account = new Account(12546772, "testuser", new byte[0], "testeremail@tester.com");
         screensManager = new ScreensManager(this);
         setScreen(new MainScreen(this));
 
