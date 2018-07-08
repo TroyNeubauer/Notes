@@ -15,7 +15,7 @@ import java.util.Set;
 
 public class MakeScreen extends MyScreen {
     private Stage stage;
-    private TextButton submit;
+    private TextButton submit,back;
     private CheckBox picchoice, textchoice;
     private Label label;
     private TextField title, classbox;
@@ -31,6 +31,14 @@ public class MakeScreen extends MyScreen {
     public MakeScreen(final Notes notes) {
         this.notes = notes;
         this.stage = stage;
+
+        this.back = new TextButton("Back", Notes.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                notes.setScreen(new MainScreen(notes));
+            }
+        });
 
         this.label = new Label("Create a post", Notes.skin);
         this.label.setColor(Color.DARK_GRAY);
@@ -64,14 +72,15 @@ public class MakeScreen extends MyScreen {
         Table superTable = new Table();
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        table.add(back).width(40).height(40).top().right();
+        table.row();
         table.add(title).width(40).height(40).expand().top().left();
         table.add(classbox).width(40).height(40).expand().top().right().row();
         table.add(picchoice).width(Gdx.graphics.getWidth()/2).height(30).left();
         table.add(textchoice).width(Gdx.graphics.getWidth()/2).height(30).right().row();
-
         superTable.add(table);
-
         final Table container = new Table();
+
         picchoice.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
@@ -87,6 +96,8 @@ public class MakeScreen extends MyScreen {
         });
         superTable.add(container);
         stage.addActor(superTable);
+        Gdx.input.setInputProcessor(stage);
+
 
         postdata.setTextFieldListener(new TextField.TextFieldListener() {
             @Override

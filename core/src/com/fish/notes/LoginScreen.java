@@ -35,8 +35,6 @@ public class LoginScreen extends MyScreen {
         this.notes = notes;
         this.stage = new Stage();
 
-
-
         this.usernameField = new TextField("", Notes.skin);
         usernameField.setMessageText("Username");
 
@@ -61,6 +59,7 @@ public class LoginScreen extends MyScreen {
         container.add(passwordField).prefSize(passwordField.getWidth(), passwordField.getHeight()).row();
         container.add(loginButton).prefSize(loginButton.getWidth(), loginButton.getHeight()).row();
         container.add(registerBtn).prefSize(registerBtn.getWidth(), registerBtn.getHeight()).row();
+        container.row();
         stage.addActor(container);
 
         Gdx.input.setInputProcessor(stage);
@@ -100,10 +99,6 @@ public class LoginScreen extends MyScreen {
         return false;
     }
 
-    public void resize(int width, int height) {
-        viewport.update(width, height);
-        camera.update();
-    }
    @Override
     public void render(float delta) {
         stage.act(delta);

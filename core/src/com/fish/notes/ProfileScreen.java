@@ -19,7 +19,7 @@ public class ProfileScreen extends MyScreen {
     private Stage stage;
     private Image pfp;
     private Label name, email, points, coins, label, school, courses;
-    private TextButton edit;
+    private TextButton edit, back;
     private Notes notes;
 
 
@@ -27,11 +27,29 @@ public class ProfileScreen extends MyScreen {
         this.notes = notes;
         this.stage = new Stage();
 
+        this.back = new TextButton("Back", Notes.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                notes.setScreen(new MainScreen(notes));
+            }
+        });
+
         this.label = new Label("User Profile", Notes.skin);
         label.setAlignment(Align.center);
         label.setColor(Color.TEAL);
 
         this.pfp = new Image(new Texture("Fishnotes_udp.png"));
+
+        this.back = new TextButton("Back", Notes.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                notes.setScreen(new MainScreen(notes));
+            }
+        });
+
+
 
         this.name = new Label("User: " + Notes.account.getUsername(), Notes.skin);
         this.email = new Label("Email: " + Notes.account.getEmail(), Notes.skin);
@@ -58,6 +76,8 @@ public class ProfileScreen extends MyScreen {
 
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        container.add(back).right().top().width(40).height(40);
+        container.row();
         container.add(pfp).left().row();
         container.add(courses).prefSize(courses.getWidth(), courses.getHeight()).left().row();
 

@@ -27,18 +27,26 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 public class ShopScreen extends MyScreen {
 
     private Stage stage;
-    private TextButton buysmall, buymed, buylarge;
+    private TextButton buysmall, buymed, buylarge, back;
     private Notes notes;
     private Label title, name, coins, smallpack, mediumpack, largepack;
     private Image small, med, large;
 
-    public ShopScreen(Notes notes) {
+    public ShopScreen(final Notes notes) {
         this.notes = notes;
         this.stage = new Stage();
         this.title = new Label("Shop", Notes.skin);
         title.setFontScaleX(2);
         title.setFontScaleY(2);
         title.setColor(Color.TEAL);
+
+        this.back = new TextButton("Back", Notes.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                notes.setScreen(new MainScreen(notes));
+            }
+        });
 
         this.name = new Label("User: " + Backend.getAccount(Notes.account.getID()).getUsername(), Notes.skin);
         name.setAlignment(Align.left);
@@ -81,6 +89,7 @@ public class ShopScreen extends MyScreen {
 
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        table.add(back).height(40).width(40).top().right();
         table.add(title).width(40).height(40).expand().top().center();
         table.row();
         table.add(name).width(40).height(40).expand().top().left();

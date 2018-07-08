@@ -43,7 +43,7 @@ public class Notes extends Game {
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
         account = new Account(12546772, "testuser", new byte[0], "testeremail@tester.com");
-        setScreen(new MakeScreen(this));
+        setScreen(new LoginScreen(this));
 
 
         purchaseManagerConfig = new PurchaseManagerConfig();

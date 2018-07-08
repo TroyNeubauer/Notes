@@ -4,16 +4,19 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.fish.core.notes.Post;
 
 public class BoughtScreen extends MyScreen {
     private Stage stage;
     private Label username, coins, totalvotes, votes, title;
+    private TextButton back;
     private Image user, coin, vote;
     private Notes notes;
 
@@ -21,6 +24,14 @@ public class BoughtScreen extends MyScreen {
     public BoughtScreen(final Notes notes) {
         this.stage = new Stage();
         this.notes = notes;
+
+        this.back = new TextButton("Back", Notes.skin);
+        back.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                notes.setScreen(new MainScreen(notes));
+            }
+        });
 
         this.username = new Label("" + Notes.account, Notes.skin);
         username.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
@@ -55,6 +66,8 @@ public class BoughtScreen extends MyScreen {
                 this.username = new Label("" + Backend.getAccount(Notes.account.getID()).getUsername(), Notes.skin);
                 Table supertable = new Table();
                 supertable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+                supertable.add(back).width(40).height(40).top().right();
+                supertable.row();
                 supertable.add(title).width(40).height(40).expand().left();
                 supertable.add(votes).width(40).height(40).expand().right();
                 supertable.row();
@@ -62,6 +75,7 @@ public class BoughtScreen extends MyScreen {
                 supertable.row();
                 stage.addActor(supertable);
                 Gdx.input.setInputProcessor(stage);
+
             }
         }
     }
