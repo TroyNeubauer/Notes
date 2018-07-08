@@ -27,6 +27,12 @@
 -dontwarn com.badlogic.gdx.physics.box2d.utils.Box2DBuild
 -dontwarn com.badlogic.gdx.jnigen.BuildTarget*
 -dontwarn com.badlogic.gdx.graphics.g2d.freetype.FreetypeBuild
+-keep class com.android.vending.billing.**
+-keep class com.amazon.** {*;}
+-keep class com.sec.android.iap.**
+-keep class com.nokia.payment.iap.aidl.**
+-keep class com.badlogic.gdx.pay.android.** { *; }
+-dontwarn org.onepf.oms.appstore.FortumoBillingService
 
 -keep class com.badlogic.gdx.controllers.android.AndroidControllers
 

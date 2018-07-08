@@ -11,6 +11,10 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		initialize(new Notes(), config);
+		Notes notes = new Notes();
+		initialize(notes, config);
+		Notes.setPlatformResolver(new AndroidResolver(notes, this));
+		}
 	}
-}
+
+
