@@ -38,6 +38,7 @@ public class ScreensManager implements Screen {
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 screens[currentIndex].stage.touchDown(screenX, screenY, pointer, button);
+                System.out.println("click");
                 return true;
             }
 
@@ -101,7 +102,6 @@ public class ScreensManager implements Screen {
 
     @Override
     public void render(float delta) {
-        System.out.println("Rendering screen " + currentIndex);
         screens[currentIndex].render(delta);
     }
 

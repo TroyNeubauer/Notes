@@ -22,6 +22,10 @@ import com.fish.core.util.ErrorString;
 import com.fish.core.util.Utils;
 import com.fish.notes.backend.RequestInfo;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -74,15 +78,15 @@ public class Backend implements Runnable {
                 Notes.showDialog("Connected to server!", "");
             }
             try {
-                in = new Input(socket.getInputStream());
-                out = new Output(socket.getOutputStream());
+                in = socket.getInputStream();
+                out = socket.getOutputStream();
             } catch(Exception e) {
                 e.printStackTrace();
                 continue;
             }
             while(running.get() && socket.isConnected()) {
                 try {
-                    BackendResponse response = Utils.kryo.readObject(in, BackendResponse.class);
+                    BackendResponse response = Utils.readObject(BackendResponse.class, in);
                     System.out.println("got responce! " + response);
                     for(int i = 0; i < requests.size(); i++) {
                         RequestInfo request = requests.get(i);
@@ -113,8 +117,8 @@ public class Backend implements Runnable {
         }
     }
 
-    private static Input in;
-    private static Output out;
+    private static InputStream in;
+    private static OutputStream out;
     private static Socket socket;
     private static Thread socketThread;
     private static AtomicBoolean running = new AtomicBoolean(false);
@@ -153,8 +157,15 @@ public class Backend implements Runnable {
             return null;
         long id = IDs.incrementAndGet();
         BackendRequest request = new BackendRequest(methodName, args, id);
-        Utils.kryo.writeObject(out, request);
-        out.flush();
+        try {
+            byte[] bytes = Utils.writeObject(request);
+            System.out.println("Client writing " + bytes.length + " bytes");
+            out.write(bytes);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Send request " + request);
         RequestInfo info = new RequestInfo(id);
         requests.add(info);
@@ -250,8 +261,15 @@ public class Backend implements Runnable {
     private static void close() {
         if(running.get()) {
             running.set(false);
-            in.close();
-            out.close();
+            try {
+                in.close();
+            } catch (IOException e) {
+            }
+            try {
+                out.close();
+            } catch (IOException e) {
+            }
+
             socket.dispose();
             try {
                 socketThread.join();

@@ -2,10 +2,14 @@ package com.fish.core.util;
 
 
 import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 
 import org.objenesis.instantiator.ObjectInstantiator;
 import org.objenesis.strategy.InstantiatorStrategy;
 
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
@@ -16,7 +20,7 @@ public class Utils {
 
 
 
-    public static final Kryo kryo = new Kryo();
+    private static final Kryo kryo = new Kryo();
     private static final Unsafe unsafe = retriveUnsafe();
     private static final String UNSAFE_CLASS = "sun.misc.Unsafe";
 
@@ -41,6 +45,23 @@ public class Utils {
         } catch (Exception e) {
         }
         return null;
+    }
+
+    public static <T> T readObject(Class<T> type, InputStream stream) {
+        Input input = new Input(stream);
+        T obj = kryo.readObject(input, type);
+
+        return obj;
+
+    }
+
+    public static byte[] writeObject(Object obj) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        Output output = new Output(stream);
+        kryo.writeObject(output, obj);
+        output.close();
+
+        return stream.toByteArray();
     }
 
     static {

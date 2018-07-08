@@ -42,8 +42,8 @@ public class Server {
         ServerBackend.init(this);
         if(DATABASE_FILE.exists()) {
             try {
-                Input in = new Input(new FileInputStream(DATABASE_FILE));
-                database = Utils.kryo.readObject(in, Database.class);
+                FileInputStream in = new FileInputStream(DATABASE_FILE);
+                database = Utils.readObject(Database.class, in);
                 in.close();
                 System.out.println("Loading database from " + DATABASE_FILE);
             } catch (Exception e) {
@@ -103,9 +103,10 @@ public class Server {
         }
         ServerBackend.close();
         try {
-            Output out = new Output(new FileOutputStream(DATABASE_FILE));
-            Utils.kryo.writeObject(out, database);
+            FileOutputStream out = new FileOutputStream(DATABASE_FILE);
+            out.write(Utils.writeObject(database));
             out.close();
+            System.out.println("Saving database");
         } catch (Exception e) {
             System.err.println("Unable to save database");
             throw new RuntimeException(e);

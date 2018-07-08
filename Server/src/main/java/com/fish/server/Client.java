@@ -7,24 +7,27 @@ import com.fish.core.notes.Account;
 import com.fish.core.notes.DatabaseAccount;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.Socket;
 
 public class Client {
-    public Input in;
-    public Output out;
-    private DatabaseAccount account = null;
-    public ClientState state = ClientState.DISCONNECTED;
     public Socket socket;
+    public InputStream in;
+    public OutputStream out;
+
+    public ClientState state = ClientState.DISCONNECTED;
+    private DatabaseAccount account = null;
+
 
     public Client(Socket socket) {
         if(!socket.isConnected()) throw new IllegalArgumentException("Socket is not connected!");
         try {
             this.socket = socket;
-
-            this.in = new Input(socket.getInputStream());
-            this.out = new Output(socket.getOutputStream());
+            this.in = socket.getInputStream();
+            this.out = socket.getOutputStream();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
 
 

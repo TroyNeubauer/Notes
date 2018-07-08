@@ -1,5 +1,7 @@
 package com.fish.server;
 
+import com.esotericsoftware.kryo.io.Input;
+import com.esotericsoftware.kryo.io.Output;
 import com.fish.core.notes.BackendRequest;
 import com.fish.core.notes.BackendResponse;
 import com.fish.core.notes.Course;
@@ -12,12 +14,14 @@ import com.fish.core.notes.School;
 import com.fish.core.util.ErrorString;
 import com.fish.core.util.Utils;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -50,7 +54,8 @@ public class ServerBackend {
     public static void listClients() {
         System.out.println(connectedClients.size() + " clients are currently online");
         for(Client client : connectedClients) {
-            System.out.println("\t" + client.getAccount().getAccount().getUsername() + " - " + client.socket.getRemoteSocketAddress());
+            if(client == null) System.out.println("null client???!!!");
+            else System.out.println("\t" + client.getAccount().getAccount().getUsername() + " - " + client.socket.getRemoteSocketAddress());
         }
     }
 
@@ -71,12 +76,20 @@ public class ServerBackend {
             while(socket.isConnected()) {
                 try {
                     System.out.println("client listener ready!");
-                    BackendRequest request = Utils.kryo.readObject(client.in, BackendRequest.class);
+                    BackendRequest request = Utils.readObject(BackendRequest.class, client.in);
+
                     System.out.println("server recieved " + request);
                     Object result = invoke(request.getMethodName(), client, request.getArgs());
                     BackendResponse response = new BackendResponse(result, request.getId());
-                    Utils.kryo.writeObject(client.out, response);
-                    client.out.flush();
+                    try {
+                        byte[] bytes = Utils.writeObject(response);
+                        System.out.println("Server writing " + bytes.length + " bytes");
+                        client.out.write(bytes);
+                        client.out.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     System.out.println("Server writing response " + response);
                 } catch (RuntimeException e) {
                     e.printStackTrace();
@@ -89,7 +102,8 @@ public class ServerBackend {
                 }
             }
             connectedClients.remove(client);
-            System.out.println("Ending client thread " + client);
+            if(client.getAccount() != null)
+                System.out.println("Ending client thread " + client.getAccount().getAccount().getUsername());
         }
     }
 
@@ -146,15 +160,30 @@ public class ServerBackend {
         System.out.println("Server recieved login! " + username);
         if(server.areCredentialsValid(username, password)) {
             DatabaseAccount account = server.getAccount(username);
+            refreshClients();
             for(Client client : connectedClients) {
-                if(client.getAccount().getAccount().getID() == account.getAccount().getID()) {
-                    return new LoginResult("Account already logged in!", null);
+                if(client.getAccount() != null) {
+                    if (client.getAccount().getAccount().getID() == account.getAccount().getID()) {
+                        return new LoginResult("Account already logged in!", null);
+                    }
                 }
             }
             sender.setAccount(account);
             return new LoginResult("", account.getAccount());
         } else {
             return new LoginResult("Invalid password", null);
+        }
+    }
+
+    private static void refreshClients() {
+        Iterator<Client> it = connectedClients.iterator();
+        while(it.hasNext()) {
+            Client client = it.next();
+            if(client == null || client.socket == null || client.socket.isInputShutdown() || client.socket.isOutputShutdown()) {
+                it.remove();
+                if(client != null) client.disconnect();
+                System.out.println("removing bad client " + client);
+            }
         }
     }
 
