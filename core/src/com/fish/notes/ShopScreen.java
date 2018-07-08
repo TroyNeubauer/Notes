@@ -2,6 +2,7 @@ package com.fish.notes;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -33,20 +34,24 @@ public class ShopScreen extends MyScreen {
     public ShopScreen(Notes notes) {
         this.notes = notes;
         this.stage = new Stage();
+        //BitmapFont blue = new BitmapFont();
+        //blue.setColor(Color.BLUE);
         //stage.setDebugAll(true);
 
         this.title = new Label("Shop", Notes.skin);
-        title.setAlignment(Align.center);
+        title.setFontScaleX(2);
+        title.setFontScaleY(2);
+        title.setColor(Color.TEAL);
 
-         this.name = new Label("User: " + Notes.account.getUsername(), Notes.skin);
-        name.setAlignment(Align.left);
+        //this.name = new Label("User: " + Notes.account.getUsername(), Notes.skin);
+        //name.setAlignment(Align.left);
 
-        this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
-        coins.setAlignment(Align.left);
+        //this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
+        //coins.setAlignment(Align.left);
         
         this.smallpack = new Label("Purchase Small", Notes.skin);
         this.small = new Image(new Texture("small.png"));
-        //smallpack.setColor(Color.WHITE);
+        smallpack.setColor(Color.BLUE);
         smallpack.setDebug(true);
         smallpack.addListener(new ClickListener(){
             @Override
@@ -56,21 +61,23 @@ public class ShopScreen extends MyScreen {
         });
         this.buysmall = new TextButton("$0.99", Notes.skin);
         this.mediumpack = new Label("Purchase Medium", Notes.skin);
+        mediumpack.setColor(Color.BLUE);
         this.med = new Image(new Texture("medium.png"));
         this.buymed = new TextButton("$4.29", Notes.skin);
         this.largepack = new Label("Purchase Large", Notes.skin);
+        largepack.setColor(Color.BLUE);
         this.large = new Image(new Texture("large.png" ));
         this.buylarge = new TextButton("$14.99", Notes.skin);
 
 
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        table.add(title).width(40).height(40).expand().top().left();
+        table.add(title).width(40).height(40).expand().top().center();
         table.row();
-        table.add(name).width(40).height(40).expand().top().left();
-        table.row();
-        table.add(coins).width(40).height(40).expand().top().left();
-        table.row();
+        //table.add(name).width(40).height(40).expand().top().left();
+        //table.row();
+        //table.add(coins).width(40).height(40).expand().top().left();
+        //table.row();
         table.add(smallpack).width(20).height(20).expand().bottom().left();
         table.add(mediumpack).width(20).height(20).expand().bottom().left();
         table.add(largepack).width(20).height(20).expand().bottom().left();
@@ -91,7 +98,7 @@ public class ShopScreen extends MyScreen {
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
-        Gdx.gl.glClearColor(0.9f, .5f, .5f, 5);
+        //Gdx.gl.glClearColor(0.9f, .5f, .5f, 5);
     }
     @Override
     public void dispose() {

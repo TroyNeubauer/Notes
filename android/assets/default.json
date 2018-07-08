@@ -169,11 +169,11 @@ com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: {
 		font: font
-		fontColor: black
+		//fontColor: black
 	}
 	title: {
 		font: title
-		fontColor: black
+		//fontColor: black
 	}
 }
 com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
@@ -292,7 +292,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		background: window
 		titleFont: font
 		titleFontColor: black
-		stageBackground: white
+		//stageBackground: white
 	}
 }
 }

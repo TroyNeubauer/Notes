@@ -31,7 +31,7 @@ public class Notes extends Game {
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
         account = new Account(12546772, "testuser", new byte[0], "testeremail@tester.com");
-        setScreen(new ProfileScreen(this));
+        setScreen(new ShopScreen(this));
     }
 
 	public static void showDialog(String title, String message) {
