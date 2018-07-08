@@ -1,6 +1,7 @@
 package com.fish.server;
 
 import com.fish.core.notes.Account;
+import com.fish.core.notes.BackendRequest;
 import com.fish.core.notes.Course;
 import com.fish.core.notes.DatabaseAccount;
 import com.fish.core.notes.LoginResult;
@@ -11,15 +12,42 @@ import com.fish.core.notes.School;
 import com.fish.core.util.ErrorString;
 import com.fish.core.util.Utils;
 
+import java.io.IOException;
 import java.lang.reflect.Method;
+import java.net.Socket;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public class ServerBackend {
     private static Server server;
     private static final HashMap<String, Method> methods = new HashMap<String, Method>();
+
+    public static class ClientThread implements Runnable {
+        private Thread thread;
+        private Client client;
+
+        public ClientThread(Client client) {
+            thread = new Thread(this);
+            thread.start();
+        }
+
+        @Override
+        public void run() {
+            Socket socket = client.socket;
+            while(socket.isConnected()) {
+                try {
+                    BackendRequest request = Server.kryo.readObject(client.in, BackendRequest.class);
+                } catch(ClassCastException e) {
+                    System.err.println("Invalid class! Expected " + BackendRequest.class);
+                    e.printStackTrace();
+                } catch (RuntimeException e) {
+                    System.err.println("Random runtime exception");
+                    e.printStackTrace();
+                }
+            }
+            System.out.println("Ending client thread " + client);
+        }
+    }
 
     public static void init(Server server) {
         if(ServerBackend.server != null) throw new RuntimeException("Already inited!");

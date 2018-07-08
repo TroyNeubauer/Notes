@@ -203,6 +203,10 @@ public class Backend implements Runnable {
     //+1 for upvote, -1 for downvote
     public static boolean addUpvote(Post post, int vote) {
         return (Boolean) getData("addUpvote", post.getPosterID(), vote);
+        }
+
+    public static int getUpvotes(Post post) {
+        return (Integer) getData("getUpvotes", post.getPosterID());
     }
 
 }

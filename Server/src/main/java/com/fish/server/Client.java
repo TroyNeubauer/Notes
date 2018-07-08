@@ -10,15 +10,17 @@ import java.io.IOException;
 import java.net.Socket;
 
 public class Client {
-    private Input in;
-    private Output out;
+    public Input in;
+    public Output out;
     private DatabaseAccount account = null;
-    private ClientState state = ClientState.DISCONNECTED;
-    private Socket socket;
+    public ClientState state = ClientState.DISCONNECTED;
+    public Socket socket;
 
     public Client(Socket socket) {
+        if(!socket.isConnected()) throw new IllegalArgumentException("Socket is not connected!");
         try {
             this.socket = socket;
+
             this.in = new Input(socket.getInputStream());
             this.out = new Output(socket.getOutputStream());
         } catch (IOException e) {
@@ -50,7 +52,12 @@ public class Client {
         state = ClientState.DISCONNECTED;
     }
 
-
-
-
+    @Override
+    public String toString() {
+        return "Client{" +
+                "account=" + account +
+                ", state=" + state +
+                ", socket=" + socket +
+                '}';
+    }
 }
