@@ -107,9 +107,14 @@ public class Notes extends Game {
     protected boolean checkTransaction (String ID) {
         boolean returnbool = false;
         if (NotesConstants.ONE_COIN_ID.equals(ID)) {
-            PeDialogEvent purchasedmultiplayerEvent = new PeDialogEvent();
-            purchasedmultiplayerEvent.setType(PeDialogEvent.Type.purchasedDualPlayer);
-            notify(purchasedmultiplayerEvent);
+            returnbool = true;
+        }
+        else if(NotesConstants.FIVE_COIN_ID.equals(ID))
+        {
+            returnbool = true;
+        }
+        else if(NotesConstants.TWENTY_COIN_ID.equals(ID))
+        {
             returnbool = true;
         }
         return returnbool;
