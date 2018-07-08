@@ -62,6 +62,7 @@ public class Backend {
     }
 
     public static PublicAccount getAccount(long id) {
+        System.out.println(id);
         return database.getAccountByID(id).toPublicAccount();
     }
 

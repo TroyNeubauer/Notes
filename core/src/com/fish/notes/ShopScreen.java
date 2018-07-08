@@ -47,7 +47,7 @@ public class ShopScreen extends MyScreen {
         });
         back.setColor(Color.DARK_GRAY);
 
-        this.name = new Label("User: " + Backend.getAccount(Notes.account.getAccount().getID()).getUsername(), Notes.skin);
+        this.name = new Label("User: " + Notes.account.getAccount().getUsername(), Notes.skin);
         name.setAlignment(Align.left);
         name.setColor(Color.DARK_GRAY);
 
