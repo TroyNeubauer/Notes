@@ -19,6 +19,7 @@ public class SettingsScreen extends MyScreen
 {
     private Stage stage;
     private TextField changeSchool, addCourse;
+    private ImageButton img;
     private Notes notes;
 
 
@@ -37,6 +38,7 @@ public class SettingsScreen extends MyScreen
 
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        container.add()
         container.add(changeSchool).prefSize(changeSchool.getWidth(), changeSchool.getHeight()).row();
         container.add(addCourse).prefSize(addCourse.getWidth(), addCourse.getHeight()).row();
         for(long ID : Notes.account.getClasses())
@@ -51,12 +53,28 @@ public class SettingsScreen extends MyScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y)
                 {
-                    
+
                 }
             });
             container.add(img).prefSize(img.getWidth(), img.getHeight()).right().row();
 
         }
+
+        stage.addActor(container);
+
+        changeSchool.setTextFieldListener(new TextField.TextFieldListener(){
+            @Override
+            public void keyTyped(TextField textfield, char key) {
+
+            }
+        });
+
+        addCourse.setTextFieldListener(new TextField.TextFieldListener(){
+            @Override
+            public void keyTyped(TextField textfield, char key) {
+
+            }
+        });
 
     }
 
