@@ -43,6 +43,12 @@ public class Backend implements Runnable {
 
     @Override
     public void run() {
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            @Override
+            public void run() {
+                close();
+            }
+        }));
         System.out.println("Starting backend!");
         SocketHints hints = new SocketHints();
         hints.tcpNoDelay = false;
@@ -241,15 +247,17 @@ public class Backend implements Runnable {
         return (List<Post>) getData("getBoughtPosts", List.class);
     }
 
-    public static void close() {
-        running.set(false);
-        in.close();
-        out.close();
-        socket.dispose();
-        try {
-            socketThread.join();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+    private static void close() {
+        if(running.get()) {
+            running.set(false);
+            in.close();
+            out.close();
+            socket.dispose();
+            try {
+                socketThread.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 }

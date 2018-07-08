@@ -7,7 +7,7 @@ import com.badlogic.gdx.Screen;
 public class ScreensManager implements Screen {
     private Class<? extends MyScreen>[] classes = new Class[]{ShopScreen.class, MakeScreen.class,MainScreen.class,BoughtScreen.class, ProfileScreen.class};
     private MyScreen[] screens = new MyScreen[classes.length];
-    private int currentIndex = 0;
+    private int currentIndex = 2;
     private Notes notes;
 
     public ScreensManager(Notes notes) {
@@ -127,6 +127,9 @@ public class ScreensManager implements Screen {
 
     @Override
     public void dispose() {
-
+        for(Screen screen : screens) {
+            if(screen != null)
+                screen.dispose();
+        }
     }
 }

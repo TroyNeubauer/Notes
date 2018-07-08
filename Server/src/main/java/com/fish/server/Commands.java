@@ -44,6 +44,9 @@ public class Commands {
                 if (commands[1].equalsIgnoreCase("schools")) {
                     server.database.listSchools();
                 }
+                if (commands[1].equalsIgnoreCase("online")) {
+                    ServerBackend.listClients();
+                }
             }
             else if (commands[0].equalsIgnoreCase("delete") || commands[0].equalsIgnoreCase("remove")) {
                 if (commands[1].equalsIgnoreCase("user")) {

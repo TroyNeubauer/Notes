@@ -24,7 +24,7 @@ import java.util.Set;
 public class ServerBackend {
     private static Server server;
     private static final HashMap<String, Method> methods = new HashMap<String, Method>();
-    private static final List<Client> connectedClients = new ArrayList<Client>();
+    public static final List<Client> connectedClients = new ArrayList<Client>();
 
     public static void init(Server server) {
         if(ServerBackend.server != null) throw new RuntimeException("Already inited!");
@@ -47,6 +47,13 @@ public class ServerBackend {
         }
     }
 
+    public static void listClients() {
+        System.out.println(connectedClients.size() + " clients are currently online");
+        for(Client client : connectedClients) {
+            System.out.println("\t" + client.getAccount().getAccount().getUsername() + " - " + client.socket.getRemoteSocketAddress());
+        }
+    }
+
     public static class ClientThread implements Runnable {
         private Thread thread;
         private Client client;
@@ -54,13 +61,13 @@ public class ServerBackend {
         public ClientThread(Client client) {
             this.client = client;
             thread = new Thread(this);
-            connectedClients.add(client);
             thread.start();
         }
 
         @Override
         public void run() {
             Socket socket = client.socket;
+            connectedClients.add(client);
             while(socket.isConnected()) {
                 try {
                     System.out.println("client listener ready!");
@@ -81,6 +88,7 @@ public class ServerBackend {
                     break;
                 }
             }
+            connectedClients.remove(client);
             System.out.println("Ending client thread " + client);
         }
     }
@@ -138,6 +146,11 @@ public class ServerBackend {
         System.out.println("Server recieved login! " + username);
         if(server.areCredentialsValid(username, password)) {
             DatabaseAccount account = server.getAccount(username);
+            for(Client client : connectedClients) {
+                if(client.getAccount().getAccount().getID() == account.getAccount().getID()) {
+                    return new LoginResult("Account already logged in!", null);
+                }
+            }
             sender.setAccount(account);
             return new LoginResult("", account.getAccount());
         } else {

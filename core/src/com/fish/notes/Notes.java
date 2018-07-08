@@ -152,8 +152,7 @@ public class Notes extends Game {
 
     @Override
     public void dispose() {
-        super.dispose();
-        Backend.close();
+        screensManager.dispose();
     }
 
     private void addCreators() {
