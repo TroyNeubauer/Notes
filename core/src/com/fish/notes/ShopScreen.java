@@ -90,26 +90,26 @@ public class ShopScreen extends MyScreen {
 
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        table.add(back).height(40).width(40).top().right();
-        table.add(title).width(40).height(40).expand().top().center();
+        table.add(back).prefSize(150, 50).top().right().row();
+        table.add(title).prefSize(300, 85).expand().top().center();
         table.row();
-        table.add(name).width(40).height(40).expand().top().left();
+        table.add(name).prefSize(50, 50).expand().top().left();
         table.row();
-        table.add(coins).width(40).height(40).expand().top().left();
+        table.add(coins).prefSize(50, 50).expand().top().left();
         table.row();
-        table.add(smallpack).width(20).height(20).expand().bottom().left();
-        table.add(mediumpack).width(20).height(20).expand().bottom().left();
-        table.add(largepack).width(20).height(20).expand().bottom().left();
+        table.add(smallpack).prefSize(50, 50).expand().bottom().left();
+        table.add(mediumpack).prefSize(50, 50).expand().bottom().left();
+        table.add(largepack).prefSize(50, 50).expand().bottom().left();
         table.row();
-        table.add(small).width(200).height(200);
-        table.add(med).width(200).height(200);
-        table.add(large).width(200).height(200);
+        table.add(small).prefSize(200, 200);
+        table.add(med).prefSize(200, 200);
+        table.add(large).prefSize(200, 200);
         table.row();
         table.add(buysmall);
         table.add(buymed);
         table.add(buylarge);
         table.row();
-        table.setColor(Color.WHITE);
+        table.setColor(Color.TEAL);
         stage.addActor(table);
     }
 

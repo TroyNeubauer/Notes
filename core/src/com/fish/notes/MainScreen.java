@@ -26,12 +26,12 @@ public class MainScreen extends MyScreen {
 
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        table.add(user).height(30).width(30).right();
-        table.add(username).height(30).width(30).left();
-        table.add(coin).height(30).width(30).right();
-        table.add(coins).height(30).width(30).left();
-        table.add(votes).height(30).width(30).right();
-        table.add(totalvotes).height(30).width(30).left();
+        table.add(user).height(30).width(30);
+        table.add(username).height(30).width(30);
+        table.add(coin).height(30).width(30);
+        table.add(coins).height(30).width(30);
+        table.add(votes).height(30).width(30);
+        table.add(totalvotes).height(30).width(30);
         table.row();
         stage.addActor(table);
         java.util.List<Post> relevantPosts = Backend.getRelevantPosts();
