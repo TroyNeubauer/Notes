@@ -53,7 +53,6 @@ public class BoughtScreen extends MyScreen {
         table.add(totalvotes).height(30).width(30).left();
         table.row();
 
-        for (int i = 0; i < Backend.getBoughtPosts().size(); i++) {
             for (Post p : Backend.getBoughtPosts()) {
                 this.title = new Label("" + p.getTitle(), Notes.skin);
                 title.setColor(Color.BLUE);
@@ -73,7 +72,6 @@ public class BoughtScreen extends MyScreen {
 
 
             }
-        }
     }
 
     @Override
