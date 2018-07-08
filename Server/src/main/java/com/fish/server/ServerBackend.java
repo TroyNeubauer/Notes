@@ -1,6 +1,5 @@
 package com.fish.server;
 
-import com.fish.core.notes.Account;
 import com.fish.core.notes.BackendRequest;
 import com.fish.core.notes.BackendResponse;
 import com.fish.core.notes.Course;
@@ -171,15 +170,23 @@ public class ServerBackend {
 
 
     //+1 for upvote, -1 for downvote
-    public static boolean addUpvote(Client sender, long post, int vote) {
+    public static boolean addUpvote(Client sender, long postID, int vote) {
         if(sender.getAccount() == null) return false;
-        List<DatabasePost> posts = server.database.posts.get(sender.getAccount());
-
+        long accountID = sender.getAccount().getAccount().getID();
+        DatabasePost post = server.database.posts.get(postID);
+        if(vote == +1) addIfNotPresent(post.getUpvotes(), accountID);
+        else if(vote == -1) addIfNotPresent(post.getDownvotes(), accountID);
+        else return false;
         return true;
     }
 
-    public static int getUpvotes(Client sender, long post) {
-        return (Integer) getData("getUpvotes", post.getPosterID());
+    private static void addIfNotPresent(List<Long> upvotes, long accountID) {
+        if(!upvotes.contains(accountID)) upvotes.add(accountID);
+    }
+
+    public static int getUpVotes(Client sender, long postID) {
+        DatabasePost post = server.database.posts.get(postID);
+        return post.getUpvotes().size();
     }
 
 

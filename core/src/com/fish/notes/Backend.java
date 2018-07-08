@@ -217,4 +217,8 @@ public class Backend implements Runnable {
         return (Post) getData("getPost", id);
     }
 
+    public static List<Post> getBoughtPosts() {
+        return (List<Post>) getData("getBoughtPosts");
+    }
+
 }

@@ -21,7 +21,7 @@ public class Database {
     public HashMap<String, DatabaseAccount> users = new HashMap<String, DatabaseAccount>();
     public HashMap<School, Map<Course, List<Long>>> schools = new HashMap<School, Map<Course, List<Long>>>();//map between schools and courses to the list of post id's
     public HashMap<DatabaseAccount, List<Long>> userPosts = new HashMap<DatabaseAccount, List<Long>>();//Maps users to a list of their posts
-    public HashMap<Long, DatabasePost> posts1 = new HashMap<Long, DatabasePost>();
+    public HashMap<Long, DatabasePost> posts = new HashMap<Long, DatabasePost>();
     private long totalUsers;
 
     private AtomicLong postCount = new AtomicLong(0L);
@@ -151,7 +151,7 @@ public class Database {
         }
         DatabasePost realPost = new DatabasePost(post);
         accountPosts.add(newID);
-        posts1.put(newID, realPost);
+        posts.put(newID, realPost);
         return post;
     }
 
