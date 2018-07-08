@@ -45,12 +45,10 @@ public class Notes extends Game {
         account = new Account(12546772, "testuser", new byte[0], "testeremail@tester.com");
         setScreen(new LoginScreen(this));
 
-
         purchaseManagerConfig = new PurchaseManagerConfig();
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.CONSUMABLE).setIdentifier(NotesConstants.FIVE_COIN_ID));
         purchaseObserver = new PurchaseObserver()
         {
-
             @Override
             public void handleRestore (Transaction[] transactions) {
                 for (int i = 0; i < transactions.length; i++) {
@@ -97,10 +95,10 @@ public class Notes extends Game {
             public void handlePurchaseCanceled () {
             }
         };
-        PurchaseSystem.install(purchaseObserver, purchaseManagerConfig);
+        /*PurchaseSystem.install(purchaseObserver, purchaseManagerConfig);
         PurchaseSystem.purchase(NotesConstants.FIVE_COIN_ID);
-        Information information = PurchaseSystem.getInformation(NotesConstants.FIVE_COIN_ID);
-
+        Information information = PurchaseSystem.getInformation(NotesConstants.FIVE_COIN_ID);*/
+        Backend.init();
     }
 
     //checks if transaction was made, if true, returns back to shop screen

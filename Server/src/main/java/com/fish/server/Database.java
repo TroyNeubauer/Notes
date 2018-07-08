@@ -47,6 +47,7 @@ public class Database {
         byte[] hash = Security.getHashedPassword(password, salt, pepper, iterations, hashBytes);
         Account basicAccount = new Account(totalUsers++, username, Server.DEFAULT_PROFILE_PIC, email);
         DatabaseAccount account = new DatabaseAccount(basicAccount, iterations, salt, hash);
+        System.out.println("Creating new user account,  username:\"" + username + "\" email:\"" + email + "\"");
         users.put(username, account);
         return account;
     }

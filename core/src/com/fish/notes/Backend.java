@@ -130,6 +130,10 @@ public class Backend implements Runnable {
         socketThread.start();
     }
 
+    public static void init() {
+        start();
+    }
+
     private static<T> T getData(String methodName, Class<T> type, Object... args) {
         if(!running.get())
             start();

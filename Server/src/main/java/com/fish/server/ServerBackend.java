@@ -14,6 +14,7 @@ import com.fish.core.util.Utils;
 
 import java.lang.reflect.Method;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +24,7 @@ import static com.fish.server.Server.kryo;
 public class ServerBackend {
     private static Server server;
     private static final HashMap<String, Method> methods = new HashMap<String, Method>();
+    private static final List<Client> connectedClients = new ArrayList<Client>();
 
     public static void init(Server server) {
         if(ServerBackend.server != null) throw new RuntimeException("Already inited!");
@@ -38,12 +40,19 @@ public class ServerBackend {
         }
     }
 
+    public static void close() {
+        for(Client client : connectedClients) {
+            client.disconnect();
+        }
+    }
+
     public static class ClientThread implements Runnable {
         private Thread thread;
         private Client client;
 
         public ClientThread(Client client) {
             thread = new Thread(this);
+            connectedClients.add(client);
             thread.start();
         }
 

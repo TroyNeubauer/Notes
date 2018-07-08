@@ -49,7 +49,7 @@ public class MainScreen extends MyScreen {
         table.add(coin).height(30).width(30).right();
         table.add(coins).height(30).width(30).left();
         table.add(votes).height(30).width(30).right();
-        table.add(totalvotes).height(30).width(30).left();
+        table.add(totalvotes).height(30).width(30).left();x
         table.row();
 
         for(int i = 0; i < Backend.getRelevantPosts().size(); i++) {

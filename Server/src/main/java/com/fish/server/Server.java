@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.Scanner;
@@ -23,11 +24,11 @@ import javax.management.relation.RoleUnresolved;
 
 public class Server {
     public static final Kryo kryo = new Kryo();
-    private static final File DATABASE_FILE = new File("database.dat");
+    private static final File DATABASE_FILE = new File("/home/ec2-user/Database.dat");
 
     public static final byte[] DEFAULT_PROFILE_PIC = new byte[0];
     private ServerSocket socket;
-    private boolean running = true;
+    private volatile boolean running = true;
     private Scanner scanner = new Scanner(System.in);
     public Database database;
 
@@ -35,26 +36,60 @@ public class Server {
         if(DATABASE_FILE.exists()) {
             try {
                 database = kryo.readObject(new Input(new FileInputStream(DATABASE_FILE)), Database.class);
+                System.out.println("Loading database from " + DATABASE_FILE);
             } catch (Exception e) {
                 System.err.println("Unable to load database");
                 throw new RuntimeException(e);
             }
         } else {
             database = new Database(64, 1000, 32, 128);
+            System.out.println("Creating database at " + DATABASE_FILE);
         }
         setupNet();
-        try {
-            if (System.in.available() > 0) {
-                String line = scanner.next();
-                System.out.println("line: " + line);
+        setupThread();
+        while(running) {
+            try {
+                if (System.in.available() > 0) {
+                    String line = scanner.next();
+                    if(Commands.parse(this, line)) {
+                        stop();
+                    }
+                }
+            } catch (IOException e) {
+                throw new RuntimeException(e);
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
+    }
 
+    private void stop() {
+        close();
+        System.out.println("Server exiting!");
+        System.exit(0);
+    }
+
+    private void setupThread() {
+        Thread waitThread = new Thread(() -> {
+            while(running) {
+                try {
+                    Socket newSocket = socket.accept();
+                    System.out.println("Accecpted new client connection from " + newSocket.getRemoteSocketAddress().toString());
+                    Client client = new Client(newSocket);
+                    new ServerBackend.ClientThread(client);
+                } catch (IOException e) {
+
+                }
+            }
+        });
     }
 
     public void close() {
+        running = false;
+        try {
+            socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ServerBackend.close();
         try {
             Output out = new Output(new FileOutputStream(DATABASE_FILE));
             kryo.writeObject(out, database);
@@ -102,8 +137,6 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        ServerBackend.init(null);
-        System.exit(0);
         new Server();
     }
 }
