@@ -12,15 +12,29 @@ import com.fish.core.notes.School;
 import com.fish.core.util.ErrorString;
 import com.fish.core.util.Utils;
 
-import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.Socket;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
 public class ServerBackend {
     private static Server server;
     private static final HashMap<String, Method> methods = new HashMap<String, Method>();
+
+    public static void init(Server server) {
+        if(ServerBackend.server != null) throw new RuntimeException("Already inited!");
+        ServerBackend.server = server;
+        for(Method method : ServerBackend.class.getMethods()) {
+            if(method.getAnnotations().length == 1) {
+                if(method.getAnnotations()[0].annotationType() == Callable.class) {
+                    System.out.println("Method " + method + " passes!");
+                }
+            } else {
+                System.out.println("\t\tMethod " + method + " fails!");
+            }
+        }
+    }
 
     public static class ClientThread implements Runnable {
         private Thread thread;
@@ -46,20 +60,6 @@ public class ServerBackend {
                 }
             }
             System.out.println("Ending client thread " + client);
-        }
-    }
-
-    public static void init(Server server) {
-        if(ServerBackend.server != null) throw new RuntimeException("Already inited!");
-        ServerBackend.server = server;
-        for(Method method : ServerBackend.class.getMethods()) {
-            if(method.getAnnotations().length == 1) {
-                if(method.getAnnotations()[0].annotationType() == Callable.class) {
-                    System.out.println("Method " + method + " passes!");
-                }
-            } else {
-                System.out.println("\t\tMethod " + method + " fails!");
-            }
         }
     }
 
@@ -159,4 +159,24 @@ public class ServerBackend {
         if(sender.getAccount() == null) return new ErrorString("Please login before requesting data");
         return server.database.getRelevantPosts(sender.getAccount());
     }
+
+
+
+
+    //+1 for upvote, -1 for downvote
+    public static boolean addUpvote(Client sender, long post, int vote) {
+        return (Boolean) getData("addUpvote", post.getPosterID(), vote);
+    }
+
+    public static int getUpvotes(Client sender, long post) {
+        return (Integer) getData("getUpvotes", post.getPosterID());
+    }
+
+
+    public static Object getAllClasses(Client sender) {
+        if(sender.getAccount() == null) return new ErrorString("Please login before requesting data");
+        School school = server.database.getSchoolByID(sender.getAccount().getAccount().getSchool());
+        return server.database.getAllClasses(school);
+    }
+
 }

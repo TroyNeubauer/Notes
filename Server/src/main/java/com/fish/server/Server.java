@@ -108,7 +108,7 @@ public class Server {
     }
 
     public static void main(String[] args) {
-        System.out.println(Arrays.toString(Utils.concat(new byte[]{1}, new byte[]{7,8,9,10,12})));
+        ServerBackend.init(null);
         System.exit(0);
         new Server();
     }
