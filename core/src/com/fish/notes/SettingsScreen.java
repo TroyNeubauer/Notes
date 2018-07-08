@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
 import com.fish.core.notes.Course;
+import com.fish.core.notes.PostDataImage;
 import com.fish.core.notes.School;
 
 import java.util.Set;
@@ -121,6 +122,16 @@ public class SettingsScreen extends MyScreen
             {
                 //save changes, go back to profile screen
                 notes.setScreen(new ProfileScreen(notes));
+            }
+        });
+
+        img.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                Texture img = Notes.getPics(Notes.gallery.getSelectedFilePath());
+                Notes.account.toPublicAccount().setProfilePic()ClientUtils.textureToJPEG(img));
             }
         });
 
