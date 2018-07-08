@@ -15,63 +15,61 @@ public class ScreensManager implements Screen {
         setScreen(currentIndex, false);
     }
 
-    public void setListener() {
-        Gdx.input.setInputProcessor(new InputProcessor() {
-            @Override
-            public boolean keyDown(int keycode) {
-                screens[currentIndex].stage.keyDown(keycode);
-                return true;
-            }
+    private InputProcessor processor = new InputProcessor() {
+        @Override
+        public boolean keyDown(int keycode) {
+            screens[currentIndex].stage.keyDown(keycode);
+            return true;
+        }
 
-            @Override
-            public boolean keyUp(int keycode) {
-                screens[currentIndex].stage.keyUp(keycode);
-                return true;
-            }
+        @Override
+        public boolean keyUp(int keycode) {
+            screens[currentIndex].stage.keyUp(keycode);
+            return true;
+        }
 
-            @Override
-            public boolean keyTyped(char character) {
-                screens[currentIndex].stage.keyTyped(character);
-                return true;
-            }
+        @Override
+        public boolean keyTyped(char character) {
+            screens[currentIndex].stage.keyTyped(character);
+            return true;
+        }
 
-            @Override
-            public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                screens[currentIndex].stage.touchDown(screenX, screenY, pointer, button);
-                System.out.println("click");
-                return true;
-            }
+        @Override
+        public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+            screens[currentIndex].stage.touchDown(screenX, screenY, pointer, button);
+            System.out.println("click");
+            return true;
+        }
 
-            @Override
-            public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                screens[currentIndex].stage.touchUp(screenX, screenY, pointer, button);
-                return true;
-            }
+        @Override
+        public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+            screens[currentIndex].stage.touchUp(screenX, screenY, pointer, button);
+            return true;
+        }
 
-            @Override
-            public boolean touchDragged(int screenX, int screenY, int pointer) {
-                screens[currentIndex].stage.touchDragged(screenX, screenY, pointer);
-                return true;
-            }
+        @Override
+        public boolean touchDragged(int screenX, int screenY, int pointer) {
+            screens[currentIndex].stage.touchDragged(screenX, screenY, pointer);
+            return true;
+        }
 
-            @Override
-            public boolean mouseMoved(int screenX, int screenY) {
-                screens[currentIndex].stage.mouseMoved(screenX, screenY);
-                return true;
-            }
+        @Override
+        public boolean mouseMoved(int screenX, int screenY) {
+            screens[currentIndex].stage.mouseMoved(screenX, screenY);
+            return true;
+        }
 
-            @Override
-            public boolean scrolled(int amount) {
-                System.out.println("amount " + amount);
-                incrementScreen(amount);
-                return true;
-            }
-        });
-    }
+        @Override
+        public boolean scrolled(int amount) {
+            System.out.println("amount " + amount);
+            incrementScreen(amount);
+            return true;
+        }
+    };
 
     @Override
     public void show() {
-        setListener();
+        Gdx.input.setInputProcessor(processor);
         setScreen(currentIndex, true);
     }
 
@@ -102,6 +100,7 @@ public class ScreensManager implements Screen {
 
     @Override
     public void render(float delta) {
+        Gdx.input.setInputProcessor(processor);
         screens[currentIndex].render(delta);
     }
 

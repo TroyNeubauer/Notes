@@ -58,7 +58,6 @@ public class LoginScreen extends MyScreen {
         container.row();
         stage.addActor(container);
 
-        Gdx.input.setInputProcessor(stage);
 
         loginButton.addListener(new ClickListener() {
             @Override
@@ -95,8 +94,6 @@ public class LoginScreen extends MyScreen {
                 }
             }
         });
-
-
     }
 
     /*

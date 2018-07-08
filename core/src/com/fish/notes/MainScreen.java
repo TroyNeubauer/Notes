@@ -24,9 +24,6 @@ public class MainScreen extends MyScreen {
         this.coin = new Image(new Texture("coins.png"));
         this.votes = new Image(new Texture("Fishnotes_upvote.png"));
 
-        MyGestureListener input = new MyGestureListener();
-        Gdx.input.setInputProcessor(input);
-
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         table.add(user).height(30).width(30).right();
