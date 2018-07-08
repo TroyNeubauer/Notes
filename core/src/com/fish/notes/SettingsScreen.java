@@ -20,11 +20,13 @@ import com.fish.core.notes.School;
 
 import java.util.Set;
 
+import static com.fish.notes.ClientUtils.jpegToTexture;
+
 public class SettingsScreen extends MyScreen
 {
     private Stage stage;
     private TextField changeSchool, addCourse;
-    //private ImageButton img;
+    private ImageButton img;
     private TextButton save;
     private Notes notes;
 
@@ -44,14 +46,15 @@ public class SettingsScreen extends MyScreen
         addCourse.setMessageText("Add a new course");
         addCourse.setAlignment(Align.center);
 
-        //Drawable drawable = new TextureRegionDrawable(new TextureRegion( new))
-       // this.img = new ImageButton(drawable);
+        Texture thing = jpegToTexture(Notes.account.getProfilePic());
+        Drawable drawable = new TextureRegionDrawable(new TextureRegion(thing));
+        this.img = new ImageButton(drawable);
 
         this.save = new TextButton("Save changes", Notes.skin);
 
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        //container.add(img).prefSize(img.getWidth(), img.getHeight()).row();
+        container.add(img).prefSize(img.getWidth(), img.getHeight()).row();
         container.add(changeSchool).prefSize(changeSchool.getWidth(), changeSchool.getHeight()).row();
         container.add(addCourse).prefSize(addCourse.getWidth(), addCourse.getHeight()).row();
         for(long ID : Notes.account.getClasses())
