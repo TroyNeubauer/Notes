@@ -1,6 +1,7 @@
 package com.fish.notes;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -30,13 +31,16 @@ public class MakeScreen extends MyScreen {
 
         this.title = new TextField("", Notes.skin);
         title.setMessageText("Title");
+        title.setColor(Color.BLUE);
 
         this.postdata = new TextField("", Notes.skin);
         postdata.setMessageText("Enter Text");
+        postdata.setColor(Color.BLUE);
 
         this.classbox = new TextField("", Notes.skin);
         classbox.setMessageText("Class");
-
+        postdata.setColor(Color.BLUE);
+        /*
         title.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
                 if(title.getText().length() > 0) {
@@ -44,7 +48,7 @@ public class MakeScreen extends MyScreen {
                 }
             }
         });
-
+    */
 
 
         this.sumbit = new TextButton("Post", Notes.skin);
@@ -56,14 +60,18 @@ public class MakeScreen extends MyScreen {
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         table.add(title).width(50).height(50).expand().bottom().left();
-
+        table.row();
+        table.add(postdata).width(50).height(50).expand().bottom().left();
+        table.row();
+        table.add(classbox).width(50).height(50).expand().bottom().left();
+        table.row();
     }
+
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-        super.render();
+        stage.act(delta);
+        stage.draw();
     }
     @Override
     public void dispose() {
