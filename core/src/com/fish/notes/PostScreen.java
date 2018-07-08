@@ -20,13 +20,13 @@ public class PostScreen extends MyScreen {
         for(Post p: Backend.getRelevantPosts()) {
             this.title = new Label("" + p.getTitle(), Notes.skin);
             title.setColor(Color.BLUE);
-            // this.votes = new Label("" + geTpoints, Notes.skin);
-            // votes.setColor(Color.BLUE);
+            this.votes = new Label("Votes: " + Backend.getUpvotes(p), Notes.skin);
+            votes.setColor(Color.BLUE);
             this.username = new Label("" + Backend.getAccount(p.getPosterID()).getUsername(), Notes.skin);
             Table table = new Table();
             table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
             table.add(title).width(40).height(40).expand().left();
-            //table.add(votes).width(40).height(40).expand().right();
+            table.add(votes).width(40).height(40).expand().right();
             table.row();
             table.add(username).width(40).height(40).expand().bottom().left();
             table.row();

@@ -22,12 +22,8 @@ public class MakeScreen extends MyScreen {
         this.game = game;
         this.stage = stage;
 
-        /*
-        this.picchoice = new TextButton("Picture Post");
-        picchoice
-        */
-
         this.label = new Label("Create a post", Notes.skin);
+        this.label.setColor(Color.DARK_GRAY);
 
         this.title = new TextField("", Notes.skin);
         title.setMessageText("Title");
