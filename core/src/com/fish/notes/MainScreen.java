@@ -7,6 +7,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
+import com.fish.core.notes.Post;
 
 import java.awt.Color;
 
@@ -23,12 +24,14 @@ public class MainScreen extends MyScreen {
         this.game = new Notes();
         this.stage = new Stage();
 
-        //this.username = new Label("" + Backend.getAccount(.getPosterID()).getUsername(), Notes.skin);
-        //username.setColor(Color.DARK_GRAY);
+        this.username = new Label("" + Notes.account, Notes.skin);
+        username.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
-        //this.coins = new Label("Coins: " + );
+        this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
+        coins.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
-        //this.totalvotes = new Label("" + );
+        this.totalvotes = new Label("Total Votes: " + Notes.account.getPoints(), Notes.skin);
+        totalvotes.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
         this.user = new Image(new Texture("Fishnotes_udp.png"));
         this.coin = new Image(new Texture("coins.png"));
@@ -36,8 +39,17 @@ public class MainScreen extends MyScreen {
 
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        
+        table.add(user).height(30).width(30).right();
+        table.add(username).height(30).width(30).left();
+        table.add(coin).height(30).width(30).right();
+        table.add(coins).height(30).width(30).left();
+        table.add(votes).height(30).width(30).right();
+        table.add(totalvotes).height(30).width(30).left();
+        table.row();
 
+        for(int i = 0; i < Backend.getRelevantPosts().size(); i++) {
+            PostScreen item = new PostScreen();
+        }
     }
 
     @Override
