@@ -31,8 +31,7 @@ public class SettingsScreen extends MyScreen
 
     public SettingsScreen(final Notes notes)
     {
-        this.stage = new Stage();
-        this.notes = notes;
+        super(notes);
 
         final Set<School> schools = Backend.getAllSchools();
         final Set<Course> courses = Backend.getAllClasses();

@@ -7,29 +7,29 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public abstract class MyScreen implements Screen
 {
-    public MyScreen()
-    {
+    protected Stage stage;
+    protected Notes notes;
+
+    public MyScreen(Notes notes) {
+        this.notes = notes;
+        this.stage = new Stage();
     }
     /** Called when this screen becomes the current screen for a {@link Game}. */
-    public void show ()
-    {
+    public void show () {
 
     }
 
     /** @see ApplicationListener#resize(int, int) */
-    public void resize (int width, int height)
-    {
+    public void resize (int width, int height) {
 
     }
 
     /** @see ApplicationListener#pause() */
-    public void pause ()
-    {
+    public void pause () {
 
     }
     /** @see ApplicationListener#resume() */
-    public void resume ()
-    {
+    public void resume () {
 
     }
 

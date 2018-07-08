@@ -14,16 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.fish.core.notes.Post;
 
 public class BoughtScreen extends MyScreen {
-    private Stage stage;
     private Label username, coins, totalvotes, votes, title;
     private TextButton back;
     private Image user, coin, vote;
-    private Notes notes;
 
 
     public BoughtScreen(final Notes notes) {
-        this.stage = new Stage();
-        this.notes = notes;
+        super(notes);
 
         this.back = new TextButton("Back", Notes.skin);
         back.addListener(new ClickListener() {

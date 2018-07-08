@@ -36,6 +36,7 @@ public class Notes extends Game {
     public static PurchaseManagerConfig purchaseManagerConfig;
     public static PurchaseObserver purchaseObserver;
     static PlatformResolver m_platformResolver;
+    public static ScreensManager screensManager;
 
 	@Override
 	public void create () {
@@ -43,6 +44,7 @@ public class Notes extends Game {
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
         account = new Account(12546772, "testuser", new byte[0], "testeremail@tester.com");
+        screensManager = new ScreensManager(this);
         setScreen(new LoginScreen(this));
 
         purchaseManagerConfig = new PurchaseManagerConfig();

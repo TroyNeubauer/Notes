@@ -5,10 +5,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 
 public class UserScreen extends MyScreen
 {
-    private Stage stage;
-   public UserScreen()
+    public UserScreen(final Notes notes)
    {
-       this.stage = new Stage();
+       super(notes);
    }
     @Override
     public void render(float delta) {

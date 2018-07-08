@@ -21,16 +21,13 @@ import javax.xml.soap.Text;
 
 public class PostScreen extends MyScreen {
     private TextButton back;
-    private Stage stage;
-    private Notes notes;
     private Label title, votes, username;
     private Image pfp;
     private ImageButton up, down;
 
     public PostScreen(final Notes notes)
     {
-        this.stage = new Stage();
-        this.notes = new Notes();
+        super(notes);
         for(final Post p: Backend.getRelevantPosts()) {
             this.title = new Label("" + p.getTitle(), Notes.skin);
             title.setColor(Color.BLUE);

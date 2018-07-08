@@ -14,7 +14,7 @@ import com.fish.core.notes.PostDataText;
 import java.util.Set;
 
 public class MakeScreen extends MyScreen {
-    private Stage stage;
+
     private TextButton submit,back;
     private CheckBox picchoice, textchoice;
     private Label label;
@@ -22,16 +22,13 @@ public class MakeScreen extends MyScreen {
     private TextArea postdata;
     private Course course;
     private PostData data;
-    private Notes notes;
 
     @Override
     public void hide() {
     }
 
     public MakeScreen(final Notes notes) {
-        this.notes = notes;
-        this.stage = stage;
-
+        super(notes);
         this.back = new TextButton("Back", Notes.skin);
         back.addListener(new ClickListener() {
             @Override

@@ -13,16 +13,14 @@ import com.badlogic.gdx.graphics.Texture;
 
 public class RegisterScreen extends MyScreen
 {
-    private Stage stage;
+
     private Image img;
     private TextField username, password, verify, email;
     private TextButton register;
     private Label label, passwords;
 
-    public RegisterScreen()
-    {
-        this.stage = new Stage();
-
+    public RegisterScreen(final Notes notes) {
+        super(notes);
         this.username = new TextField("", Notes.skin);
         username.setMessageText("Create a username");
         username.setAlignment(Align.center);

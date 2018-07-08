@@ -26,14 +26,12 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 
 public class ShopScreen extends MyScreen {
 
-    private Stage stage;
     private TextButton buysmall, buymed, buylarge, back;
-    private Notes notes;
     private Label title, name, coins, smallpack, mediumpack, largepack;
     private Image small, med, large;
 
     public ShopScreen(final Notes notes) {
-        this.notes = notes;
+        super(notes);
         this.stage = new Stage();
         this.title = new Label("Shop", Notes.skin);
         title.setFontScaleX(2);

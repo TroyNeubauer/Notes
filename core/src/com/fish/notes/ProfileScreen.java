@@ -16,16 +16,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 
 public class ProfileScreen extends MyScreen {
-    private Stage stage;
     private Image pfp;
     private Label name, email, points, coins, label, school, courses;
     private TextButton edit, back;
-    private Notes notes;
 
 
     public ProfileScreen(final Notes notes) {
-        this.notes = notes;
-        this.stage = new Stage();
+        super(notes);
 
         this.back = new TextButton("Back", Notes.skin);
         back.addListener(new ClickListener() {

@@ -17,15 +17,11 @@ import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 import static com.badlogic.gdx.scenes.scene2d.InputEvent.Type.scrolled;
 
 public class MainScreen extends MyScreen {
-    private Stage stage;
     private Label username, coins, totalvotes;
     private Image user, coin, votes;
-    private Notes notes;
 
     public MainScreen(final Notes notes) {
-        this.notes = new Notes();
-        this.stage = new Stage();
-
+        super(notes);
         this.username = new Label("" + Notes.account, Notes.skin);
         username.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
@@ -49,7 +45,7 @@ public class MainScreen extends MyScreen {
         table.add(coin).height(30).width(30).right();
         table.add(coins).height(30).width(30).left();
         table.add(votes).height(30).width(30).right();
-        table.add(totalvotes).height(30).width(30).left();x
+        table.add(totalvotes).height(30).width(30).left();
         table.row();
 
         for(int i = 0; i < Backend.getRelevantPosts().size(); i++) {

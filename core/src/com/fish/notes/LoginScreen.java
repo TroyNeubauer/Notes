@@ -30,8 +30,7 @@ public class LoginScreen extends MyScreen {
     private Notes notes;
 
     public LoginScreen(final Notes notes) {
-        this.notes = notes;
-        this.stage = new Stage();
+        super(notes);
 
         this.usernameField = new TextField("", Notes.skin);
         usernameField.setMessageText("Username");
@@ -78,7 +77,7 @@ public class LoginScreen extends MyScreen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //Show create account screen
-                notes.setScreen(new RegisterScreen());
+                notes.setScreen(new RegisterScreen(notes));
             }
         });
         usernameField.setTextFieldListener(new TextField.TextFieldListener() {
