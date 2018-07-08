@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
@@ -19,7 +20,8 @@ public class SettingsScreen extends MyScreen
 {
     private Stage stage;
     private TextField changeSchool, addCourse;
-    private ImageButton img;
+    //private ImageButton img;
+    private TextButton save;
     private Notes notes;
 
 
@@ -36,9 +38,14 @@ public class SettingsScreen extends MyScreen
         addCourse.setMessageText("Add a new course");
         addCourse.setAlignment(Align.center);
 
+        //Drawable drawable = new TextureRegionDrawable(new TextureRegion( new))
+       // this.img = new ImageButton(drawable);
+
+        this.save = new TextButton("Save changes", Notes.skin);
+
         Table container = new Table();
         container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        container.add()
+        //container.add(img).prefSize(img.getWidth(), img.getHeight()).row();
         container.add(changeSchool).prefSize(changeSchool.getWidth(), changeSchool.getHeight()).row();
         container.add(addCourse).prefSize(addCourse.getWidth(), addCourse.getHeight()).row();
         for(long ID : Notes.account.getClasses())
@@ -46,25 +53,27 @@ public class SettingsScreen extends MyScreen
             Label temp = new Label ("" + Backend.getClass(ID), Notes.skin);
             container.add(temp).prefSize(temp.getWidth(), temp.getHeight()).left();
 
-            Drawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture("Fishnotes_downvote.png")));
-            ImageButton img = new ImageButton(drawable);
+            Drawable drawable2 = new TextureRegionDrawable(new TextureRegion(new Texture("Fishnotes_downvote.png")));
+            ImageButton img = new ImageButton(drawable2);
             img.addListener(new ClickListener()
             {
                 @Override
                 public void clicked(InputEvent event, float x, float y)
                 {
-
+                    //removes specified course
                 }
             });
             container.add(img).prefSize(img.getWidth(), img.getHeight()).right().row();
 
         }
+        container.add(save).prefSize(save.getWidth(), save.getHeight()).row();
 
         stage.addActor(container);
 
         changeSchool.setTextFieldListener(new TextField.TextFieldListener(){
             @Override
             public void keyTyped(TextField textfield, char key) {
+                //changes school
 
             }
         });
@@ -72,7 +81,18 @@ public class SettingsScreen extends MyScreen
         addCourse.setTextFieldListener(new TextField.TextFieldListener(){
             @Override
             public void keyTyped(TextField textfield, char key) {
+                //adds course to list
 
+            }
+        });
+
+        save.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y)
+            {
+                //save changes, go back to profile screen
+                notes.setScreen(new ProfileScreen(notes));
             }
         });
 
