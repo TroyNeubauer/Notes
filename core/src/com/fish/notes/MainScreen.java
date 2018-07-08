@@ -58,7 +58,7 @@ public class MainScreen extends MyScreen {
         }
         Table container = new Table();
         container.setBounds(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        container.add(makePost).maxSize(10,10).bottom();
+        container.add(makePost).maxSize(40,40).bottom();
         stage.addActor(container);
 
         makePost.addListener(new ClickListener()
