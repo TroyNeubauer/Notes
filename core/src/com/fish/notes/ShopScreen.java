@@ -23,6 +23,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.fish.core.NotesConstants;
 
 public class ShopScreen extends MyScreen {
 
@@ -59,7 +60,8 @@ public class ShopScreen extends MyScreen {
         smallpack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //
+                notes.getPlatformResolver().requestPurchase(NotesConstants.ONE_COIN_ID);
+                notes.checkTransaction(NotesConstants.ONE_COIN_ID);
             }
         });
         this.buysmall = new TextButton("$0.99", Notes.skin);
@@ -68,7 +70,8 @@ public class ShopScreen extends MyScreen {
         mediumpack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //
+                notes.getPlatformResolver().requestPurchase(NotesConstants.FIVE_COIN_ID);
+                notes.checkTransaction(NotesConstants.FIVE_COIN_ID);
             }
         });
         this.med = new Image(new Texture("medium.png"));
@@ -78,7 +81,8 @@ public class ShopScreen extends MyScreen {
         largepack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //
+                notes.getPlatformResolver().requestPurchase(NotesConstants.TWENTY_COIN_ID);
+                notes.checkTransaction(NotesConstants.TWENTY_COIN_ID);
             }
         });
         this.large = new Image(new Texture("large.png" ));

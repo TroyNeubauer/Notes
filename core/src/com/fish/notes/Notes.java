@@ -1,5 +1,6 @@
 package com.fish.notes;
 
+import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -35,9 +36,11 @@ public class Notes extends Game {
 	public static Account account;
     public static PurchaseManagerConfig purchaseManagerConfig;
     public static PurchaseObserver purchaseObserver;
-    static PlatformResolver m_platformResolver;
+    public static PlatformResolver m_platformResolver;
     public static ScreensManager screensManager;
     public static OpenGallery gallery;
+    public static ApplicationAdapter adapt;
+
     public Notes(OpenGallery gallery)
     {
         this.gallery = gallery;
@@ -64,7 +67,7 @@ public class Notes extends Game {
 
             @Override
             public void handleRestoreError (Throwable e) {
-                // getPlatformResolver().showToast("PurchaseObserver: handleRestoreError!");
+                //getPlatformResolver().showToast("PurchaseObserver: handleRestoreError!");
                 Gdx.app.log("ERROR", "PurchaseObserver: handleRestoreError!: " + e.getMessage());
                 throw new GdxRuntimeException(e);
             }
@@ -101,10 +104,18 @@ public class Notes extends Game {
             public void handlePurchaseCanceled () {
             }
         };
-        /*PurchaseSystem.install(purchaseObserver, purchaseManagerConfig);
+        PurchaseSystem.install(purchaseObserver, purchaseManagerConfig);
         PurchaseSystem.purchase(NotesConstants.FIVE_COIN_ID);
-        Information information = PurchaseSystem.getInformation(NotesConstants.FIVE_COIN_ID);*/
+        //Information information = PurchaseSystem.getInformation(NotesConstants.FIVE_COIN_ID);
+
+        getPlatformResolver().requestPurchaseRestore();
+        
         Backend.init();
+    }
+
+    public  PlatformResolver getPlatformResolver()
+    {
+        return m_platformResolver;
     }
 
     //checks if transaction was made, if true, returns back to shop screen

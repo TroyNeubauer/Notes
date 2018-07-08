@@ -18,7 +18,8 @@ public class DesktopLauncher {
         config.addIcon("mac.png", Files.FileType.Internal);
         config.addIcon("windows.png", Files.FileType.Internal);
         config.addIcon("windows2.png", Files.FileType.Internal);
+        Notes notes = new Notes(new DesktopGalleryOpener());
+		new LwjglApplication(notes, config);
 
-		new LwjglApplication(new Notes(new DesktopGalleryOpener()), config);
 	}
 }
