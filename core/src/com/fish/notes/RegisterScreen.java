@@ -113,6 +113,7 @@ public class RegisterScreen extends MyScreen
                 LoginResult result = Backend.register(username.getText(), password.getText(), email.getText());
                 if(Notes.validateResult(result, "Unable to create account")){
                     Notes.account = result.getAccount();
+                    notes.setScreen(Notes.screensManager);
                 }
 
             }

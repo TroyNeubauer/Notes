@@ -56,12 +56,6 @@ public class MainScreen extends MyScreen {
     }
 
     @Override
-    public void render(float delta) {
-        stage.act(delta);
-        stage.draw();
-    }
-
-    @Override
     public void dispose() {
         stage.dispose();
     }

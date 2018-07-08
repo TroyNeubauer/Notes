@@ -76,11 +76,7 @@ public class BoughtScreen extends MyScreen {
             }
         }
     }
-        public void render ( float delta){
-            stage.act(delta);
-            stage.draw();
-        }
-        public void dispose () {
+    public void dispose () {
             stage.dispose();
         }
 

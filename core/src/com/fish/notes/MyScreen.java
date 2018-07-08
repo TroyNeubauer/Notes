@@ -19,6 +19,12 @@ public abstract class MyScreen implements Screen
 
     }
 
+    @Override
+    public void render(float delta) {
+        stage.act(delta);
+        stage.draw();
+    }
+
     /** @see ApplicationListener#resize(int, int) */
     public void resize (int width, int height) {
 

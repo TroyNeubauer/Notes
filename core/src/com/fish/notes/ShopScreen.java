@@ -110,12 +110,7 @@ public class ShopScreen extends MyScreen {
         stage.addActor(table);
         Gdx.input.setInputProcessor(stage);
     }
-    @Override
-    public void render(float delta) {
-        stage.act(delta);
-        stage.draw();
-        //Gdx.gl.glClearColor(0.9f, .5f, .5f, 5);
-    }
+
     @Override
     public void dispose() {
         stage.dispose();

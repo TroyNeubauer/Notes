@@ -106,9 +106,7 @@ public class ProfileScreen extends MyScreen {
         @Override
         public void render ( float delta){
             Gdx.gl.glClearColor(.123f, .675f,.89f, 1);
-            stage.act(delta);
-            stage.draw();
-
+            super.render(delta);
         }
 
         @Override
