@@ -13,6 +13,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import sun.net.www.http.PosterOutputStream;
+
 public class Database {
     public int hashBytes, iterations, saltBytes;
     public byte[] pepper;
@@ -128,7 +130,12 @@ public class Database {
 
     public Post post(DatabaseAccount account, String title, PostData data) {
         Post post = new Post(data, title, account.getAccount().getID());
-
+        //TODO
         return post;
+    }
+
+    public List<Post> getRelevantPosts(DatabaseAccount account) {
+        //TODO
+        return null;
     }
 }

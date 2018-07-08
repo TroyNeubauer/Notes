@@ -194,4 +194,15 @@ public class Backend implements Runnable {
     public static boolean removeClass(Course course) {
         return (Boolean) getData("removeClass", course.getID());
     }
+
+
+    public static List<Post> getRelevantPosts() {
+        return (List<Post>) getData("getRelevantPosts");
+    }
+
+    //+1 for upvote, -1 for downvote
+    public static boolean addUpvote(Post post, int vote) {
+        return (Boolean) getData("addUpvote", post.getPosterID(), vote);
+    }
+
 }
