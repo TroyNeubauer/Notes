@@ -6,7 +6,7 @@ import com.badlogic.gdx.pay.PurchaseManagerConfig;
 import com.badlogic.gdx.pay.PurchaseObserver;
 import com.badlogic.gdx.pay.PurchaseSystem;
 
-public abstract class PlatformResolver {
+public class PlatformResolver {
 
         protected PurchaseManager mgr;
         private Notes notes;

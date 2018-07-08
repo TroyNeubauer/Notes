@@ -52,7 +52,7 @@ public class Notes extends Game {
         addCreators();
         screensManager = new ScreensManager(this);
         setScreen(new LoginScreen(this));
-
+        setPlatformResolver(new PlatformResolver(this));
         purchaseManagerConfig = new PurchaseManagerConfig();
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.CONSUMABLE).setIdentifier(NotesConstants.FIVE_COIN_ID));
         purchaseObserver = new PurchaseObserver()
