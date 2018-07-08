@@ -102,7 +102,7 @@ public class Notes extends Game {
 
         public BaseActor(Post post) {
             this.post = post;
-            byte[] jpeg = Backend.getAccount(post.getPosterID()).getProfilePic();
+            byte[] jpeg = Backend.getAccount(post.getPosterUserID()).getProfilePic();
             Table left = new Table();
 
             left.add(new Label("", skin));

@@ -132,7 +132,7 @@ public class ServerBackend {
     @Callable
     public static Post post(Client sender, String title, Course course, PostData data) {
         if(sender.getAccount() == null) return null;
-        return server.database.post(sender.getAccount(), title, data);
+        return server.database.post(sender.getAccount(), title, course, data);
     }
 
     @Callable
@@ -165,7 +165,10 @@ public class ServerBackend {
 
     //+1 for upvote, -1 for downvote
     public static boolean addUpvote(Client sender, long post, int vote) {
-        return (Boolean) getData("addUpvote", post.getPosterID(), vote);
+        if(sender.getAccount() == null) return false;
+        List<DatabasePost> posts = server.database.posts.get(sender.getAccount());
+
+        return true;
     }
 
     public static int getUpvotes(Client sender, long post) {

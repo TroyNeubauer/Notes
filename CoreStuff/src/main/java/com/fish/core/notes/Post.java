@@ -1,14 +1,15 @@
 package com.fish.core.notes;
 
-public class Post {
+public class Post extends DefaultNotesObject {
     private PostData data;
     private String title;
-    private long posterID;
+    private long posterUserID;
 
-    public Post(PostData data, String title, long posterID) {
+    public Post(long postID, PostData data, String title, long posterID) {
+        super(postID);
         this.data = data;
         this.title = title;
-        this.posterID = posterID;
+        this.posterUserID = posterID;
     }
 
     public PostData getData() {
@@ -19,7 +20,7 @@ public class Post {
         return title;
     }
 
-    public long getPosterID() {
-        return posterID;
+    public long getPosterUserID() {
+        return posterUserID;
     }
 }
