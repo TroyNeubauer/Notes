@@ -6,7 +6,12 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.fish.core.notes.Course;
 import com.fish.core.notes.LoginResult;
+import com.fish.core.notes.PostData;
+import com.fish.core.notes.PostDataText;
+
+import java.util.Set;
 
 public class MakeScreen extends MyScreen {
     private Stage stage;
@@ -15,14 +20,16 @@ public class MakeScreen extends MyScreen {
     private Label label;
     private TextField title, classbox;
     private TextArea postdata;
-    private Notes game;
+    private Course course;
+    private PostData data;
+    private Notes notes;
 
     @Override
     public void hide() {
     }
 
-    public MakeScreen(final Notes game) {
-        this.game = game;
+    public MakeScreen(final Notes notes) {
+        this.notes = notes;
         this.stage = stage;
 
         this.label = new Label("Create a post", Notes.skin);
@@ -40,11 +47,19 @@ public class MakeScreen extends MyScreen {
         classbox.setMessageText("Class");
         classbox.setColor(Color.BLUE);
 
+
         this.picchoice = new CheckBox("Picture Post", Notes.skin);
 
         this.textchoice = new CheckBox("Text Post", Notes.skin);
 
+        final Set<Course> courses = Backend.getAllClasses();
 
+        for(Course temp : courses){
+            if(temp.getName().equals(classbox.getText())){
+                course = temp;
+            }
+        }
+        this.submit = new TextButton("Submit Post", Notes.skin);
 
         Table superTable = new Table();
         Table table = new Table();
@@ -67,11 +82,26 @@ public class MakeScreen extends MyScreen {
             @Override
             public void clicked(InputEvent event, float x, float y){
                 container.add(postdata).prefSize(postdata.getWidth(), postdata.getHeight()).row();
+                container.add(submit).prefSize(submit.getWidth(),submit.getHeight()).row();
             }
         });
         superTable.add(container);
         stage.addActor(superTable);
 
+        postdata.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textfield, char key)
+            {
+                data = data = new PostDataText(postdata.getText());
+            }
+        });
+
+        submit.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Backend.post(title.getText(), course, data);
+            }
+        });
     }
 
 
