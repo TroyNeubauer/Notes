@@ -83,9 +83,9 @@ public class Backend implements Runnable {
                     }
 
                 } catch(ClassCastException e) {
-                  System.err.print("Different class recieved from server!");
-                  e.printStackTrace();
-                  continue;
+                    System.err.print("Different class recieved from server!");
+                    e.printStackTrace();
+                    continue;
                 } catch(GdxRuntimeException e) {
                     System.err.println("In 12345 catch in Backend!");
                     e.printStackTrace();

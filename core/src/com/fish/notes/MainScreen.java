@@ -47,7 +47,7 @@ public class MainScreen extends MyScreen {
         table.row();
 
         for(int i = 0; i < Backend.getRelevantPosts().size(); i++) {
-            PostScreen item = new PostScreen();
+            PostScreen item = new PostScreen(notes);
         }
     }
 
