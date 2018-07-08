@@ -130,13 +130,11 @@ public class Backend implements Runnable {
         socketThread.start();
     }
 
-    private static Object getData(String methodName, Object... args) {
-        if(!running.get()) {
+    private static<T> T getData(String methodName, Class<T> type, Object... args) {
+        if(!running.get())
             start();
-        }
-        if(!isConnected()) {
-            return DISCONNECTED_FROM_SERVER;
-        }
+        if(!isConnected())
+            return null;
         long id = IDs.incrementAndGet();
         BackendRequest request = new BackendRequest(methodName, args, id);
         kryo.writeObject(out, request);
@@ -149,76 +147,86 @@ public class Backend implements Runnable {
                 throw new RuntimeException(e);
             }
         }
-        return info.result;
+        Object result = info.result;
+        System.out.println("got from server expected " + type + " got " + result.getClass() + "!");
+        return (T) info.result;
     }
 
     public static PublicAccount getAccount(long id) {
-        return (PublicAccount) getData("getAccount", id);
+        return getData("getAccount", PublicAccount.class, id);
     }
 
     public static School getSchool(long id) {
-        return (School) getData("getSchool", id);
+        return getData("getSchool", School.class, id);
     }
 
     public static Course getClass(long id) {
-        return (Course) getData("getClass", id);
+        return getData("getClass", Course.class, id);
     }
 
     public static boolean joinClass(Account account, Course course) {
-        boolean success = (Boolean) getData("joinClass", course);
+        Boolean success = getData("joinClass", Boolean.class, course);
+        if(success == null) return false;
         if(success) account.getClasses().add(course.getID());
         return success;
     }
 
     public static LoginResult login(String username, String password) {
-        return (LoginResult) getData("login", username, password.toCharArray());
+        return getData("login", LoginResult.class, username, password.toCharArray());
     }
 
     public static LoginResult register(String username, String password, String email) {
-        return (LoginResult) getData("register", username, password.toCharArray(), email);
+        return getData("register", LoginResult.class, username, password.toCharArray(), email);
     }
 
     public static Post post(String title, Course course, PostData data) {
-        return (Post) getData("post", title, course, data);
+        return getData("post", Post.class, title, course, data);
     }
 
 
     public static Set<School> getAllSchools() {
-        return (Set<School>) getData("getAllSchools");
+        return getData("getAllSchools", Set.class);
     }
 
     public static boolean setSchool(School school) {
-        return (Boolean) getData("setSchool", school.getID());
+        Boolean result = getData("setSchool", Boolean.class, school.getID());
+        if(result == null) return false;
+        return result;
     }
 
     public static boolean removeClass(Course course) {
-        return (Boolean) getData("removeClass", course.getID());
+        Boolean result = getData("removeClass", Boolean.class, course.getID());
+        if(result == null) return false;
+        return result;
     }
 
-
     public static List<Post> getRelevantPosts() {
-        return (List<Post>) getData("getRelevantPosts");
+        return getData("getRelevantPosts", List.class);
     }
 
     //+1 for upvote, -1 for downvote
     public static boolean addUpvote(Post post, int vote) {
-        return (Boolean) getData("addUpvote", post.getPosterUserID(), vote);
+        Boolean result = getData("addUpvote", Boolean.class, post.getPosterUserID(), vote);
+        if(result == null) return false;
+        return result;
     }
 
     public static int getUpvotes(Post post) {
-        return (Integer) getData("getUpvotes", post.getPosterUserID());
+        Integer result = getData("getUpvotes", Integer.class, post.getPosterUserID());
+        if(result == null) return -1;
+        return result;
     }
 
     public static Set<Course> getAllClasses() {
-        return (Set<Course>) getData("getAllClasses");
+        return (Set<Course>) getData("getAllClasses", Set.class);
     }
 
     public static Post getPost(long id) {
-        return (Post) getData("getPost", id);
+        return getData("getPost", Post.class, id);
     }
 
     public static List<Post> getBoughtPosts() {
-        return (List<Post>) getData("getBoughtPosts");
+        return (List<Post>) getData("getBoughtPosts", List.class);
     }
 
 }
