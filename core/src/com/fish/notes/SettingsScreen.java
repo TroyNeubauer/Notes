@@ -35,7 +35,7 @@ public class SettingsScreen extends MyScreen
         this.notes = notes;
 
         final Set<School> schools = Backend.getAllSchools();
-        final Set<Long> courses = Notes.account.getAllClasses();
+        final Set<Course> courses = Backend.getAllClasses();
 
         this.changeSchool = new TextField("", Notes.skin);
         changeSchool.setMessageText("Enter a new school");
@@ -97,10 +97,10 @@ public class SettingsScreen extends MyScreen
             public void keyTyped(TextField textfield, char key) {
                 //adds course to list
                 Course course = null;
-                for(Long ID : courses)
+                for(Course temp : courses)
                 {
-                   if(Backend.getClass(ID).getName().equals(addCourse.getText()))
-                       course = Backend.getClass(ID);
+                   if(temp.getName().equals(addCourse.getText()))
+                       course = temp;
                 }
                 Backend.joinClass(Notes.account,course);
             }
