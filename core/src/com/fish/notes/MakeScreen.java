@@ -1,6 +1,7 @@
 package com.fish.notes;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -46,20 +47,23 @@ public class MakeScreen extends MyScreen {
 
 
 
-        //container.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Table container = new Table();
-        container.add(title);
-
         this.sumbit = new TextButton("Post", Notes.skin);
         //sumbit.addListener(finalize);
 
         Gdx.input.setInputProcessor(stage);
+
+
+        Table table = new Table();
+        table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        table.add(title).width(50).height(50).expand().bottom().left();
+
     }
 
     @Override
     public void render(float delta) {
-        stage.act(delta);
-        stage.draw();
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+        super.render();
     }
     @Override
     public void dispose() {
