@@ -50,6 +50,7 @@ public class MainScreen extends MyScreen {
 
         for(int i = 0; i < Backend.getRelevantPosts().size(); i++) {
             PostScreen item = new PostScreen(notes);
+            stage.addActor(item);
         }
         //Gdx.input.setInputProcessor(new GestureDetector(new MyGestureListener()));
         //stage.scrolled(notes.setScreen();)

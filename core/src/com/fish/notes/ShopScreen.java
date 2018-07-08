@@ -57,36 +57,36 @@ public class ShopScreen extends MyScreen {
         this.smallpack = new Label("Purchase Small", Notes.skin);
         this.small = new Image(new Texture("small.png"));
         smallpack.setColor(Color.BLUE);
-        smallpack.addListener(new ClickListener(){
+        this.buysmall = new TextButton("$0.99", Notes.skin);
+        buysmall.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 notes.getPlatformResolver().requestPurchase(NotesConstants.ONE_COIN_ID);
                 notes.checkTransaction(NotesConstants.ONE_COIN_ID);
             }
         });
-        this.buysmall = new TextButton("$0.99", Notes.skin);
         this.mediumpack = new Label("Purchase Medium", Notes.skin);
         mediumpack.setColor(Color.BLUE);
-        mediumpack.addListener(new ClickListener(){
+        this.med = new Image(new Texture("medium.png"));
+        this.buymed = new TextButton("$4.29", Notes.skin);
+        buymed.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 notes.getPlatformResolver().requestPurchase(NotesConstants.FIVE_COIN_ID);
                 notes.checkTransaction(NotesConstants.FIVE_COIN_ID);
             }
         });
-        this.med = new Image(new Texture("medium.png"));
-        this.buymed = new TextButton("$4.29", Notes.skin);
         this.largepack = new Label("Purchase Large", Notes.skin);
         largepack.setColor(Color.BLUE);
-        largepack.addListener(new ClickListener(){
+        this.large = new Image(new Texture("large.png" ));
+        this.buylarge = new TextButton("$14.99", Notes.skin);
+        buylarge.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 notes.getPlatformResolver().requestPurchase(NotesConstants.TWENTY_COIN_ID);
                 notes.checkTransaction(NotesConstants.TWENTY_COIN_ID);
             }
         });
-        this.large = new Image(new Texture("large.png" ));
-        this.buylarge = new TextButton("$14.99", Notes.skin);
 
 
         Table table = new Table();

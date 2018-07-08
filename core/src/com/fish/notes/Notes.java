@@ -52,7 +52,7 @@ public class Notes extends Game {
         addCreators();
         account = new Account(12546772, "testuser", new byte[0], "testeremail@tester.com");
         screensManager = new ScreensManager(this);
-        setScreen(new MakeScreen(this));
+        setScreen(new MainScreen(this));
 
         purchaseManagerConfig = new PurchaseManagerConfig();
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.CONSUMABLE).setIdentifier(NotesConstants.FIVE_COIN_ID));
@@ -109,7 +109,7 @@ public class Notes extends Game {
         //Information information = PurchaseSystem.getInformation(NotesConstants.FIVE_COIN_ID);
 
         getPlatformResolver().requestPurchaseRestore();
-        
+
         Backend.init();
     }
 

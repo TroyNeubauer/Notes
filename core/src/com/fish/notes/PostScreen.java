@@ -19,16 +19,17 @@ import com.fish.core.notes.Post;
 
 import javax.xml.soap.Text;
 
-public class PostScreen extends MyScreen {
+public class PostScreen extends Table {
     private TextButton back;
     private Label title, votes, username;
     private Image pfp;
     private ImageButton up, down;
+    private Notes notes;
 
-    public PostScreen(final Notes notes)
-    {
-        super(notes);
-        for(final Post p: Backend.getRelevantPosts()) {
+    public PostScreen(final Notes notes) {
+        //super(notes);
+        this.notes = notes;
+        for (final Post p : Backend.getRelevantPosts()) {
             this.title = new Label("" + p.getTitle(), Notes.skin);
             title.setColor(Color.BLUE);
             this.votes = new Label("Votes: " + Backend.getUpvotes(p), Notes.skin);
@@ -74,19 +75,7 @@ public class PostScreen extends MyScreen {
             table.add(username).width(40).height(40).expand().bottom().left();
             table.add(up).right().width(40).height(40);
             table.add(down).left().width(40).height(40);
-            stage.addActor(table);
-            Gdx.input.setInputProcessor(stage);
+
         }
-    }
-
-    @Override
-    public void render(float delta) {
-        stage.act(delta);
-        stage.draw();
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 }

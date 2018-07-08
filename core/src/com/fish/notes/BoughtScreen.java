@@ -54,7 +54,6 @@ public class BoughtScreen extends MyScreen {
         table.row();
 
         for (int i = 0; i < Backend.getBoughtPosts().size(); i++) {
-            this.stage = new Stage();
             for (Post p : Backend.getBoughtPosts()) {
                 this.title = new Label("" + p.getTitle(), Notes.skin);
                 title.setColor(Color.BLUE);
@@ -71,11 +70,12 @@ public class BoughtScreen extends MyScreen {
                 supertable.add(username).width(40).height(40).expand().bottom().left();
                 supertable.row();
                 stage.addActor(supertable);
-                Gdx.input.setInputProcessor(stage);
+
 
             }
         }
     }
+
     public void dispose () {
             stage.dispose();
         }
