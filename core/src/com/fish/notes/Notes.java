@@ -51,7 +51,7 @@ public class Notes extends Game {
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
         screensManager = new ScreensManager(this);
-        setScreen(new MainScreen(this));
+        setScreen(new LoginScreen(this));
 
         purchaseManagerConfig = new PurchaseManagerConfig();
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.CONSUMABLE).setIdentifier(NotesConstants.FIVE_COIN_ID));
