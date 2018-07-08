@@ -1,6 +1,7 @@
 package com.fish.notes;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -90,7 +91,9 @@ public class SettingsScreen extends MyScreen
                         school = temp;
                 }
                 Backend.setSchool(school);
-
+                if ((key == '\r' || key == '\n')){
+                    textfield.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) );
+                }
             }
         });
 
@@ -105,6 +108,9 @@ public class SettingsScreen extends MyScreen
                        course = temp;
                 }
                 Backend.joinClass(Notes.account,course);
+                if ((key == '\r' || key == '\n')){
+                    textfield.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)  );
+                }
             }
         });
 

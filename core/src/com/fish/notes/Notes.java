@@ -49,7 +49,7 @@ public class Notes extends Game {
         addCreators();
         account = new Account(12546772, "testuser", new byte[0], "testeremail@tester.com");
         screensManager = new ScreensManager(this);
-        setScreen(new LoginScreen(this));
+        setScreen(new MakeScreen(this));
 
         purchaseManagerConfig = new PurchaseManagerConfig();
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.CONSUMABLE).setIdentifier(NotesConstants.FIVE_COIN_ID));

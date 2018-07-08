@@ -98,7 +98,24 @@ public class MakeScreen extends MyScreen {
         stage.addActor(superTable);
         Gdx.input.setInputProcessor(stage);
 
-
+        title.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textfield, char key)
+            {
+                if ((key == '\r' || key == '\n')){
+                    textfield.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) );
+                }
+            }
+        });
+        classbox.setTextFieldListener(new TextField.TextFieldListener() {
+            @Override
+            public void keyTyped(TextField textfield, char key)
+            {
+                if ((key == '\r' || key == '\n')){
+                    textfield.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) || Gdx.input.isKeyPressed(Input.Keys.SHIFT_RIGHT) );
+                }
+            }
+        });
         textPost.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
             public void keyTyped(TextField textfield, char key)
