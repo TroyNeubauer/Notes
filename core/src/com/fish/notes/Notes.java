@@ -37,7 +37,11 @@ public class Notes extends Game {
     public static PurchaseObserver purchaseObserver;
     static PlatformResolver m_platformResolver;
     public static ScreensManager screensManager;
-
+    public static OpenGallery gallery;
+    public Notes(OpenGallery gallery)
+    {
+        this.gallery = gallery;
+    }
 	@Override
 	public void create () {
         dialogs = GDXDialogsSystem.install();
@@ -205,5 +209,10 @@ public class Notes extends Game {
     }
     public static void setPlatformResolver (PlatformResolver platformResolver) {
         m_platformResolver = platformResolver;
+    }
+
+    public static Texture getPics(String path)
+    {
+        return new Texture(path);
     }
 }

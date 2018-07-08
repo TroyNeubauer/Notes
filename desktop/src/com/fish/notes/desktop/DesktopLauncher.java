@@ -18,14 +18,7 @@ public class DesktopLauncher {
         config.addIcon("mac.png", Files.FileType.Internal);
         config.addIcon("windows.png", Files.FileType.Internal);
         config.addIcon("windows2.png", Files.FileType.Internal);
-        try {
-            Class<?> cls = Class.forName("com.apple.eawt.Application");
-            Object application = cls.newInstance().getClass().getMethod("getApplication").invoke(null);
-            FileHandle icon = Gdx.files.local("mac.png");
-            application.getClass().getMethod("setDockIconImage", java.awt.Image.class).invoke(application, new ImageIcon(icon.file().getAbsolutePath()).getImage());
-        } catch (Exception e) {
-            System.out.println("Failed to set mac thing");
-        }
-		new LwjglApplication(new Notes(), config);
+
+		new LwjglApplication(new Notes(new DesktopGalleryOpener()), config);
 	}
 }

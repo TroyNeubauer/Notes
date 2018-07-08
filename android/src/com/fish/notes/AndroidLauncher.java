@@ -1,5 +1,6 @@
 package com.fish.notes;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import com.badlogic.gdx.backends.android.AndroidApplication;
@@ -11,7 +12,8 @@ public class AndroidLauncher extends AndroidApplication {
 	protected void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		AndroidApplicationConfiguration config = new AndroidApplicationConfiguration();
-		Notes notes = new Notes();
+
+		Notes notes = new Notes(new AndroidGalleryOpener(this));
 		initialize(notes, config);
 		Notes.setPlatformResolver(new AndroidResolver(notes, this));
 		}

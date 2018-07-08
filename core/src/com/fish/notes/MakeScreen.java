@@ -3,19 +3,21 @@ package com.fish.notes;
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.fish.core.notes.Course;
 import com.fish.core.notes.LoginResult;
 import com.fish.core.notes.PostData;
+import com.fish.core.notes.PostDataImage;
 import com.fish.core.notes.PostDataText;
 
 import java.util.Set;
 
 public class MakeScreen extends MyScreen {
 
-    private TextButton submit,back;
+    private TextButton submit,back, img;
     private CheckBox picchoice, textchoice;
     private Label label;
     private TextField title, classbox;
@@ -108,10 +110,11 @@ public class MakeScreen extends MyScreen {
             }
         });
 
-        .addListener(new ClickListener() {
+        img.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                data  = new PostDataText(textPost.getText());
+                Texture img = Notes.getPics(Notes.gallery.getSelectedFilePath());
+                data  = new PostDataImage(ClientUtils.textureToJPEG(img));
             }
         });
 
