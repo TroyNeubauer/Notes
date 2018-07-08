@@ -20,7 +20,7 @@ public class MainScreen extends MyScreen {
         this.totalvotes = new Label("Total Votes: " + Notes.account.getAccount().getPoints(), Notes.skin);
         totalvotes.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
-        this.user = new Image(new Texture("Fishnotes_udp.png"));
+        this.user = new Image(ClientUtils.jpegToTexture(Notes.account.toPublicAccount().getProfilePic()));
         this.coin = new Image(new Texture("coins.png"));
         this.votes = new Image(new Texture("Fishnotes_upvote.png"));
 

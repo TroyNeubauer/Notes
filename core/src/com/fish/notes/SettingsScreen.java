@@ -131,7 +131,7 @@ public class SettingsScreen extends MyScreen
             public void clicked(InputEvent event, float x, float y)
             {
                 Texture img = Notes.getPics(Notes.gallery.getSelectedFilePath());
-                Notes.account.toPublicAccount().setProfilePic()ClientUtils.textureToJPEG(img));
+                Notes.account.toPublicAccount().setProfilePic(ClientUtils.textureToJPEG(img));
             }
         });
 
