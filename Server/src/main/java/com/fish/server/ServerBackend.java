@@ -196,12 +196,13 @@ public class ServerBackend {
         return server.database.getAllClasses(school);
     }
 
-    public static Post getPost(long id) {
+    public static Post getPost(Client sender, long id) {
         return server.database.posts.get(id).getPost();
     }
 
-    public static List<Long> getBoughtPosts() {
-        return (List<Post>) getData("getBoughtPosts");
+    public static Object getBoughtPosts(Client sender) {
+        if(sender.getAccount() == null) return new ErrorString("Please login before requesting data");
+        return sender.getAccount().getBoughtPosts();
     }
 
 }
