@@ -11,4 +11,12 @@ public class DefaultNotesObject implements NotesObject {
     public long getID() {
         return id;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this.getClass() != obj.getClass()) {
+            return false;
+        }
+        return this.id == ((DefaultNotesObject) obj).getID();
+    }
 }

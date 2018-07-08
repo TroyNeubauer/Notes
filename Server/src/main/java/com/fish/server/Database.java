@@ -4,6 +4,7 @@ import com.fish.core.notes.Account;
 import com.fish.core.notes.Course;
 import com.fish.core.notes.DatabaseAccount;
 import com.fish.core.notes.Post;
+import com.fish.core.notes.PostData;
 import com.fish.core.notes.School;
 
 import java.security.SecureRandom;
@@ -16,10 +17,21 @@ public class Database {
     public int hashBytes, iterations, saltBytes;
     public byte[] pepper;
     public HashMap<String, DatabaseAccount> users = new HashMap<String, DatabaseAccount>();
-    public HashMap<School, List<Map<Course, Post>>> schools = new HashMap<School, List<Map<Course, Post>>>();
-    private long totalUsers = 0L;
+    public HashMap<School, Map<Course, List<Long>>> schools = new HashMap<School, Map<Course, List<Long>>>();//map between schools and courses to the list of post id's
+    public HashMap<DatabaseAccount, List<Post>> posts = new HashMap<DatabaseAccount, List<Post>>();
+    private long totalUsers;
 
     private transient SecureRandom random = new SecureRandom();
+
+    public Database(int hashBytes, int iterations, int saltBytesr, int pepperBytes) {
+        this.hashBytes = hashBytes;
+        this.iterations = iterations;
+        this.saltBytes = saltBytes;
+
+        this.pepper = new byte[pepperBytes];
+        this.random.nextBytes(pepper);
+        this.totalUsers = 0L;
+    }
 
     public DatabaseAccount registerUser(String username, char[] password, String email) {
         if (containsUsername(username))
@@ -34,7 +46,7 @@ public class Database {
         return account;
     }
 
-    private boolean containsUsername(String username) {
+    public boolean containsUsername(String username) {
         return users.containsKey(username);
     }
 
@@ -57,8 +69,61 @@ public class Database {
                     return false;
                 }
             }
-            return true;
+            return true;//They match!
         }
         return false;
+    }
+
+    public DatabaseAccount getAccount(String username) {
+        return users.get(username);
+    }
+
+    public DatabaseAccount removeUser(String username) {
+        DatabaseAccount account = users.get(username);
+        if(account != null) users.remove(username);
+        return account;
+    }
+
+    public DatabaseAccount getAccountByID(long id) {
+        for(DatabaseAccount account : users.values()) {
+            if(account.getAccount().getID() == id) return account;
+        }
+        return null;
+    }
+
+    public School getSchoolByID(long id) {
+        for(School school : schools.keySet()) {
+            if(school.getID() == id) return school;
+        }
+        return null;
+    }
+
+    public Course getClassByID(School school, long id) {
+        Map<Course, List<Long>> classes = schools.get(school);
+        if(classes == null) return null;
+        for(Course course : classes.keySet()) {
+            if(course.getID() == id) return course;
+        }
+        return null;
+    }
+
+    public boolean joinClass(School school, DatabaseAccount account, Course course) {
+        if(account.getAccount().getSchool() == -1) return false;
+
+
+
+        return true;
+    }
+
+    public boolean containsEmail(String email) {
+        for(DatabaseAccount account : users.values()) {
+            if(account.getAccount().getEmail().equals(email)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public void post(DatabaseAccount account, Course course, PostData data) {
     }
 }

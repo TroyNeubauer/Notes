@@ -50,13 +50,7 @@ public class DatabaseAccount {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((account == null) ? 0 : account.hashCode());
-		result = prime * result + Arrays.hashCode(hash);
-		result = prime * result + iterations;
-		result = prime * result + Arrays.hashCode(salt);
-		return result;
+		return account.hashCode();
 	}
 
 	@Override
@@ -82,4 +76,7 @@ public class DatabaseAccount {
 		return true;
 	}
 
+    public PublicAccount toPublicAccount() {
+	    return new PublicAccount(account.getID(), account.getUsername(), account.getProfilePic());
+    }
 }

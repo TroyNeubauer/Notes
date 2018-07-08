@@ -22,6 +22,7 @@ import com.fish.notes.backend.RequestInfo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -163,22 +164,34 @@ public class Backend implements Runnable {
         return (Course) getData("getClass", id);
     }
 
-    public static void joinClass(Account account, Course course) {
-        getData("joinClass", account, course);
-        account.getClasses().add(course.getID());
+    public static boolean joinClass(Account account, Course course) {
+        boolean success = (Boolean) getData("joinClass", course);
+        if(success) account.getClasses().add(course.getID());
+        return success;
     }
 
-
-
     public static LoginResult login(String username, String password) {
-        return (LoginResult) getData("login", username, password);
+        return (LoginResult) getData("login", username, password.toCharArray());
     }
 
     public static LoginResult register(String username, String password, String email) {
-        return (LoginResult) getData("register", username, password, email);
+        return (LoginResult) getData("register", username, password.toCharArray(), email);
     }
 
     public static Post post(String title, Course course, PostData data) {
         return (Post) getData("post", title, course, data);
+    }
+
+
+    public static Set<School> getAllSchools() {
+        return (Set<School>) getData("getAllSchools");
+    }
+
+    public static boolean setSchool(School school) {
+        return (Boolean) getData("setSchool", school.getID());
+    }
+
+    public static boolean removeClass(Course course) {
+        return (Boolean) getData("removeClass", course.getID());
     }
 }

@@ -29,12 +29,14 @@ public class Account extends PublicAccount {
         return classes;
     }
 
+    public long getSchool() {
+        return schoolID;
+    }
+
     @Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		return result;
+	    long id = getID();
+		return (int) ((id >> 32) ^ id);
 	}
 
 	@Override

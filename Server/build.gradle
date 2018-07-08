@@ -1,9 +1,9 @@
 apply plugin: 'java-library'
 
 dependencies {
-    implementation fileTree(include: ['*.jar'], dir: 'libs')
     compile project(':CoreStuff')
+    compile group: 'com.esotericsoftware', name: 'kryo', version: '4.0.0'
 }
 
-sourceCompatibility = "1.6"
-targetCompatibility = "1.6"
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
