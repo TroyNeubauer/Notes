@@ -103,11 +103,11 @@ public class Notes extends Game {
             public void handlePurchaseCanceled () {
             }
         };
-        PurchaseSystem.install(purchaseObserver, purchaseManagerConfig);
+       /* PurchaseSystem.install(purchaseObserver, purchaseManagerConfig);
         PurchaseSystem.purchase(NotesConstants.FIVE_COIN_ID);
         //Information information = PurchaseSystem.getInformation(NotesConstants.FIVE_COIN_ID);
-
-        getPlatformResolver().requestPurchaseRestore();
+*/
+       // getPlatformResolver().requestPurchaseRestore();
 
         Backend.init();
         screensManager = new ScreensManager(this);
