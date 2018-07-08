@@ -1,11 +1,13 @@
 package com.fish.core.notes;
 
+import com.sun.prism.Texture;
+
 public class PublicAccount extends DefaultNotesObject {
 
     private String username;
-    private byte[] profilePic;
+    private Texture profilePic;
 
-    public PublicAccount(long id, String username, byte[] profilePic) {
+    public PublicAccount(long id, String username, Texture profilePic) {
         super(id);
         this.username = username;
         this.profilePic = profilePic;
@@ -15,7 +17,7 @@ public class PublicAccount extends DefaultNotesObject {
         return username;
     }
 
-    public byte[] getProfilePic() {
+    public Texture getProfilePic() {
         return profilePic;
     }
 }

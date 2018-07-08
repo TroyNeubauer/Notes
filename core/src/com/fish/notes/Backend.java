@@ -32,7 +32,7 @@ public class Backend {
         return true;
     }
 
-    private static void start() {
+    public static void start() {
         FileHandle dataBaseFile = Gdx.files.internal("database.dat");
         if(dataBaseFile.exists()) {
             database = Utils.readObject(Database.class, new ByteArrayInputStream(dataBaseFile.readBytes()));

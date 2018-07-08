@@ -78,7 +78,7 @@ public class ProfileScreen extends MyScreen {
         container.add(pfp).left().row();
         container.add(courses).prefSize(courses.getWidth(), courses.getHeight()).left().row();
 
-        for(long ID : Notes.account.getClasses())
+        for(long ID : Notes.account.getAccount().getClasses())
         {
             Label temp = new Label("" + Backend.getClass(ID), Notes.skin);
             container.add(temp).prefSize(temp.getWidth(), temp.getHeight()).left().row();

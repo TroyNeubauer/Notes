@@ -1,12 +1,13 @@
 package com.fish.core.notes;
 
+import java.util.HashSet;
 import java.util.Set;
 
 public class Account extends PublicAccount {
 
 	public String email;
 	private long schoolID;
-	private Set<Long> classes;
+	private Set<Long> classes = new HashSet<Long>();
     private int points, coins;
 
 	public Account(long id, String username, byte[] profilePic, String email) {

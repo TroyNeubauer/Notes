@@ -50,6 +50,7 @@ public class Notes extends Game {
     }
 	@Override
 	public void create () {
+        Backend.start();
         dialogs = GDXDialogsSystem.install();
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
