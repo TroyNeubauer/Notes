@@ -39,7 +39,7 @@ public class ShopScreen extends MyScreen {
         title.setFontScaleY(2);
         title.setColor(Color.TEAL);
 
-        this.name = new Label("User: " + Backend.getAccount(p.getPosterID()).getUsername(), Notes.skin);
+        this.name = new Label("User: " + Backend.getAccount(Notes.account.getID()).getUsername(), Notes.skin);
         name.setAlignment(Align.left);
         name.setColor(Color.DARK_GRAY);
 
@@ -49,20 +49,31 @@ public class ShopScreen extends MyScreen {
         this.smallpack = new Label("Purchase Small", Notes.skin);
         this.small = new Image(new Texture("small.png"));
         smallpack.setColor(Color.BLUE);
-        smallpack.setDebug(true);
         smallpack.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("click");
+                //
             }
         });
         this.buysmall = new TextButton("$0.99", Notes.skin);
         this.mediumpack = new Label("Purchase Medium", Notes.skin);
         mediumpack.setColor(Color.BLUE);
+        mediumpack.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //
+            }
+        });
         this.med = new Image(new Texture("medium.png"));
         this.buymed = new TextButton("$4.29", Notes.skin);
         this.largepack = new Label("Purchase Large", Notes.skin);
         largepack.setColor(Color.BLUE);
+        largepack.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                //
+            }
+        });
         this.large = new Image(new Texture("large.png" ));
         this.buylarge = new TextButton("$14.99", Notes.skin);
 
