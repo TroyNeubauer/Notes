@@ -10,7 +10,6 @@ public abstract class MyScreen implements Screen
     public MyScreen()
     {
     }
-
     /** Called when this screen becomes the current screen for a {@link Game}. */
     public void show ()
     {
