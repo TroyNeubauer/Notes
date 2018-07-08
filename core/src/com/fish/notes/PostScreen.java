@@ -33,7 +33,7 @@ public class PostScreen extends Table {
             title.setColor(Color.BLUE);
             this.votes = new Label("Votes: " + Backend.getUpvotes(p), Notes.skin);
             votes.setColor(Color.BLUE);
-            this.username = new Label("" + Backend.getAccount(Notes.account.getID()).getUsername(), Notes.skin);
+            this.username = new Label("" + Backend.getAccount(Notes.account.getAccount().getID()).getUsername(), Notes.skin);
             this.back = new TextButton("Back", Notes.skin);
             back.setColor(Color.DARK_GRAY);
             back.addListener(new ClickListener() {

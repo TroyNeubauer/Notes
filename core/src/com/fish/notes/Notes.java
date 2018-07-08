@@ -20,10 +20,13 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.fish.core.NotesConstants;
 import com.fish.core.notes.Account;
 import com.fish.core.notes.Core;
+import com.fish.core.notes.DatabaseAccount;
 import com.fish.core.notes.LoginResult;
 import com.fish.core.notes.Post;
 import com.fish.core.notes.PostDataImage;
 import com.fish.core.notes.PostDataText;
+import com.fish.notes.backend.Database;
+
 import de.tomgrill.gdxdialogs.core.GDXDialogs;
 import de.tomgrill.gdxdialogs.core.GDXDialogsSystem;
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
@@ -33,7 +36,7 @@ import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 public class Notes extends Game {
 	public static Skin skin;
 	public static GDXDialogs dialogs;
-	public static Account account;
+	public static DatabaseAccount account = Backend.getMyAccount();
     public static PurchaseManagerConfig purchaseManagerConfig;
     public static PurchaseObserver purchaseObserver;
     public static PlatformResolver m_platformResolver;
@@ -51,7 +54,7 @@ public class Notes extends Game {
 		skin = new Skin(Gdx.files.internal("default.json"));
         addCreators();
         screensManager = new ScreensManager(this);
-        setScreen(new LoginScreen(this));
+        setScreen(screensManager);
         setPlatformResolver(new PlatformResolver(this));
         purchaseManagerConfig = new PurchaseManagerConfig();
         purchaseManagerConfig.addOffer(new Offer().setType(OfferType.CONSUMABLE).setIdentifier(NotesConstants.FIVE_COIN_ID));

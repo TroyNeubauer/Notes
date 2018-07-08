@@ -1,4 +1,4 @@
-package com.fish.server;
+package com.fish.core.notes;
 
 
 import com.fish.core.notes.Post;

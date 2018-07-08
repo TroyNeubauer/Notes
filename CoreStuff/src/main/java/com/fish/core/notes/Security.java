@@ -1,4 +1,4 @@
-package com.fish.server;
+package com.fish.core.notes;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.*;

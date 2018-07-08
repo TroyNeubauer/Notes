@@ -48,12 +48,12 @@ public class ProfileScreen extends MyScreen {
 
 
 
-        this.name = new Label("User: " + Notes.account.getUsername(), Notes.skin);
-        this.email = new Label("Email: " + Notes.account.getEmail(), Notes.skin);
-        this.school = new Label("School: " + Backend.getSchool(Notes.account.getID()), Notes.skin);
+        this.name = new Label("User: " + Notes.account.getAccount().getUsername(), Notes.skin);
+        this.email = new Label("Email: " + Notes.account.getAccount().getEmail(), Notes.skin);
+        this.school = new Label("School: " + Backend.getSchool(Notes.account.getAccount().getID()), Notes.skin);
         this.courses = new Label("Courses: ", Notes.skin);
-        this.points = new Label("Points: " + Notes.account.getPoints(), Notes.skin);
-        this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
+        this.points = new Label("Points: " + Notes.account.getAccount().getPoints(), Notes.skin);
+        this.coins = new Label("Coins: " + Notes.account.getAccount().getCoins(), Notes.skin);
 
         name.setAlignment(Align.right);
         email.setAlignment(Align.right);

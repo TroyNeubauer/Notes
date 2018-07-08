@@ -47,7 +47,7 @@ public class SettingsScreen extends MyScreen
         addCourse.setMessageText("Add a new course");
         addCourse.setAlignment(Align.center);
 
-        Texture thing = jpegToTexture(Notes.account.getProfilePic());
+        Texture thing = jpegToTexture(Notes.account.getAccount().getProfilePic());
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(thing));
         this.img = new ImageButton(drawable);
 
@@ -58,7 +58,7 @@ public class SettingsScreen extends MyScreen
         container.add(img).prefSize(img.getWidth(), img.getHeight()).row();
         container.add(changeSchool).prefSize(changeSchool.getWidth(), changeSchool.getHeight()).row();
         container.add(addCourse).prefSize(addCourse.getWidth(), addCourse.getHeight()).row();
-        for(long ID : Notes.account.getClasses())
+        for(long ID : Notes.account.getAccount().getClasses())
         {
             final Course course = Backend.getClass(ID);
             Label temp = new Label ("" + course.getName(), Notes.skin);
@@ -107,7 +107,7 @@ public class SettingsScreen extends MyScreen
                    if(temp.getName().equals(addCourse.getText()))
                        course = temp;
                 }
-                Backend.joinClass(Notes.account,course);
+                Backend.joinClass(course);
                 if ((key == '\r' || key == '\n')){
                     textfield.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT)  );
                 }

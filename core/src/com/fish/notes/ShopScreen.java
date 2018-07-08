@@ -47,11 +47,11 @@ public class ShopScreen extends MyScreen {
         });
         back.setColor(Color.DARK_GRAY);
 
-        this.name = new Label("User: " + Backend.getAccount(Notes.account.getID()).getUsername(), Notes.skin);
+        this.name = new Label("User: " + Backend.getAccount(Notes.account.getAccount().getID()).getUsername(), Notes.skin);
         name.setAlignment(Align.left);
         name.setColor(Color.DARK_GRAY);
 
-        this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
+        this.coins = new Label("Coins: " + Notes.account.getAccount().getCoins(), Notes.skin);
         coins.setAlignment(Align.left);
         
         this.smallpack = new Label("Purchase Small", Notes.skin);

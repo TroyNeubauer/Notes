@@ -1,11 +1,13 @@
-package com.fish.server;
+package com.fish.notes.backend;
 
 import com.fish.core.notes.Account;
 import com.fish.core.notes.Course;
 import com.fish.core.notes.DatabaseAccount;
+import com.fish.core.notes.DatabasePost;
 import com.fish.core.notes.Post;
 import com.fish.core.notes.PostData;
 import com.fish.core.notes.School;
+import com.fish.core.notes.Security;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
@@ -26,15 +28,12 @@ public class Database {
 
     private AtomicLong postCount = new AtomicLong(0L);
 
-
-    public Database(int hashBytes, int iterations, int saltBytesr, int pepperBytes) {
+    public Database(int hashBytes, int iterations, int saltBytes, int pepperBytes) {
         this.hashBytes = hashBytes;
         this.iterations = iterations;
         this.saltBytes = saltBytes;
-
         this.pepper = new byte[pepperBytes];
         new SecureRandom().nextBytes(pepper);
-        this.totalUsers = 0L;
     }
 
     public DatabaseAccount registerUser(String username, char[] password, String email) {
@@ -44,7 +43,7 @@ public class Database {
         new SecureRandom().nextBytes(salt);
 
         byte[] hash = Security.getHashedPassword(password, salt, pepper, iterations, hashBytes);
-        Account basicAccount = new Account(totalUsers++, username, Server.DEFAULT_PROFILE_PIC, email);
+        Account basicAccount = new Account(totalUsers++, username, new byte[0], email);
         DatabaseAccount account = new DatabaseAccount(basicAccount, iterations, salt, hash);
         System.out.println("Creating new user account,  username:\"" + username + "\" email:\"" + email + "\"");
         users.put(username, account);
@@ -164,26 +163,5 @@ public class Database {
         Map<Course, List<Long>> map = schools.get(school);
         if(map == null) return null;
         return map.keySet();
-    }
-
-    public void listUsers() {
-        System.out.println("Database currently tracking " + users.size() + " out of " + totalUsers + " total users");
-        for(DatabaseAccount account : users.values()) {
-            System.out.println("\t" + account.getAccount().getUsername() + ", " + account.getAccount().getEmail());
-        }
-    }
-
-    public void listPosts() {
-        System.out.println("Database currently tracking " + posts.size() + " out of " + postCount.get() + " total posts");
-        for(DatabasePost post : posts.values()) {
-            System.out.println("\t" + post.getPost());
-        }
-    }
-
-    public void listSchools() {
-        System.out.println("Database currently tracking " + schools.size() + " schools");
-        for(School school : schools.keySet()) {
-            System.out.println("\t" + school);
-        }
     }
 }

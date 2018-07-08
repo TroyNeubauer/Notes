@@ -14,10 +14,10 @@ public class MainScreen extends MyScreen {
         this.username = new Label("" + Notes.account, Notes.skin);
         username.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
-        this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
+        this.coins = new Label("Coins: " + Notes.account.getAccount().getCoins(), Notes.skin);
         coins.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
-        this.totalvotes = new Label("Total Votes: " + Notes.account.getPoints(), Notes.skin);
+        this.totalvotes = new Label("Total Votes: " + Notes.account.getAccount().getPoints(), Notes.skin);
         totalvotes.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
         this.user = new Image(new Texture("Fishnotes_udp.png"));

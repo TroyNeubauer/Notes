@@ -36,10 +36,10 @@ public class BoughtScreen extends MyScreen {
         this.username = new Label("" + Notes.account, Notes.skin);
         username.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
-        this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
+        this.coins = new Label("Coins: " + Notes.account.getAccount().getCoins(), Notes.skin);
         coins.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
-        this.totalvotes = new Label("Total Votes: " + Notes.account.getPoints(), Notes.skin);
+        this.totalvotes = new Label("Total Votes: " + Notes.account.getAccount().getPoints(), Notes.skin);
         totalvotes.setColor(com.badlogic.gdx.graphics.Color.DARK_GRAY);
 
         this.user = new Image(new Texture("Fishnotes_udp.png"));
@@ -56,12 +56,13 @@ public class BoughtScreen extends MyScreen {
         table.add(totalvotes).height(30).width(30);
         table.row();
 
-            for (Post p : Backend.getBoughtPosts()) {
-                this.title = new Label("" + p.getTitle(), Notes.skin);
+            for (Long postID : Backend.getBoughtPosts()) {
+                Post post = Backend.getPost(postID);
+                this.title = new Label("" + post.getTitle(), Notes.skin);
                 title.setColor(Color.BLUE);
-                this.votes = new Label("Votes: " + Backend.getUpvotes(p), Notes.skin);
+                this.votes = new Label("Votes: " + Backend.getUpvotes(post), Notes.skin);
                 votes.setColor(Color.BLUE);
-                this.username = new Label("" + Backend.getAccount(Notes.account.getID()).getUsername(), Notes.skin);
+                this.username = new Label("" + Backend.getAccount(Notes.account.getAccount().getID()).getUsername(), Notes.skin);
                 Table supertable = new Table();
                 supertable.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
                 supertable.add(back).width(40).height(40).top().right();
