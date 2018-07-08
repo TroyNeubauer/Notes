@@ -15,13 +15,12 @@ import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 
 public class MainScreen extends MyScreen {
     private Stage stage;
-    private TextButton loginButton, registerBtn;
     private Label username, coins, totalvotes;
     private Image user, coin, votes;
-    private Notes game;
+    private Notes notes;
 
     public MainScreen(final Notes notes) {
-        this.game = new Notes();
+        this.notes = new Notes();
         this.stage = new Stage();
 
         this.username = new Label("" + Notes.account, Notes.skin);
