@@ -21,7 +21,7 @@ public class MakeScreen extends MyScreen {
     private CheckBox picchoice, textchoice;
     private Label label;
     private TextField title, classbox;
-    private TextArea postdata;
+    private TextArea textPost;
     private Course course;
     private PostData data;
 
@@ -46,9 +46,9 @@ public class MakeScreen extends MyScreen {
         title.setMessageText("Title");
         title.setColor(Color.BLUE);
 
-        this.postdata = new TextArea("", Notes.skin);
-        postdata.setMessageText("Enter Text");
-        postdata.setColor(Color.BLUE);
+        this.textPost = new TextArea("", Notes.skin);
+        textPost.setMessageText("Enter Text");
+        textPost.setColor(Color.BLUE);
 
         this.classbox = new TextField("", Notes.skin);
         classbox.setMessageText("Class");
@@ -89,7 +89,7 @@ public class MakeScreen extends MyScreen {
         textchoice.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                container.add(postdata).prefSize(postdata.getWidth(), postdata.getHeight()).row();
+                container.add(textPost).prefSize(textPost.getWidth(), textPost.getHeight()).row();
                 container.add(submit).prefSize(submit.getWidth(),submit.getHeight()).row();
             }
         });
@@ -118,7 +118,7 @@ public class MakeScreen extends MyScreen {
             @Override
             public void keyTyped(TextField textfield, char key)
             {
-                data = data = new PostDataText(postdata.getText());
+                data = data = new PostDataText(textPost.getText());
             }
         });
 
