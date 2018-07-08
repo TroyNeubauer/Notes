@@ -2,12 +2,18 @@ package com.fish.notes;
 
 import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.fish.core.notes.Post;
 
 public class MainScreen extends MyScreen {
     private Label username, coins, totalvotes;
     private Image user, coin, votes;
+    private ImageButton makePost;
 
     public MainScreen(final Notes notes) {
         super(notes);
@@ -24,14 +30,17 @@ public class MainScreen extends MyScreen {
         this.coin = new Image(new Texture("coins.png"));
         this.votes = new Image(new Texture("Fishnotes_upvote.png"));
 
+        Drawable drawable = new TextureRegionDrawable(new TextureRegion(new Texture("Fishnotes_post.png")));
+        makePost = new ImageButton(drawable);
+
         Table table = new Table();
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        table.add(user).height(30).width(30);
-        table.add(username).height(30).width(30);
-        table.add(coin).height(30).width(30);
-        table.add(coins).height(30).width(30);
-        table.add(votes).height(30).width(30);
-        table.add(totalvotes).height(30).width(30);
+        table.add(user).height(30).width(30).top();
+        table.add(username).height(30).width(30).top();
+        table.add(coin).height(30).width(30).top();
+        table.add(coins).height(30).width(30).top();
+        table.add(votes).height(30).width(30).top();
+        table.add(totalvotes).height(30).width(30).top();
         table.row();
         stage.addActor(table);
         java.util.List<Post> relevantPosts = Backend.getRelevantPosts();
@@ -40,6 +49,18 @@ public class MainScreen extends MyScreen {
             PostScreen item = new PostScreen(notes, relevantPosts.get(i));
             stage.addActor(item);
         }
+        Table container = new Table();
+        container.setBounds(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        container.add(makePost).bottom();
+        stage.addActor(container);
+
+        makePost.addListener(new ClickListener()
+        {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+            notes.setScreen(new MakeScreen(notes));
+            }
+        });
     }
 
 }
