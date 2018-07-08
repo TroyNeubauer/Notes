@@ -8,9 +8,41 @@ import com.fish.core.notes.Post;
 import com.fish.core.notes.PostData;
 import com.fish.core.notes.PublicAccount;
 import com.fish.core.notes.School;
+import com.fish.core.util.ErrorString;
+import com.fish.core.util.Utils;
+
+import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class ServerBackend {
     private static Server server;
+    private static final HashMap<String, Method> methods = new HashMap<String, Method>();
+
+    public static void init(Server server) {
+        if(server != null) throw new RuntimeException("Already inited!");
+        ServerBackend.server = server;
+        for(Method method : ServerBackend.class.getMethods()) {
+
+        }
+    }
+
+    public static Object invoke(String name, Client sender, Object... args) {
+        Method method = methods.get(name);
+        if(method == null) {
+            return new ErrorString("Unable to run method with args " + Utils.getElementClasses(args));
+        }
+        Object[] finalArgs = new Object[args.length + 1];
+        finalArgs[0] = sender;
+        System.arraycopy(args, 0, finalArgs, 1, args.length);//Copy all normal args
+        try {
+            return method.invoke(null, args);
+        } catch(Exception e) {
+            return new ErrorString("Unable to ");
+        }
+    }
 
     public static PublicAccount getAccount(Client sender, long id) {
         DatabaseAccount account = server.database.getAccountByID(id);
@@ -59,6 +91,21 @@ public class ServerBackend {
 
     public static Post post(Client sender, String title, Course course, PostData data) {
         if(sender.getAccount() == null) return null;
-        server.database.post(sender.getAccount(), course, data);
+        return server.database.post(sender.getAccount(), title, data);
+    }
+
+    public static Set<School> getAllSchools(Client sender) {
+        return server.database.schools.keySet();
+    }
+
+    public static boolean setSchool(Client sender, long schoolID) {
+        if(sender.getAccount() == null) return false;
+        sender.getAccount().getAccount().setSchool(schoolID);
+        return true;
+    }
+
+    public static boolean removeClass(Client sender, long courseID) {
+        if(sender.getAccount() == null) return false;
+        return sender.getAccount().getAccount().getClasses().remove(courseID);
     }
 }
