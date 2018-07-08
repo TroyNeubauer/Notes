@@ -4,14 +4,19 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.pay.Information;
+import com.badlogic.gdx.pay.Offer;
+import com.badlogic.gdx.pay.OfferType;
 import com.badlogic.gdx.pay.PurchaseManagerConfig;
 import com.badlogic.gdx.pay.PurchaseObserver;
+import com.badlogic.gdx.pay.PurchaseSystem;
 import com.badlogic.gdx.pay.Transaction;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.fish.core.NotesConstants;
 import com.fish.core.notes.Account;
 import com.fish.core.notes.Core;
 import com.fish.core.notes.LoginResult;
@@ -28,8 +33,9 @@ public class Notes extends Game {
 	public static Skin skin;
 	public static GDXDialogs dialogs;
 	public static Account account;
-    public PurchaseManagerConfig purchaseManagerConfig;
-    public PurchaseObserver purchaseObserver;
+    public static PurchaseManagerConfig purchaseManagerConfig;
+    public static PurchaseObserver purchaseObserver;
+    static PlatformResolver m_platformResolver;
 
 	@Override
 	public void create () {
@@ -40,6 +46,8 @@ public class Notes extends Game {
         setScreen(new MakeScreen(this));
 
 
+        purchaseManagerConfig = new PurchaseManagerConfig();
+        purchaseManagerConfig.addOffer(new Offer().setType(OfferType.CONSUMABLE).setIdentifier(NotesConstants.FIVE_COIN_ID));
         purchaseObserver = new PurchaseObserver()
         {
 
@@ -89,7 +97,22 @@ public class Notes extends Game {
             public void handlePurchaseCanceled () {
             }
         };
+        PurchaseSystem.install(purchaseObserver, purchaseManagerConfig);
+        PurchaseSystem.purchase(NotesConstants.FIVE_COIN_ID);
+        Information information = PurchaseSystem.getInformation(NotesConstants.FIVE_COIN_ID);
 
+    }
+
+    //checks if transaction was made, if true, returns back to shop screen
+    protected boolean checkTransaction (String ID) {
+        boolean returnbool = false;
+        if (NotesConstants.ONE_COIN_ID.equals(ID)) {
+            PeDialogEvent purchasedmultiplayerEvent = new PeDialogEvent();
+            purchasedmultiplayerEvent.setType(PeDialogEvent.Type.purchasedDualPlayer);
+            notify(purchasedmultiplayerEvent);
+            returnbool = true;
+        }
+        return returnbool;
     }
 
 	public static void showDialog(String title, String message) {
@@ -175,5 +198,7 @@ public class Notes extends Game {
 
         public abstract void addImpl(Table table);
     }
-
+    public static void setPlatformResolver (PlatformResolver platformResolver) {
+        m_platformResolver = platformResolver;
+    }
 }
