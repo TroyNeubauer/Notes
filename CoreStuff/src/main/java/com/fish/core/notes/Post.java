@@ -2,12 +2,12 @@ package com.fish.core.notes;
 
 public class Post {
     private PostData data;
-    private String name;
+    private String title;
     private long posterID;
 
-    public Post(PostData data, String name, long posterID) {
+    public Post(PostData data, String title, long posterID) {
         this.data = data;
-        this.name = name;
+        this.title = title;
         this.posterID = posterID;
     }
 
@@ -15,8 +15,8 @@ public class Post {
         return data;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
     public long getPosterID() {

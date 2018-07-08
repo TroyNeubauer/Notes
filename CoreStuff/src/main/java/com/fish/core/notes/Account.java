@@ -7,7 +7,7 @@ public class Account extends PublicAccount {
 	public String email;
 	private long schoolID;
 	private Set<Long> classes;
-	private int points, coins;
+    private int points, coins;
 
 	public Account(long id, String username, byte[] profilePic, String email) {
 	    super(id, username, profilePic);
@@ -15,6 +15,7 @@ public class Account extends PublicAccount {
 		this.points = 0;
 		this.coins = 0;
 	}
+
 	public void setPoints(int point) {points = point;}
 	public int getPoints() {return points;}
 
@@ -31,6 +32,10 @@ public class Account extends PublicAccount {
 
     public long getSchool() {
         return schoolID;
+    }
+
+    public void setSchool(long schoolID) {
+        this.schoolID = schoolID;
     }
 
     @Override

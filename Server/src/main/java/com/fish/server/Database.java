@@ -18,7 +18,7 @@ public class Database {
     public byte[] pepper;
     public HashMap<String, DatabaseAccount> users = new HashMap<String, DatabaseAccount>();
     public HashMap<School, Map<Course, List<Long>>> schools = new HashMap<School, Map<Course, List<Long>>>();//map between schools and courses to the list of post id's
-    public HashMap<DatabaseAccount, List<Post>> posts = new HashMap<DatabaseAccount, List<Post>>();
+    public HashMap<DatabaseAccount, List<DatabasePost>> posts = new HashMap<DatabaseAccount, List<DatabasePost>>();
     private long totalUsers;
 
     private transient SecureRandom random = new SecureRandom();
@@ -109,10 +109,12 @@ public class Database {
 
     public boolean joinClass(School school, DatabaseAccount account, Course course) {
         if(account.getAccount().getSchool() == -1) return false;
-
-
-
-        return true;
+        Account rawAccount = account.getAccount();
+        if(school.equals(getSchoolByID(rawAccount.getSchool()))) {
+            rawAccount.getClasses().add(course.getID());//Make sure the school the class is taught at it the same as the requester's school
+            return true;
+        } else
+            return false;
     }
 
     public boolean containsEmail(String email) {
@@ -124,6 +126,9 @@ public class Database {
         return false;
     }
 
-    public void post(DatabaseAccount account, Course course, PostData data) {
+    public Post post(DatabaseAccount account, String title, PostData data) {
+        Post post = new Post(data, title, account.getAccount().getID());
+
+        return post;
     }
 }
