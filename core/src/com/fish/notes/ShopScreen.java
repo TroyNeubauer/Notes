@@ -34,20 +34,17 @@ public class ShopScreen extends MyScreen {
     public ShopScreen(Notes notes) {
         this.notes = notes;
         this.stage = new Stage();
-        //BitmapFont blue = new BitmapFont();
-        //blue.setColor(Color.BLUE);
-        //stage.setDebugAll(true);
-
         this.title = new Label("Shop", Notes.skin);
         title.setFontScaleX(2);
         title.setFontScaleY(2);
         title.setColor(Color.TEAL);
 
-        //this.name = new Label("User: " + Notes.account.getUsername(), Notes.skin);
-        //name.setAlignment(Align.left);
+        this.name = new Label("User: " + Backend.getAccount(p.getPosterID()).getUsername(), Notes.skin);
+        name.setAlignment(Align.left);
+        name.setColor(Color.DARK_GRAY);
 
-        //this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
-        //coins.setAlignment(Align.left);
+        this.coins = new Label("Coins: " + Notes.account.getCoins(), Notes.skin);
+        coins.setAlignment(Align.left);
         
         this.smallpack = new Label("Purchase Small", Notes.skin);
         this.small = new Image(new Texture("small.png"));
@@ -74,10 +71,10 @@ public class ShopScreen extends MyScreen {
         table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         table.add(title).width(40).height(40).expand().top().center();
         table.row();
-        //table.add(name).width(40).height(40).expand().top().left();
-        //table.row();
-        //table.add(coins).width(40).height(40).expand().top().left();
-        //table.row();
+        table.add(name).width(40).height(40).expand().top().left();
+        table.row();
+        table.add(coins).width(40).height(40).expand().top().left();
+        table.row();
         table.add(smallpack).width(20).height(20).expand().bottom().left();
         table.add(mediumpack).width(20).height(20).expand().bottom().left();
         table.add(largepack).width(20).height(20).expand().bottom().left();

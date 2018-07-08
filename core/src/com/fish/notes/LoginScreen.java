@@ -8,18 +8,19 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
-//<<<<<<< Updated upstream
+<<<<<<< Updated upstream
 import com.fish.core.notes.LoginResult;
+=======
 import com.badlogic.gdx.utils.viewport.Viewport;
-import com.fish.core.notes.Account;
-import com.fish.core.notes.LoginResult;
+import com.fish.core.game.Account;
+import com.fish.core.game.LoginResult;
 import com.fish.core.packet.LoginData;
 
 import java.awt.Color;
 
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
-//>>>>>>> Stashed changes
+>>>>>>> Stashed changes
 
 import static java.awt.Color.RED;
 
@@ -53,6 +54,7 @@ public class LoginScreen extends MyScreen {
 
         this.label = new Label("Welcome to Notes", Notes.skin);
         label.setAlignment(Align.center);
+        label.setColor((Color) Color.RED);
 
         img = new Image(new Texture("Fishnotes.png"));
         Table container = new Table();
@@ -110,6 +112,8 @@ public class LoginScreen extends MyScreen {
     public void render(float delta) {
         stage.act(delta);
         stage.draw();
+       batch.setTransformMatrix(notes.getCamera().view);
+       batch.setProjectionMatrix(notes.getCamera().projection);
     }
 
     @Override
