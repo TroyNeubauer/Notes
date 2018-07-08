@@ -4,10 +4,14 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.pay.PurchaseManagerConfig;
+import com.badlogic.gdx.pay.PurchaseObserver;
+import com.badlogic.gdx.pay.Transaction;
 import com.badlogic.gdx.scenes.scene2d.ui.HorizontalGroup;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.fish.core.notes.Account;
 import com.fish.core.notes.Core;
 import com.fish.core.notes.LoginResult;
@@ -24,7 +28,9 @@ public class Notes extends Game {
 	public static Skin skin;
 	public static GDXDialogs dialogs;
 	public static Account account;
-	
+    public PurchaseManagerConfig purchaseManagerConfig;
+    public PurchaseObserver purchaseObserver;
+
 	@Override
 	public void create () {
         dialogs = GDXDialogsSystem.install();
@@ -32,6 +38,58 @@ public class Notes extends Game {
         addCreators();
         account = new Account(12546772, "testuser", new byte[0], "testeremail@tester.com");
         setScreen(new MakeScreen(this));
+
+
+        purchaseObserver = new PurchaseObserver()
+        {
+
+            @Override
+            public void handleRestore (Transaction[] transactions) {
+                for (int i = 0; i < transactions.length; i++) {
+                    if (checkTransaction(transactions[i].getIdentifier()) == true) break;
+                }
+            }
+
+            @Override
+            public void handleRestoreError (Throwable e) {
+                // getPlatformResolver().showToast("PurchaseObserver: handleRestoreError!");
+                Gdx.app.log("ERROR", "PurchaseObserver: handleRestoreError!: " + e.getMessage());
+                throw new GdxRuntimeException(e);
+            }
+
+            @Override
+            public void handleInstall () {
+                // getPlatformResolver().showToast("PurchaseObserver: installed successfully...");
+                Gdx.app.log("handleInstall: ", "successfully..");
+            }
+
+            @Override
+            public void handleInstallError (Throwable e) {
+                // getPlatformResolver().showToast("PurchaseObserver: handleInstallError!");
+                Gdx.app.log("ERROR", "PurchaseObserver: handleInstallError!: " + e.getMessage());
+                throw new GdxRuntimeException(e);
+            }
+
+            @Override
+            public void handlePurchase (Transaction transaction) {
+                checkTransaction(transaction.getIdentifier());
+            }
+
+            @Override
+            public void handlePurchaseError (Throwable e) {
+                if (e.getMessage().equals("There has been a Problem with your Internet connection. Please try again later")) {
+
+                    // this check is needed because user-cancel is a handlePurchaseError too)
+                    // getPlatformResolver().showToast("handlePurchaseError: " + e.getMessage());
+                }
+                throw new GdxRuntimeException(e);
+            }
+
+            @Override
+            public void handlePurchaseCanceled () {
+            }
+        };
+
     }
 
 	public static void showDialog(String title, String message) {
