@@ -20,7 +20,7 @@ public class DatabaseAccount {
 	private byte[] salt;
 	/** The hash of the user's password */
 	private byte[] hash;
-	private List<Long> seenPosts = new ArrayList<Long>();
+	private List<Long> boughtPosts = new ArrayList<Long>();
 
 	public DatabaseAccount(Account account, int iterations, byte[] salt, byte[] hash) {
 		this.account = account;
@@ -45,8 +45,8 @@ public class DatabaseAccount {
 		return hash;
 	}
 
-    public List<Long> getSeenPosts() {
-        return seenPosts;
+    public List<Long> getBoughtPosts() {
+        return boughtPosts;
     }
 
     @Override

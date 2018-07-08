@@ -213,4 +213,8 @@ public class Backend implements Runnable {
         return (Set<Course>) getData("getAllClasses");
     }
 
+    public static Post getPost(long id) {
+        return (Post) getData("getPost", id);
+    }
+
 }

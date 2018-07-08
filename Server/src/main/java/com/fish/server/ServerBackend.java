@@ -164,7 +164,7 @@ public class ServerBackend {
     public static Object getRelevantPosts(Client sender) {
         if(sender.getAccount() == null) return new ErrorString("Please login before requesting data");
         return server.database.getRelevantPosts(sender.getAccount());
-
+ 
     }
 
 
