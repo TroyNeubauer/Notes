@@ -15,6 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.fish.core.notes.Course;
+import com.fish.core.notes.School;
+
+import java.util.Set;
 
 public class SettingsScreen extends MyScreen
 {
@@ -29,6 +33,9 @@ public class SettingsScreen extends MyScreen
     {
         this.stage = new Stage();
         this.notes = notes;
+
+        final Set<School> schools = Backend.getAllSchools();
+        final Set<Long> courses = Notes.account.getAllClasses();
 
         this.changeSchool = new TextField("", Notes.skin);
         changeSchool.setMessageText("Enter a new school");
@@ -50,7 +57,8 @@ public class SettingsScreen extends MyScreen
         container.add(addCourse).prefSize(addCourse.getWidth(), addCourse.getHeight()).row();
         for(long ID : Notes.account.getClasses())
         {
-            Label temp = new Label ("" + Backend.getClass(ID), Notes.skin);
+            final Course course = Backend.getClass(ID);
+            Label temp = new Label ("" + course.getName(), Notes.skin);
             container.add(temp).prefSize(temp.getWidth(), temp.getHeight()).left();
 
             Drawable drawable2 = new TextureRegionDrawable(new TextureRegion(new Texture("Fishnotes_downvote.png")));
@@ -60,7 +68,7 @@ public class SettingsScreen extends MyScreen
                 @Override
                 public void clicked(InputEvent event, float x, float y)
                 {
-                    //removes specified course
+                    Backend.removeClass(course);
                 }
             });
             container.add(img).prefSize(img.getWidth(), img.getHeight()).right().row();
@@ -74,6 +82,12 @@ public class SettingsScreen extends MyScreen
             @Override
             public void keyTyped(TextField textfield, char key) {
                 //changes school
+                School school = null;
+                for(School temp : schools){
+                    if(temp.getName().equals(changeSchool.getText()))
+                        school = temp;
+                }
+                Backend.setSchool(school);
 
             }
         });
@@ -82,7 +96,13 @@ public class SettingsScreen extends MyScreen
             @Override
             public void keyTyped(TextField textfield, char key) {
                 //adds course to list
-
+                Course course = null;
+                for(Long ID : courses)
+                {
+                   if(Backend.getClass(ID).getName().equals(addCourse.getText()))
+                       course = Backend.getClass(ID);
+                }
+                Backend.joinClass(Notes.account,course);
             }
         });
 
