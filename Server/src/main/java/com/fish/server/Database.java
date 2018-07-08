@@ -26,7 +26,6 @@ public class Database {
 
     private AtomicLong postCount = new AtomicLong(0L);
 
-    private transient SecureRandom random = new SecureRandom();
 
     public Database(int hashBytes, int iterations, int saltBytesr, int pepperBytes) {
         this.hashBytes = hashBytes;
@@ -34,7 +33,7 @@ public class Database {
         this.saltBytes = saltBytes;
 
         this.pepper = new byte[pepperBytes];
-        this.random.nextBytes(pepper);
+        new SecureRandom().nextBytes(pepper);
         this.totalUsers = 0L;
     }
 
@@ -42,7 +41,7 @@ public class Database {
         if (containsUsername(username))
             throw new IllegalStateException("An account with username \"" + username + "\" already exists!");
         byte[] salt = new byte[saltBytes];
-        random.nextBytes(salt);
+        new SecureRandom().nextBytes(salt);
 
         byte[] hash = Security.getHashedPassword(password, salt, pepper, iterations, hashBytes);
         Account basicAccount = new Account(totalUsers++, username, Server.DEFAULT_PROFILE_PIC, email);
@@ -158,12 +157,33 @@ public class Database {
 
     public List<Post> getRelevantPosts(DatabaseAccount account) {
         //TODO
-        return null;
+        return new ArrayList<Post>();
     }
 
     public Set<Course> getAllClasses(School school) {
         Map<Course, List<Long>> map = schools.get(school);
         if(map == null) return null;
         return map.keySet();
+    }
+
+    public void listUsers() {
+        System.out.println("Database currently tracking " + users.size() + " out of " + totalUsers + " total users");
+        for(DatabaseAccount account : users.values()) {
+            System.out.println("\t" + account.getAccount().getUsername() + ", " + account.getAccount().getEmail());
+        }
+    }
+
+    public void listPosts() {
+        System.out.println("Database currently tracking " + posts.size() + " out of " + postCount.get() + " total posts");
+        for(DatabasePost post : posts.values()) {
+            System.out.println("\t" + post.getPost());
+        }
+    }
+
+    public void listSchools() {
+        System.out.println("Database currently tracking " + schools.size() + " schools");
+        for(School school : schools.keySet()) {
+            System.out.println("\t" + school);
+        }
     }
 }

@@ -33,7 +33,6 @@ public class ShopScreen extends MyScreen {
 
     public ShopScreen(final Notes notes) {
         super(notes);
-        this.stage = new Stage();
         this.title = new Label("Shop", Notes.skin);
         title.setFontScaleX(2);
         title.setFontScaleY(2);
@@ -112,11 +111,6 @@ public class ShopScreen extends MyScreen {
         table.row();
         table.setColor(Color.WHITE);
         stage.addActor(table);
-        Gdx.input.setInputProcessor(stage);
     }
 
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
 }

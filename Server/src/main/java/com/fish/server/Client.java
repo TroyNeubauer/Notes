@@ -44,9 +44,8 @@ public class Client {
             in.close();
             out.close();
             socket.close();
+
         } catch (IOException e) {
-            System.err.println("Error disconnecting client!:");
-            e.printStackTrace();
         }
         account = null;
         state = ClientState.DISCONNECTED;

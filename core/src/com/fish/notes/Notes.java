@@ -111,6 +111,8 @@ public class Notes extends Game {
         getPlatformResolver().requestPurchaseRestore();
 
         Backend.init();
+        screensManager = new ScreensManager(this);
+        setScreen(new LoginScreen(this));
     }
 
     public  PlatformResolver getPlatformResolver()
@@ -149,6 +151,12 @@ public class Notes extends Game {
         warningDialog.build().show();
     }
 
+    @Override
+    public void dispose() {
+        super.dispose();
+        Backend.close();
+    }
+
     private void addCreators() {
         Core.creatorMap.put(PostDataImage.class, new Core.Creator() {
             @Override
@@ -175,12 +183,10 @@ public class Notes extends Game {
     }
 
     public static boolean validateResult(LoginResult result, String title) {
-        if(result == Backend.DISCONNECTED_FROM_SERVER) {
+        if(result == null) {
             Notes.showDialog("No connection", "Check your internet connection or try again later!");
         } else {
-            if(result == null) {
-                Notes.showDialog("Invalid server request!", "");
-            } else if (result.isSuccess()) {
+            if (result.isSuccess()) {
                 return true;
             } else {
                 Notes.showDialog(title, result.getMessage());

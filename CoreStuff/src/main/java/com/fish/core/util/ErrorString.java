@@ -11,4 +11,11 @@ public class ErrorString {
     public String getString() {
         return string;
     }
+
+    @Override
+    public String toString() {
+        return "ErrorString{" +
+                "string='" + string + '\'' +
+                '}';
+    }
 }

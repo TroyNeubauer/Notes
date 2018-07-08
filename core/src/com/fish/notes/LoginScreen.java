@@ -22,7 +22,6 @@ import de.tomgrill.gdxdialogs.core.listener.ButtonClickListener;
 import static java.awt.Color.RED;
 
 public class LoginScreen extends MyScreen {
-    private Stage stage;
     Image img;
     private TextField usernameField, passwordField;
     private TextButton loginButton, registerBtn;

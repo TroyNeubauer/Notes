@@ -23,4 +23,13 @@ public class Post extends DefaultNotesObject {
     public long getPosterUserID() {
         return posterUserID;
     }
+
+    @Override
+    public String toString() {
+        return "Post{" +
+                "data=" + data +
+                ", title='" + title + '\'' +
+                ", posterUserID=" + posterUserID +
+                '}';
+    }
 }

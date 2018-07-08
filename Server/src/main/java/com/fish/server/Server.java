@@ -8,11 +8,15 @@ import com.fish.core.notes.DatabaseAccount;
 import com.fish.core.notes.School;
 import com.fish.core.util.Utils;
 
+import org.objenesis.instantiator.ObjectInstantiator;
+import org.objenesis.strategy.InstantiatorStrategy;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Field;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -22,8 +26,10 @@ import java.util.Scanner;
 
 import javax.management.relation.RoleUnresolved;
 
+import sun.misc.Unsafe;
+
 public class Server {
-    public static final Kryo kryo = new Kryo();
+
     private static final File DATABASE_FILE = new File("/home/ec2-user/Database.dat");
 
     public static final byte[] DEFAULT_PROFILE_PIC = new byte[0];
@@ -33,9 +39,12 @@ public class Server {
     public Database database;
 
     public Server() {
+        ServerBackend.init(this);
         if(DATABASE_FILE.exists()) {
             try {
-                database = kryo.readObject(new Input(new FileInputStream(DATABASE_FILE)), Database.class);
+                Input in = new Input(new FileInputStream(DATABASE_FILE));
+                database = Utils.kryo.readObject(in, Database.class);
+                in.close();
                 System.out.println("Loading database from " + DATABASE_FILE);
             } catch (Exception e) {
                 System.err.println("Unable to load database");
@@ -50,7 +59,7 @@ public class Server {
         while(running) {
             try {
                 if (System.in.available() > 0) {
-                    String line = scanner.next();
+                    String line = scanner.nextLine();
                     if(Commands.parse(this, line)) {
                         stop();
                     }
@@ -69,8 +78,10 @@ public class Server {
 
     private void setupThread() {
         Thread waitThread = new Thread(() -> {
+            System.out.println("Waiting for nre connections...");
             while(running) {
                 try {
+
                     Socket newSocket = socket.accept();
                     System.out.println("Accecpted new client connection from " + newSocket.getRemoteSocketAddress().toString());
                     Client client = new Client(newSocket);
@@ -80,6 +91,7 @@ public class Server {
                 }
             }
         });
+        waitThread.start();
     }
 
     public void close() {
@@ -92,7 +104,8 @@ public class Server {
         ServerBackend.close();
         try {
             Output out = new Output(new FileOutputStream(DATABASE_FILE));
-            kryo.writeObject(out, database);
+            Utils.kryo.writeObject(out, database);
+            out.close();
         } catch (Exception e) {
             System.err.println("Unable to save database");
             throw new RuntimeException(e);
@@ -101,7 +114,7 @@ public class Server {
 
     private void setupNet() {
         try {
-            socket = new ServerSocket(NotesConstants.PORT, 10, InetAddress.getByName(NotesConstants.IP));
+            socket = new ServerSocket(NotesConstants.PORT);
         } catch(UnknownHostException e) {
             throw new RuntimeException(e);
         } catch (IOException e) {

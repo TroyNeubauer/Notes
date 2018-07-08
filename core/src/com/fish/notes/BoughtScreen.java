@@ -76,8 +76,8 @@ public class BoughtScreen extends MyScreen {
         }
     }
 
-    public void dispose () {
-            stage.dispose();
-        }
+    @Override
+    public void hide() {
 
+    }
 }

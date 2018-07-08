@@ -22,4 +22,13 @@ public class School extends DefaultNotesObject {
     public double getLng() {
         return lng;
     }
+
+    @Override
+    public String toString() {
+        return "School{" +
+                "name='" + name + '\'' +
+                ", lat=" + lat +
+                ", lng=" + lng +
+                '}';
+    }
 }

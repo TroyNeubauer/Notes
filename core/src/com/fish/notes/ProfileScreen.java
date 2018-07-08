@@ -92,8 +92,6 @@ public class ProfileScreen extends MyScreen {
         container.add(edit).prefSize(edit.getWidth(), edit.getHeight()).left().row();
         stage.addActor(container);
 
-        Gdx.input.setInputProcessor(stage);
-
         edit.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -103,17 +101,13 @@ public class ProfileScreen extends MyScreen {
         });
 
     }
-        @Override
-        public void render ( float delta){
-            Gdx.gl.glClearColor(.123f, .675f,.89f, 1);
-            super.render(delta);
-        }
-
-        @Override
-        public void dispose () {
-            stage.dispose();
-        }
-
+    @Override
+    public void render ( float delta){
+        Gdx.gl.glClearColor(.123f, .675f,.89f, 1);
+        super.render(delta);
     }
+
+
+}
 
 

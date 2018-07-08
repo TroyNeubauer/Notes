@@ -18,6 +18,8 @@ import com.fish.core.notes.LoginResult;
 import com.fish.core.notes.PostData;
 import com.fish.core.notes.PublicAccount;
 import com.fish.core.notes.School;
+import com.fish.core.util.ErrorString;
+import com.fish.core.util.Utils;
 import com.fish.notes.backend.RequestInfo;
 
 import java.util.ArrayList;
@@ -29,7 +31,6 @@ import java.util.concurrent.atomic.AtomicLong;
 public class Backend implements Runnable {
 
     public static boolean showConnectionDialog = true;
-    private static final Kryo kryo = new Kryo();
 
     public static final Object DISCONNECTED_FROM_SERVER = new Object();
 
@@ -42,6 +43,7 @@ public class Backend implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("Starting backend!");
         SocketHints hints = new SocketHints();
         hints.tcpNoDelay = false;
         hints.trafficClass = 0x02 | 0x04;//Cheap and reliable
@@ -52,6 +54,7 @@ public class Backend implements Runnable {
                 } catch (GdxRuntimeException e) {
                     if (showConnectionDialog)
                         Notes.showDialog("Unable to connect to server!", "Check your connection");
+                    e.printStackTrace();
                     showConnectionDialog = false;
                 }
                 try {
@@ -60,6 +63,7 @@ public class Backend implements Runnable {
                     break;
                 }
             }
+            System.out.println("connected to server!");
             if(!showConnectionDialog) {//if we connected after a while...
                 Notes.showDialog("Connected to server!", "");
             }
@@ -72,11 +76,15 @@ public class Backend implements Runnable {
             }
             while(running.get() && socket.isConnected()) {
                 try {
-                    BackendResponse response = kryo.readObject(in, BackendResponse.class);
+                    BackendResponse response = Utils.kryo.readObject(in, BackendResponse.class);
+                    System.out.println("got responce! " + response);
                     for(int i = 0; i < requests.size(); i++) {
                         RequestInfo request = requests.get(i);
                         if(request.id == response.id) {
                             request.result = response.result;
+                            if(response.result instanceof ErrorString) {
+                                Notes.showDialog("Invalid server request:", ((ErrorString) response.result).getString());
+                            }
                             request.done = true;
                             System.out.println("Recieved! Setting id \"" + request.id + "\" to " + request.result);
                         }
@@ -87,8 +95,6 @@ public class Backend implements Runnable {
                     e.printStackTrace();
                     continue;
                 } catch(GdxRuntimeException e) {
-                    System.err.println("In 12345 catch in Backend!");
-                    e.printStackTrace();
                     continue;
                 }
 
@@ -141,7 +147,9 @@ public class Backend implements Runnable {
             return null;
         long id = IDs.incrementAndGet();
         BackendRequest request = new BackendRequest(methodName, args, id);
-        kryo.writeObject(out, request);
+        Utils.kryo.writeObject(out, request);
+        out.flush();
+        System.out.println("Send request " + request);
         RequestInfo info = new RequestInfo(id);
         requests.add(info);
         while(!info.done) {
@@ -233,4 +241,15 @@ public class Backend implements Runnable {
         return (List<Post>) getData("getBoughtPosts", List.class);
     }
 
+    public static void close() {
+        running.set(false);
+        in.close();
+        out.close();
+        socket.dispose();
+        try {
+            socketThread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

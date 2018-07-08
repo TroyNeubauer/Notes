@@ -3,13 +3,18 @@ package com.fish.server;
 import com.fish.core.notes.DatabaseAccount;
 import com.fish.core.util.Utils;
 
+import java.util.Arrays;
+import java.util.regex.Pattern;
+
 public class Commands {
+    private static final Pattern SPACE = Pattern.compile(" ");
+
     public static boolean parse(Server server, String line) {
         if (line.equalsIgnoreCase("stop") || line.equalsIgnoreCase("end") || line.equalsIgnoreCase("quit") || line.equalsIgnoreCase("exit")) {
             return true;
         }
         try {
-            String[] commands = line.split(" ");
+            String[] commands = SPACE.split(line); // str is the string to be split
             if (commands[0].equalsIgnoreCase("register")) {
                 try {
                     server.registerUser(commands[1], commands[2].toCharArray(), commands[3]);
@@ -25,16 +30,22 @@ public class Commands {
                 System.out.println("registering user {username \"" + commands[1] + "\", password \"" + new String(password) + "\" email \""
                         + commands[3] + "\"");
             }
-            if (commands[0].equalsIgnoreCase("auth")) {
+            else if (commands[0].equalsIgnoreCase("auth")) {
                 System.out.println(server.areCredentialsValid(commands[1], commands[2].toCharArray()) ? "Authentication succscful!"
                         : "Invalid username or password");
             }
-            if (commands[0].equalsIgnoreCase("list")) {
+            else if (commands[0].equalsIgnoreCase("list")) {
                 if (commands[1].equalsIgnoreCase("users")) {
-                    //List users
+                    server.database.listUsers();
+                }
+                if (commands[1].equalsIgnoreCase("posts")) {
+                    server.database.listPosts();
+                }
+                if (commands[1].equalsIgnoreCase("schools")) {
+                    server.database.listSchools();
                 }
             }
-            if (commands[0].equalsIgnoreCase("delete") || commands[0].equalsIgnoreCase("remove")) {
+            else if (commands[0].equalsIgnoreCase("delete") || commands[0].equalsIgnoreCase("remove")) {
                 if (commands[1].equalsIgnoreCase("user")) {
                     String username = commands[2];
                     if (server.containsUser(username)) {
@@ -47,7 +58,7 @@ public class Commands {
 
                 }
             }
-            if (commands[0].equalsIgnoreCase("print")) {
+            else if (commands[0].equalsIgnoreCase("print")) {
                 if (commands[1].equalsIgnoreCase("user")) {
                     String username = commands[2];
                     if (server.containsUser(username)) {

@@ -27,7 +27,7 @@ public abstract class MyScreen implements Screen
 
     /** @see ApplicationListener#resize(int, int) */
     public void resize (int width, int height) {
-
+        stage.getViewport().update(width, height, true);
     }
 
     /** @see ApplicationListener#pause() */
@@ -39,9 +39,13 @@ public abstract class MyScreen implements Screen
 
     }
 
-    /** Called when this screen is no longer the current screen for a {@link Game}. */
-    public void hide ()
-    {
-        dispose();
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 }

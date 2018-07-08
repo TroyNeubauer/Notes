@@ -11,6 +11,7 @@ import com.badlogic.gdx.utils.Align;
 import com.fish.core.notes.Post;
 
 import java.awt.Color;
+import java.util.*;
 
 import de.tomgrill.gdxdialogs.core.dialogs.GDXButtonDialog;
 
@@ -47,18 +48,14 @@ public class MainScreen extends MyScreen {
         table.add(votes).height(30).width(30).right();
         table.add(totalvotes).height(30).width(30).left();
         table.row();
-
-        for(int i = 0; i < Backend.getRelevantPosts().size(); i++) {
+        java.util.List<Post> relevantPosts = Backend.getRelevantPosts();
+        System.out.println("relevant posts: " + relevantPosts);
+        /*for(int i = 0; i < relevantPosts.size(); i++) {
             PostScreen item = new PostScreen(notes);
             stage.addActor(item);
         }
         //Gdx.input.setInputProcessor(new GestureDetector(new MyGestureListener()));
         //stage.scrolled(notes.setScreen();)
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 
 }

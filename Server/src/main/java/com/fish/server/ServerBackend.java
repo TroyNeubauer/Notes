@@ -13,13 +13,13 @@ import com.fish.core.util.ErrorString;
 import com.fish.core.util.Utils;
 
 import java.lang.reflect.Method;
+import java.lang.reflect.Modifier;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
-
-import static com.fish.server.Server.kryo;
 
 public class ServerBackend {
     private static Server server;
@@ -30,12 +30,13 @@ public class ServerBackend {
         if(ServerBackend.server != null) throw new RuntimeException("Already inited!");
         ServerBackend.server = server;
         for(Method method : ServerBackend.class.getMethods()) {
-            if(method.getAnnotations().length == 1) {
-                if(method.getAnnotations()[0].annotationType() == Callable.class) {
-                    System.out.println("Method " + method + " passes!");
+            if(Modifier.isStatic(method.getModifiers())) {
+                if (method.getAnnotations().length == 1) {
+                    if (method.getAnnotations()[0].annotationType() == Callable.class) {
+                        System.out.println("Method " + method + " passes!");
+                        methods.put(method.getName(), method);
+                    }
                 }
-            } else {
-                System.out.println("\t\tMethod " + method + " fails!");
             }
         }
     }
@@ -51,6 +52,7 @@ public class ServerBackend {
         private Client client;
 
         public ClientThread(Client client) {
+            this.client = client;
             thread = new Thread(this);
             connectedClients.add(client);
             thread.start();
@@ -61,16 +63,22 @@ public class ServerBackend {
             Socket socket = client.socket;
             while(socket.isConnected()) {
                 try {
-                    BackendRequest request = kryo.readObject(client.in, BackendRequest.class);
+                    System.out.println("client listener ready!");
+                    BackendRequest request = Utils.kryo.readObject(client.in, BackendRequest.class);
+                    System.out.println("server recieved " + request);
                     Object result = invoke(request.getMethodName(), client, request.getArgs());
                     BackendResponse response = new BackendResponse(result, request.getId());
-                    kryo.writeObject(client.out, response);
-                } catch(ClassCastException e) {
-                    System.err.println("Invalid class! Expected " + BackendRequest.class);
-                    e.printStackTrace();
+                    Utils.kryo.writeObject(client.out, response);
+                    client.out.flush();
+                    System.out.println("Server writing response " + response);
                 } catch (RuntimeException e) {
-                    System.err.println("Random runtime exception");
                     e.printStackTrace();
+                    try {
+                        socket.close();
+                    } catch (Exception e2) {
+
+                    }
+                    break;
                 }
             }
             System.out.println("Ending client thread " + client);
@@ -78,17 +86,23 @@ public class ServerBackend {
     }
 
     public static Object invoke(String name, Client sender, Object... args) {
-        Method method = methods.get(name);
-        if(method == null) {
-            return new ErrorString("Unable to run method with args " + Utils.getElementClasses(args));
-        }
         Object[] finalArgs = new Object[args.length + 1];
         finalArgs[0] = sender;
         System.arraycopy(args, 0, finalArgs, 1, args.length);//Copy all normal args
+        System.out.println("Args are " + Arrays.deepToString(finalArgs) + " types: " + Utils.getElementClasses(finalArgs)+"  name: " + name);
+        Method method = methods.get(name);
+        if(method == null) {
+            System.out.println("unable to find method with mayching name!");
+            return new ErrorString("Unable to run method with args " + Utils.getElementClasses(args) + ". Options are " + methods.values().toString());
+        }
+        System.out.println("Server about to invoke: " + method);
         try {
-            return method.invoke(null, args);
+            Object obj = method.invoke(null, finalArgs);
+            System.out.println("Invoked method with no errors!");
+            return obj;
         } catch(Exception e) {
-            return new ErrorString("Unable to ");
+            System.out.println("failed to invoke method " + Utils.getStackTrace(e));
+            return new ErrorString("Unable to invoke method " + method);
         }
     }
 
@@ -121,8 +135,10 @@ public class ServerBackend {
 
     @Callable
     public static LoginResult login(Client sender, String username, char[] password) {
+        System.out.println("Server recieved login! " + username);
         if(server.areCredentialsValid(username, password)) {
             DatabaseAccount account = server.getAccount(username);
+            sender.setAccount(account);
             return new LoginResult("", account.getAccount());
         } else {
             return new LoginResult("Invalid password", null);
@@ -131,6 +147,7 @@ public class ServerBackend {
 
     @Callable
     public static LoginResult register(Client sender, String username, char[] password, String email) {
+        System.out.println("Server recieved register! " + username + ", " + email);
         if(server.containsUser(username)) {
             return new LoginResult("Username already in use!", null);
         } else if(server.database.containsEmail(email)){

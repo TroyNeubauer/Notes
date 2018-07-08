@@ -21,7 +21,7 @@ public class MakeScreen extends MyScreen {
     private CheckBox picchoice, textchoice;
     private Label label;
     private TextField title, classbox;
-    private TextArea textPost;
+    private TextArea postdata;
     private Course course;
     private PostData data;
 
@@ -46,9 +46,9 @@ public class MakeScreen extends MyScreen {
         title.setMessageText("Title");
         title.setColor(Color.BLUE);
 
-        this.textPost = new TextArea("", Notes.skin);
-        textPost.setMessageText("Enter Text");
-        textPost.setColor(Color.BLUE);
+        this.postdata = new TextArea("", Notes.skin);
+        postdata.setMessageText("Enter Text");
+        postdata.setColor(Color.BLUE);
 
         this.classbox = new TextField("", Notes.skin);
         classbox.setMessageText("Class");
@@ -83,20 +83,18 @@ public class MakeScreen extends MyScreen {
         picchoice.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                //container.add()
-                container.add(submit).prefSize(submit.getWidth(),submit.getHeight()).row();
+
             }
         });
         textchoice.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y){
-                container.add(textPost).prefSize(textPost.getWidth(), textPost.getHeight()).row();
+                container.add(postdata).prefSize(postdata.getWidth(), postdata.getHeight()).row();
                 container.add(submit).prefSize(submit.getWidth(),submit.getHeight()).row();
             }
         });
         superTable.add(container);
         stage.addActor(superTable);
-        Gdx.input.setInputProcessor(stage);
 
         title.setTextFieldListener(new TextField.TextFieldListener() {
             @Override
@@ -120,10 +118,7 @@ public class MakeScreen extends MyScreen {
             @Override
             public void keyTyped(TextField textfield, char key)
             {
-                data  = new PostDataText(textPost.getText());
-                    if ((key == '\r' || key == '\n')){
-                        textfield.next(Gdx.input.isKeyPressed(Input.Keys.SHIFT_LEFT) );
-                }
+                data = data = new PostDataText(postdata.getText());
             }
         });
 
@@ -141,11 +136,6 @@ public class MakeScreen extends MyScreen {
                 Backend.post(title.getText(), course, data);
             }
         });
-    }
-
-    @Override
-    public void dispose() {
-        stage.dispose();
     }
 
 }

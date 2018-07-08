@@ -1,6 +1,8 @@
 package com.fish.core.notes;
 
 
+import java.util.Arrays;
+
 public final class BackendRequest {
     private String methodName;
     private Object[] args;
@@ -24,4 +26,13 @@ public final class BackendRequest {
     public long getId() {
         return id;
     }
+
+/*
+    @Override
+    public String toString() {
+        return "BackendRequest{" +
+                "methodName='" + methodName + '\'' +
+                ", id=" + id +
+                '}';
+    }*/
 }
