@@ -1,9 +1,10 @@
 package com.fish.notes;
 
+import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 
-public class MyGestureListener implements GestureDetector.GestureListener {
+public class MyGestureListener implements GestureDetector.GestureListener, InputProcessor {
 
     @Override
     public boolean touchDown(float x, float y, int pointer, int button) {
@@ -54,5 +55,40 @@ public class MyGestureListener implements GestureDetector.GestureListener {
     }
     @Override
     public void pinchStop () {
+    }
+
+    public boolean keyDown (int keycode) {
+        return false;
+    }
+
+    public boolean keyUp (int keycode) {
+        return false;
+    }
+
+    public boolean keyTyped (char character) {
+        return false;
+    }
+
+    public boolean touchDown (int x, int y, int pointer, int button) {
+        return false;
+    }
+
+    public boolean touchUp (int x, int y, int pointer, int button) {
+        return false;
+    }
+
+    public boolean touchDragged (int x, int y, int pointer) {
+        return false;
+    }
+
+    public boolean mouseMoved (int x, int y) {
+        return false;
+    }
+
+    public boolean scrolled (int amount) {
+        if(amount == 1) {
+
+        }
+        return false;
     }
 }
