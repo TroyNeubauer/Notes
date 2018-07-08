@@ -134,8 +134,4 @@ public class Backend {
     public static List<Long> getBoughtPosts() {
         return Notes.account.getBoughtPosts();
     }
-
-    public static DatabaseAccount getMyAccount() {
-        return new DatabaseAccount(new Account(0, "TroyNeubauer", new byte[0], "troyneubauer@gmail.com"), 100, new byte[32], new byte[32]);
-    }
 }
