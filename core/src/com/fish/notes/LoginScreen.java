@@ -68,7 +68,7 @@ public class LoginScreen extends MyScreen {
                 LoginResult result = Backend.login(usernameField.getText(), passwordField.getText());
                 if(Notes.validateResult(result, "Unable to log in!")) {
                     Notes.account = result.getAccount();
-                    //Set account
+                    notes.setScreen(Notes.screensManager);
                 }
             }
         });

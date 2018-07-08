@@ -50,22 +50,22 @@ public class ScreensManager implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        screens[currentIndex].resize(width, height);
     }
 
     @Override
     public void pause() {
-
+        screens[currentIndex].pause();
     }
 
     @Override
     public void resume() {
-
+        screens[currentIndex].resume();
     }
 
     @Override
     public void hide() {
-
+        screens[currentIndex].hide();
     }
 
     @Override
