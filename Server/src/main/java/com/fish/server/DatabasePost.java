@@ -10,4 +10,12 @@ public class DatabasePost {
     private Post post;
     private List<Long> upvotes = new ArrayList<Long>(), downvotes = new ArrayList<Long>();
 
+    public DatabasePost(Post post) {
+        this.post = post;
+    }
+
+
+    public Post getPost() {
+        return post;
+    }
 }

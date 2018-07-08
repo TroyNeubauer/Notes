@@ -1,6 +1,8 @@
 package com.fish.core.notes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Represents a user's account
@@ -18,6 +20,7 @@ public class DatabaseAccount {
 	private byte[] salt;
 	/** The hash of the user's password */
 	private byte[] hash;
+	private List<Long> seenPosts = new ArrayList<Long>();
 
 	public DatabaseAccount(Account account, int iterations, byte[] salt, byte[] hash) {
 		this.account = account;
@@ -42,7 +45,11 @@ public class DatabaseAccount {
 		return hash;
 	}
 
-	@Override
+    public List<Long> getSeenPosts() {
+        return seenPosts;
+    }
+
+    @Override
 	public String toString() {
 		return "DatabaseAccount [account=" + account + ", iterations=" + iterations + ", salt=" + Arrays.toString(salt) + ", hash=" + Arrays.toString(hash)
 				+ "]";

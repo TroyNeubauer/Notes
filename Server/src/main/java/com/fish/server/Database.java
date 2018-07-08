@@ -13,6 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 import sun.net.www.http.PosterOutputStream;
 
@@ -21,8 +22,11 @@ public class Database {
     public byte[] pepper;
     public HashMap<String, DatabaseAccount> users = new HashMap<String, DatabaseAccount>();
     public HashMap<School, Map<Course, List<Long>>> schools = new HashMap<School, Map<Course, List<Long>>>();//map between schools and courses to the list of post id's
-    public HashMap<DatabaseAccount, List<DatabasePost>> posts = new HashMap<DatabaseAccount, List<DatabasePost>>();
+    public HashMap<DatabaseAccount, List<Long>> userPosts = new HashMap<DatabaseAccount, List<Long>>();//Maps users to a list of their posts
+    public HashMap<Long, DatabasePost> posts1 = new HashMap<Long, DatabasePost>();
     private long totalUsers;
+
+    private AtomicLong postCount = new AtomicLong(0L);
 
     private transient SecureRandom random = new SecureRandom();
 
@@ -129,9 +133,27 @@ public class Database {
         return false;
     }
 
-    public Post post(DatabaseAccount account, String title, PostData data) {
-        Post post = new Post(data, title, account.getAccount().getID());
-        //TODO
+    public Post post(DatabaseAccount account, String title, Course course, PostData data) {
+        School school = getSchoolByID(account.getAccount().getSchool());
+        if(school == null) return null;
+        long newID = postCount.incrementAndGet();
+        Post post = new Post(newID, data, title, account.getAccount().getID());
+        Map<Course, List<Long>> map = schools.get(school);
+        List<Long> postIDs = map.get(course);
+        if(postIDs == null) {
+            postIDs = new ArrayList<Long>();
+            map.put(course, postIDs);
+        }
+        postIDs.add(newID);
+
+        List<Long> accountPosts = userPosts.get(account);
+        if(accountPosts == null) {
+            accountPosts = new ArrayList<Long>(1);
+            userPosts.put(account, accountPosts);
+        }
+        DatabasePost realPost = new DatabasePost(post);
+        accountPosts.add(newID);
+        posts1.put(newID, realPost);
         return post;
     }
 
@@ -141,6 +163,8 @@ public class Database {
     }
 
     public Set<Course> getAllClasses(School school) {
-
+        Map<Course, List<Long>> map = schools.get(school);
+        if(map == null) return null;
+        return map.keySet();
     }
 }
