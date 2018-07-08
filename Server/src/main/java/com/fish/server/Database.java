@@ -15,8 +15,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicLong;
 
-import sun.net.www.http.PosterOutputStream;
-
 public class Database {
     public int hashBytes, iterations, saltBytes;
     public byte[] pepper;
